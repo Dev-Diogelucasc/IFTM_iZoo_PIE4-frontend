@@ -1,7 +1,7 @@
 import "./App.css";
 
 // Router
-import {Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // Components
 import NavBar from "./components/navBar/NavBar";
@@ -14,13 +14,14 @@ import Consult from "./pages/inspections/Consult";
 import Reports from "./pages/reports/Reports";
 import Mapping from "./pages/mapping/Mapping";
 import Users from "./pages/users/Users";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
     <div>
       <NavBar />
       <Routes>
-        <Route path="/" />
+        <Route path="/" element={<Home />} />
         <Route path="/cadastro" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/inspecoes/registar" element={<RecordInspection />} />
