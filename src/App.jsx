@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 
 // Components
 import NavBar from "./components/navBar/NavBar";
+import Footer from "./components/footer/Footer";
 
 // Pages
 import Register from "./pages/auth/register/Register";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/mapeamento" element={<Mapping />} />
         <Route path="/usuarios" element={<Users />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

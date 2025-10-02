@@ -1,3 +1,4 @@
+// Icons
 import { BsActivity } from "react-icons/bs";
 import {
   BsSearch,
@@ -6,9 +7,15 @@ import {
   BsPeople,
   BsPersonPlus,
 } from "react-icons/bs";
+
+// Components
 import FeatureCard from "../../components/FeatureCard/FeatureCard";
 
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="mt-8 flex flex-col items-center">
       <span className="text-2xl font-semibold mb-6">
@@ -20,42 +27,42 @@ const Home = () => {
           title="Registrar Inspeção"
           description="Cadastre novas inspeções com dados detalhados sobre ocorrências de zoonose"
           buttonLabel="Acessar"
-          onButtonClick={() => alert("Acessar Inspeção")}
+          onButtonClick={() => navigate("/inspecoes/registar")}
         />
         <FeatureCard
           icon={<BsSearch size={28} className="text-green-700" />}
           title="Consultar Inspeções"
           description="Busque e visualize histórico completo de inspeções realizadas"
           buttonLabel="Acessar"
-          onButtonClick={() => alert("Consultar Inspeções")}
+          onButtonClick={() => navigate("/inspecoes/consultar")}
         />
         <FeatureCard
           icon={<BsFileEarmarkText size={28} className="text-green-700" />}
           title="Gerar Relatórios"
           description="Crie relatórios detalhados e análises estatísticas das ocorrências"
           buttonLabel="Acessar"
-          onButtonClick={() => alert("Gerar Relatórios")}
+          onButtonClick={() => navigate("/relatorios")}
         />
         <FeatureCard
           icon={<BsGeoAlt size={28} className="text-green-700" />}
           title="Mapeamento"
           description="Visualize geograficamente as ocorrências de zoonose na região"
           buttonLabel="Acessar"
-          onButtonClick={() => alert("Mapeamento")}
+          onButtonClick={() => navigate("/mapeamento")}
         />
         <FeatureCard
           icon={<BsPeople size={28} className="text-green-700" />}
           title="Gerenciar Usuários"
           description="Administre permissões e controle de acesso da equipe"
           buttonLabel="Acessar"
-          onButtonClick={() => alert("Gerenciar Usuários")}
+          onButtonClick={() => navigate("/usuarios") }
         />
         <FeatureCard
           icon={<BsPersonPlus size={28} className="text-green-700" />}
           title="Cadastro"
           description="Crie sua conta para acessar o sistema de controle"
           buttonLabel="Acessar"
-          onButtonClick={() => alert("Cadastro")}
+          onButtonClick={() => navigate("/cadastro")}
         />
       </div>
     </section>
