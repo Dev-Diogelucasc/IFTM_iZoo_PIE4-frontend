@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
       proxy: {
         "/usuario": {
           target:
-            env.VITE_API_URL || "https://iftm-izoo-pie4-backend.onrender.com",
+            env.VITE_API_URL,
           changeOrigin: true,
           secure: false,
         },
