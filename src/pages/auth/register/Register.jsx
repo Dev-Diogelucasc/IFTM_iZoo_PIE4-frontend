@@ -2,92 +2,51 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 //import { BsActivity } from "react-icons/bs";
 import { GiPlantsAndAnimals } from "react-icons/gi";
-import api from "../../../services/api";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const Register = () => {
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [cpf, setCpf] = useState("");
+  const [login, setLogin] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { register } = useAuth();
+
   const navigate = useNavigate();
-
-  const validateForm = () => {
-    if (!name || !email || !cpf || !phone || !password || !confirmPassword) {
-      setError("Por favor, preencha todos os campos");
-      return false;
-    }
-
-    if (password !== confirmPassword) {
-      setError("As senhas não coincidem");
-      return false;
-    }
-
-    if (password.length < 6) {
-      setError("A senha deve ter pelo menos 6 caracteres");
-      return false;
-    }
-
-    return true;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (password !== confirmPassword) {
+      setError("As senhas não coincidem.");
       return;
     }
 
-    setError("");
-    setLoading(true);
+    const registerData = {
+      login: login,
+      senha: password,
+      email: email,
+      telefone: "+55" + phone,
+    };
 
     try {
-      const API_URL =
-        import.meta.env.VITE_API_URL ||
-        "https://iftm-izoo-pie4-backend.onrender.com";
-      console.log("Tentando fazer cadastro com API URL:", API_URL);
-      console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
-
-      await api.post("/usuario/cadastro", {
-        nome: name,
-        email: email,
-        cpf: cpf,
-        telefone: phone,
-        login: email, // usando email como login
-        senha: password,
-      });
-
-      // Redirecionar para login após registro bem-sucedido
-      navigate("/login", {
-        state: { message: "Cadastro realizado com sucesso! Faça seu login." },
-      });
+      setLoading(true);
+      await register(registerData);
+      navigate("/login");
     } catch (error) {
-      console.error("Erro no cadastro:", error);
-      if (error.response?.data?.message) {
-        setError(error.response.data.message);
-      } else if (error.response?.status === 400) {
-        setError("Dados inválidos. Verifique as informações fornecidas.");
-      } else if (error.response?.status === 409) {
-        setError("Email ou CPF já cadastrado.");
-      } else if (error.response?.status === 403) {
-        setError(
-          "Erro de permissão. O servidor não permite acesso deste domínio. Entre em contato com o suporte."
-        );
-      } else if (error.message === "Network Error") {
-        setError(
-          "Erro de conexão com o servidor. Verifique sua internet ou tente novamente mais tarde."
-        );
-      } else {
-        setError("Erro ao realizar cadastro. Tente novamente.");
-      }
-    } finally {
+      console.log("Erro detalhado no registro:", error.response?.data || error);
+      setError(
+        error.response?.data?.error ||
+          "Erro ao registrar. Verifique os dados e tente novamente."
+      );
       setLoading(false);
     }
   };
+
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
@@ -106,7 +65,7 @@ const Register = () => {
           </div>
         )}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div>
+          {/* <div>
             <label className="block font-semibold mb-1 text-gray-800">
               Nome
             </label>
@@ -118,6 +77,20 @@ const Register = () => {
               onChange={(e) => setName(e.target.value)}
               required
               autoComplete="name"
+            />
+          </div> */}
+          <div>
+            <label className="block font-semibold mb-1 text-gray-800">
+              Login
+            </label>
+            <input
+              type="text"
+              className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
+              placeholder="Digite seu usuário"
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
+              required
+              autoComplete="off"
             />
           </div>
           <div>
@@ -134,20 +107,7 @@ const Register = () => {
               autoComplete="email"
             />
           </div>
-          <div>
-            <label className="block font-semibold mb-1 text-gray-800">
-              CPF
-            </label>
-            <input
-              type="text"
-              className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
-              placeholder="000.000.000-00"
-              value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
-              required
-              autoComplete="off"
-            />
-          </div>
+
           <div>
             <label className="block font-semibold mb-1 text-gray-800">
               Telefone
@@ -155,7 +115,7 @@ const Register = () => {
             <input
               type="tel"
               className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
-              placeholder="(99) 99999-9999"
+              placeholder="(99) 999999999"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
