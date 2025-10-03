@@ -1,5 +1,6 @@
 // Icons
-import { BsActivity } from "react-icons/bs";
+// import { BsActivity } from "react-icons/bs";
+import { GiPlantsAndAnimals } from "react-icons/gi";
 import {
   BsSearch,
   BsFileEarmarkText,
@@ -27,7 +28,7 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
           <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
             <FeatureCard
-              icon={<BsActivity size={28} className="text-green-700" />}
+              icon={<GiPlantsAndAnimals size={28} className="text-green-700" />}
               title="Registrar Inspeção"
               description="Cadastre novas inspeções com dados detalhados sobre ocorrências de zoonose"
               buttonLabel="Acessar"

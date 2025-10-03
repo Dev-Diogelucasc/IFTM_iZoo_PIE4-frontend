@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { BsActivity } from "react-icons/bs";
+//import { BsActivity } from "react-icons/bs";
+import { GiPlantsAndAnimals } from "react-icons/gi";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -16,8 +17,8 @@ const Register = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
-      <div className="flex gap-3 items-center mb-6">
-        <BsActivity size={40} className="text-green-700" />
+      <div className="flex gap-3 items-center mb-6  mt-8">
+        <GiPlantsAndAnimals size={40} className="text-green-700" />
         <h1 className="text-2xl font-semibold mt-2 text-gray-800">Izoo</h1>
       </div>
       <div className="bg-[#fafafa] rounded-xl shadow-md p-8 w-full max-w-xl border border-gray-200">

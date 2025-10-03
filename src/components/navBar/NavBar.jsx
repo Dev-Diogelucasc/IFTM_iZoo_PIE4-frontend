@@ -1,5 +1,6 @@
 import React from "react";
-import { BsActivity } from "react-icons/bs";
+// import { BsActivity } from "react-icons/bs";
+import { GiPlantsAndAnimals } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -15,7 +16,7 @@ const NavBar = () => {
       <Link to="/">
         <div className="flex items-center gap-2">
           <div className="bg-green-800 h-8 w-8 rounded flex items-center justify-center">
-            <BsActivity className="text-white h-7 w-6" />
+            <GiPlantsAndAnimals className="text-white h-7 w-6" />
           </div>
           <span className="text-2xl">Izoo</span>
           {/* <span>Gestão e Monitoramento</span> */}
