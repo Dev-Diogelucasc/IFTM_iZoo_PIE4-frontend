@@ -73,6 +73,14 @@ const Register = () => {
         setError("Dados inválidos. Verifique as informações fornecidas.");
       } else if (error.response?.status === 409) {
         setError("Email ou CPF já cadastrado.");
+      } else if (error.response?.status === 403) {
+        setError(
+          "Erro de permissão. O servidor não permite acesso deste domínio. Entre em contato com o suporte."
+        );
+      } else if (error.message === "Network Error") {
+        setError(
+          "Erro de conexão com o servidor. Verifique sua internet ou tente novamente mais tarde."
+        );
       } else {
         setError("Erro ao realizar cadastro. Tente novamente.");
       }

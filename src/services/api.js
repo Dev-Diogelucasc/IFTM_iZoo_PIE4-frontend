@@ -1,76 +1,104 @@
 import axios from "axios";
 
-// Definir a URL da API com base no ambiente
-const getApiUrl = () => {
-  // Se estivermos em produção no Vercel
-  if (window.location.hostname.includes("vercel.app")) {
-    return "https://iftm-izoo-pie4-backend.onrender.com";
-  }
-
-  // Tentar usar a variável de ambiente primeiro
-  const envUrl = import.meta.env.VITE_API_URL;
-  if (envUrl && envUrl !== "undefined") {
-    return envUrl;
-  }
-
-  // Fallback para a URL de produção
-  return "https://iftm-izoo-pie4-backend.onrender.com";
-};
-
-const API_URL = getApiUrl();
-
-// Debug logs
-console.log("Environment check:");
-console.log("- Hostname:", window.location.hostname);
-console.log("- VITE_API_URL from env:", import.meta.env.VITE_API_URL);
-console.log("- Final API_URL:", API_URL);
-
-// Configuração base do axios
-const api = axios.create({
-  baseURL: API_URL,
-  timeout: 10000,
+// Configuração segura da API
+const API_CONFIG = {
+  // URL base da API (usar variável de ambiente ou fallback)
+  baseURL:
+    import.meta.env.VITE_API_URL ||
+    "https://iftm-izoo-pie4-backend.onrender.com",
+  timeout: 15000,
+  withCredentials: false, // Para CORS
   headers: {
     "Content-Type": "application/json",
+    Accept: "application/json",
   },
-});
+};
 
-// Interceptador para adicionar logs de requisições
+// Debug seguro (sem expor URLs completas em produção)
+const isProduction = import.meta.env.PROD;
+if (!isProduction) {
+  console.log("API Configuration:", {
+    baseURL: API_CONFIG.baseURL,
+    timeout: API_CONFIG.timeout,
+    environment: import.meta.env.MODE,
+  });
+}
+
+// Instância do axios configurada
+const api = axios.create(API_CONFIG);
+
+// Interceptador para requests
 api.interceptors.request.use(
   (config) => {
-    console.log("=== REQUEST DEBUG ===");
-    console.log("Full URL:", config.baseURL + config.url);
-    console.log("Base URL:", config.baseURL);
-    console.log("Endpoint:", config.url);
-    console.log("Method:", config.method);
-    console.log("Data:", config.data);
+    // Log apenas em desenvolvimento
+    if (!isProduction) {
+      console.log("🚀 Request:", {
+        method: config.method?.toUpperCase(),
+        url: config.url,
+        data: config.data ? "Data present" : "No data",
+      });
+    }
+
+    // Garantir headers CORS
+    config.headers = {
+      ...config.headers,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+
     return config;
   },
   (error) => {
-    console.error("Erro na requisição:", error);
+    if (!isProduction) {
+      console.error("❌ Request Error:", error.message);
+    }
     return Promise.reject(error);
   }
 );
 
-// Interceptador para tratar respostas e erros
+// Interceptador para responses
 api.interceptors.response.use(
   (response) => {
-    console.log("=== RESPONSE DEBUG ===");
-    console.log("Status:", response.status);
-    console.log("Data:", response.data);
+    if (!isProduction) {
+      console.log("✅ Response:", {
+        status: response.status,
+        url: response.config.url,
+        data: response.data ? "Data received" : "No data",
+      });
+    }
     return response;
   },
   (error) => {
-    console.error("=== ERROR DEBUG ===");
-    console.error("Status:", error.response?.status);
-    console.error("StatusText:", error.response?.statusText);
-    console.error("Data:", error.response?.data);
-    console.error("URL:", error.config?.url);
-    console.error("Full URL:", error.config?.baseURL + error.config?.url);
-    console.error("Message:", error.message);
+    // Log de erro mais detalhado
+    const errorInfo = {
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      message: error.message,
+      url: error.config?.url,
+    };
 
-    // Tratamento específico para erros de CORS
+    // Tratamento específico para CORS
+    if (error.response?.status === 403) {
+      errorInfo.corsError =
+        "CORS Error - Backend não permite requisições deste domínio";
+      console.error(
+        "🚫 CORS Error: O backend precisa adicionar o domínio da Vercel nas configurações de CORS"
+      );
+    }
+
     if (error.message === "Network Error") {
-      console.error("Possível problema de CORS ou conectividade");
+      errorInfo.networkError =
+        "Erro de rede - possível problema de CORS ou conectividade";
+    }
+
+    if (!isProduction) {
+      console.error("❌ Response Error:", errorInfo);
+    } else {
+      // Em produção, log apenas informações essenciais
+      console.error("API Error:", {
+        status: errorInfo.status,
+        message: errorInfo.message,
+      });
     }
 
     return Promise.reject(error);
