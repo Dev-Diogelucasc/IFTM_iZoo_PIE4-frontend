@@ -38,6 +38,7 @@ const Login = () => {
       // Redirecionar para a tela inicial após login bem-sucedido
       navigate("/");
     } catch (error) {
+      console.log(error);
       if (error.response?.data?.message) {
         setError(error.response.data.message);
       } else if (error.response?.status === 401) {

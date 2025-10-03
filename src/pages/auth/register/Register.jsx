@@ -46,6 +46,12 @@ const Register = () => {
     setLoading(true);
 
     try {
+      const API_URL =
+        import.meta.env.VITE_API_URL ||
+        "https://iftm-izoo-pie4-backend.onrender.com";
+      console.log("Tentando fazer cadastro com API URL:", API_URL);
+      console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
+
       await api.post("/usuario/cadastro", {
         nome: name,
         email: email,
@@ -60,6 +66,7 @@ const Register = () => {
         state: { message: "Cadastro realizado com sucesso! Faça seu login." },
       });
     } catch (error) {
+      console.error("Erro no cadastro:", error);
       if (error.response?.data?.message) {
         setError(error.response.data.message);
       } else if (error.response?.status === 400) {

@@ -53,7 +53,8 @@ export const AuthProvider = ({ children }) => {
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${storedToken}`;
-        } catch {
+        } catch (error) {
+          console.error("Token inválido:", error);
           logout();
         }
       }
@@ -64,17 +65,28 @@ export const AuthProvider = ({ children }) => {
   }, [logout]);
 
   const login = async (loginData, senha) => {
-    const response = await api.post("/usuario/login", {
-      login: loginData,
-      senha: senha,
-    });
+    try {
+      const API_URL =
+        import.meta.env.VITE_API_URL ||
+        "https://iftm-izoo-pie4-backend.onrender.com";
+      console.log("Tentando fazer login com API URL:", API_URL);
+      console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
 
-    const { token: receivedToken, usuario } = response.data;
+      const response = await api.post("/usuario/login", {
+        login: loginData,
+        senha: senha,
+      });
 
-    setToken(receivedToken);
-    setUser({ login: loginData, ...usuario });
+      const { token: receivedToken, usuario } = response.data;
 
-    return { success: true, data: response.data };
+      setToken(receivedToken);
+      setUser({ login: loginData, ...usuario });
+
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Erro no login:", error);
+      throw error;
+    }
   };
 
   const isAuthenticated = () => {
