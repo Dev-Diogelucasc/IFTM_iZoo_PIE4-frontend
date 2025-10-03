@@ -1,8 +1,15 @@
 import React from "react";
 import { BsActivity } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const NavBar = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <nav className="flex justify-between p-5 border-b-1 bg-[#F8F8F8] border-stone-300">
       <Link to="/">
@@ -14,18 +21,33 @@ const NavBar = () => {
           {/* <span>Gestão e Monitoramento</span> */}
         </div>
       </Link>
-      <div className="flex gap-2">
-        <Link to="/login">
-          <button className="rounded border border-stone-300 px-3 py-1 hover:bg-green-700 hover:text-white transition-colors duration-500 ease-in-out cursor-pointer font-light">
-            Login
+
+      {isAuthenticated() ? (
+        <div className="flex items-center gap-4">
+          <span className="text-gray-700">
+            Olá, <span className="font-semibold">{user?.login}</span>
+          </span>
+          <button
+            onClick={handleLogout}
+            className="rounded border border-stone-300 px-3 py-1 hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-500 ease-in-out cursor-pointer font-light"
+          >
+            Sair
           </button>
-        </Link>
-        <Link to="/cadastro">
-          <button className="rounded border border-stone-300 px-3 py-1 bg-green-800 text-white hover:bg-green-700 transition-colors duration-500 ease-in-out cursor-pointer font-light">
-            Cadastrar
-          </button>
-        </Link>
-      </div>
+        </div>
+      ) : (
+        <div className="flex gap-2">
+          <Link to="/login">
+            <button className="rounded border border-stone-300 px-3 py-1 hover:bg-green-700 hover:text-white transition-colors duration-500 ease-in-out cursor-pointer font-light">
+              Login
+            </button>
+          </Link>
+          <Link to="/cadastro">
+            <button className="rounded border border-stone-300 px-3 py-1 bg-green-800 text-white hover:bg-green-700 transition-colors duration-500 ease-in-out cursor-pointer font-light">
+              Cadastrar
+            </button>
+          </Link>
+        </div>
+      )}
     </nav>
   );
 };
