@@ -38,7 +38,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
-      <div className="flex gap-3 items-center mb-6">
+      <div className="flex gap-3 items-center mb-4">
         <BsActivity size={40} className="text-green-700" />
         <h1 className="text-2xl font-semibold mt-2 text-gray-800">Izoo</h1>
       </div>
