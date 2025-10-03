@@ -4,8 +4,7 @@ import axios from "axios";
 const API_CONFIG = {
   // URL base da API (usar variável de ambiente ou fallback)
   baseURL:
-    import.meta.env.VITE_API_URL ||
-    "https://iftm-izoo-pie4-backend.onrender.com",
+    import.meta.env.VITE_API_URL,
   timeout: 15000,
   withCredentials: false, // Para CORS
   headers: {

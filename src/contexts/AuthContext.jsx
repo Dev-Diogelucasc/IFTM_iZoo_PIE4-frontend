@@ -67,8 +67,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (loginData, senha) => {
     try {
       const API_URL =
-        import.meta.env.VITE_API_URL ||
-        "https://iftm-izoo-pie4-backend.onrender.com";
+        import.meta.env.VITE_API_URL;
       console.log("Tentando fazer login com API URL:", API_URL);
       console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
 
