@@ -13,7 +13,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -21,23 +21,23 @@ const Register = () => {
       setError("Por favor, preencha todos os campos");
       return false;
     }
-    
+
     if (password !== confirmPassword) {
       setError("As senhas não coincidem");
       return false;
     }
-    
+
     if (password.length < 6) {
       setError("A senha deve ter pelo menos 6 caracteres");
       return false;
     }
-    
+
     return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -46,22 +46,24 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'https://iftm-izoo-pie4-backend.onrender.com';
+      const API_URL =
+        import.meta.env.VITE_API_URL ||
+        "https://iftm-izoo-pie4-backend.onrender.com";
       console.log("Tentando fazer cadastro com API URL:", API_URL);
       console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
-      
+
       await api.post("/usuario/cadastro", {
         nome: name,
         email: email,
         cpf: cpf,
         telefone: phone,
         login: email, // usando email como login
-        senha: password
+        senha: password,
       });
 
       // Redirecionar para login após registro bem-sucedido
-      navigate("/login", { 
-        state: { message: "Cadastro realizado com sucesso! Faça seu login." } 
+      navigate("/login", {
+        state: { message: "Cadastro realizado com sucesso! Faça seu login." },
       });
     } catch (error) {
       console.error("Erro no cadastro:", error);
