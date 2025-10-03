@@ -1,7 +1,7 @@
 import React from 'react'
-import SideBar from '../../components/sideBar/SideBar'
+import SideBar from "../../components/sideBar/SideBar"
 
-const Mapping = () => {
+const Dashboard = () => {
   return (
     <div className='flex justify-between items-center'>
       <SideBar />
@@ -10,4 +10,4 @@ const Mapping = () => {
   )
 }
 
-export default Mapping
+export default Dashboard

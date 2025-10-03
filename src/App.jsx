@@ -20,6 +20,7 @@ import Reports from "./pages/reports/Reports";
 import Mapping from "./pages/mapping/Mapping";
 import Users from "./pages/users/Users";
 import Home from "./pages/home/Home";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 function App() {
   return (
@@ -30,6 +31,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cadastro" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/inspecoes/registar"
             element={

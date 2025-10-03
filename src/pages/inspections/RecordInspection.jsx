@@ -1,8 +1,12 @@
 import React from 'react'
+import SideBar from '../../components/sideBar/SideBar'
 
 const RecordInspection = () => {
   return (
-    <div>RecordInspection</div>
+    <div className='flex justify-between items-center'>
+      <SideBar />
+      <p>teste</p>
+    </div>
   )
 }
 
