@@ -12,12 +12,14 @@ import {
 import FeatureCard from "../../components/FeatureCard/FeatureCard";
 
 import { useNavigate } from "react-router-dom";
+import Presentation from "../presentation/Presentation";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="mt-10 flex flex-col items-center">
+    <section className="mt-6 flex flex-col items-center">
+      <Presentation />
       <span className="text-2xl font-semibold mb-6">
         Funcionalidade do Sistema
       </span>
