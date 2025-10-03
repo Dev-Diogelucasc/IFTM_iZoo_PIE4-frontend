@@ -46,7 +46,9 @@ const Register = () => {
     setLoading(true);
 
     try {
-      console.log("Tentando fazer cadastro com API URL:", import.meta.env.VITE_API_URL);
+      const API_URL = import.meta.env.VITE_API_URL || 'https://iftm-izoo-pie4-backend.onrender.com';
+      console.log("Tentando fazer cadastro com API URL:", API_URL);
+      console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
       
       await api.post("/usuario/cadastro", {
         nome: name,

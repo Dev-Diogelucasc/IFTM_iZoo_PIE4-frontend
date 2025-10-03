@@ -1,8 +1,13 @@
 import axios from 'axios';
 
+// Debug da variável de ambiente
+const API_URL = import.meta.env.VITE_API_URL || 'https://iftm-izoo-pie4-backend.onrender.com';
+console.log('VITE_API_URL from env:', import.meta.env.VITE_API_URL);
+console.log('Using API_URL:', API_URL);
+
 // Configuração base do axios
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
