@@ -3,9 +3,13 @@ import "./App.css";
 // Router
 import { Routes, Route } from "react-router-dom";
 
+// Context
+import { AuthProvider } from "./contexts/AuthContext";
+
 // Components
 import NavBar from "./components/navBar/NavBar";
 import Footer from "./components/footer/Footer";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 // Pages
 import Register from "./pages/auth/register/Register";
@@ -19,20 +23,57 @@ import Home from "./pages/home/Home";
 
 function App() {
   return (
-    <div>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cadastro" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/inspecoes/registar" element={<RecordInspection />} />
-        <Route path="/inspecoes/consultar" element={<Consult />} />
-        <Route path="/relatorios" element={<Reports />} />
-        <Route path="/mapeamento" element={<Mapping />} />
-        <Route path="/usuarios" element={<Users />} />
-      </Routes>
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cadastro" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/inspecoes/registar"
+            element={
+              <ProtectedRoute>
+                <RecordInspection />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inspecoes/consultar"
+            element={
+              <ProtectedRoute>
+                <Consult />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/relatorios"
+            element={
+              <ProtectedRoute>
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mapeamento"
+            element={
+              <ProtectedRoute>
+                <Mapping />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/usuarios"
+            element={
+              <ProtectedRoute>
+                <Users />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }
 
