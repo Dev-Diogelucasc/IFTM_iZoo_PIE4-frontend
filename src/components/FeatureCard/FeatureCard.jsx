@@ -13,7 +13,7 @@ const FeatureCard = ({
     <span className="font-light text-gray-600">{description}</span>
     {buttonLabel && (
       <button
-        className="rounded border border-stone-300 px-3 py-2 hover:bg-green-700 hover:text-white transition-colors duration-500 ease-in-out cursor-pointer font-medium"
+        className=" bg-green-100 rounded border border-stone-300 px-3 py-2 hover:bg-green-600 hover:text-white transition-colors duration-500 ease-in-out cursor-pointer font-medium"
         onClick={onButtonClick}
       >
         {buttonLabel}
