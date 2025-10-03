@@ -6,6 +6,7 @@ import {
   useCallback,
 } from "react";
 import axios from "axios";
+import api from "../services/api";
 
 const AuthContext = createContext();
 
@@ -65,8 +66,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (loginData, senha) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
-      const response = await axios.post(`${API_URL}/usuario/login`, {
+      console.log("Tentando fazer login com API URL:", import.meta.env.VITE_API_URL);
+      
+      const response = await api.post("/usuario/login", {
         login: loginData,
         senha: senha,
       });

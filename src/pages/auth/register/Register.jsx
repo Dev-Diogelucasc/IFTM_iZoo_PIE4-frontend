@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 //import { BsActivity } from "react-icons/bs";
 import { GiPlantsAndAnimals } from "react-icons/gi";
+import api from "../../../services/api";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -9,10 +11,70 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    if (!name || !email || !cpf || !phone || !password || !confirmPassword) {
+      setError("Por favor, preencha todos os campos");
+      return false;
+    }
+    
+    if (password !== confirmPassword) {
+      setError("As senhas não coincidem");
+      return false;
+    }
+    
+    if (password.length < 6) {
+      setError("A senha deve ter pelo menos 6 caracteres");
+      return false;
+    }
+    
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
+    if (!validateForm()) {
+      return;
+    }
+
+    setError("");
+    setLoading(true);
+
+    try {
+      console.log("Tentando fazer cadastro com API URL:", import.meta.env.VITE_API_URL);
+      
+      await api.post("/usuario/cadastro", {
+        nome: name,
+        email: email,
+        cpf: cpf,
+        telefone: phone,
+        login: email, // usando email como login
+        senha: password
+      });
+
+      // Redirecionar para login após registro bem-sucedido
+      navigate("/login", { 
+        state: { message: "Cadastro realizado com sucesso! Faça seu login." } 
+      });
+    } catch (error) {
+      console.error("Erro no cadastro:", error);
+      if (error.response?.data?.message) {
+        setError(error.response.data.message);
+      } else if (error.response?.status === 400) {
+        setError("Dados inválidos. Verifique as informações fornecidas.");
+      } else if (error.response?.status === 409) {
+        setError("Email ou CPF já cadastrado.");
+      } else {
+        setError("Erro ao realizar cadastro. Tente novamente.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -26,6 +88,11 @@ const Register = () => {
         <p className="text-gray-500 mb-6 text-sm">
           Preencha os dados abaixo para criar sua conta no sistema
         </p>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="block font-semibold mb-1 text-gray-800">
@@ -113,20 +180,25 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-green-700 text-white font-bold py-2 rounded-md mt-2 hover:bg-green-800 transition"
+            disabled={loading}
+            className={`w-full font-bold py-2 rounded-md mt-2 transition ${
+              loading
+                ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                : "bg-green-700 text-white hover:bg-green-800"
+            }`}
           >
-            Criar Conta
+            {loading ? "Criando Conta..." : "Criar Conta"}
           </button>
         </form>
       </div>
       <div className="mt-4 text-gray-600">
         Já tem uma conta?{" "}
-        <a
-          href="/login"
+        <Link
+          to="/login"
           className="text-green-700 font-semibold hover:underline"
         >
           Faça login
-        </a>
+        </Link>
       </div>
     </div>
   );
