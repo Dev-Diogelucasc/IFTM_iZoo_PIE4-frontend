@@ -15,15 +15,14 @@ const Users = () => {
     const load = async () => {
       try {
         const response = await authUsers();
-        const data = response.data;
-        setUsers(data);
+        const data = response?.data ?? response
+        setUsers(data)
       } catch (error) {
         console.error("Erro ao carregar usuários:", error);
       }
     };
     load();
     console.log("authUsers:", authUsers);
-    setUsers(Array.isArray(authUsers) ? authUsers : []);
   }, [authUsers]);
 
   return (
@@ -100,7 +99,7 @@ const Users = () => {
                         <td className="px-4 py-4">{obj.email}</td>
                         <td className="px-4 py-4">{obj.cargo}</td>
                         <td className="px-4 py-4">{obj.telefone}</td>
-                        <td className="px-4 py-4">status</td>
+                        <td className="px-4 py-4">{obj.status}</td>
                         <td className="px-4 py-4 flex gap-3">
                           <BiEdit className="cursor-pointer" />
                           <FaRegTrashAlt className="cursor-pointer" />
