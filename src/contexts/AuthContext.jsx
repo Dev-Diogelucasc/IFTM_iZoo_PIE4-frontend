@@ -101,6 +101,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const users = async (usersData) => {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL;
+      console.log("Tentando fazer login com API URL:", API_URL);
+      console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
+
+      const response = await api.get("/usuario", usersData);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.log("Erro no registro:", error);
+      throw error;
+    }
+  };
+
   const isAuthenticated = () => {
     return !!token;
   };
@@ -113,6 +127,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     loading,
     register,
+    users,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

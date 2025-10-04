@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SideBar from "../../components/sideBar/SideBar";
 import { BiEdit } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
 
+import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+
 const Users = () => {
+  const [users, setUsers] = useState([]);
+  // login, email, cargo, telefone
+  const { users: authUsers } = useAuth();
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await authUsers();
+        const data = response.data;
+        setUsers(data);
+      } catch (error) {
+        console.error("Erro ao carregar usuários:", error);
+      }
+    };
+    load();
+    console.log("authUsers:", authUsers);
+    setUsers(Array.isArray(authUsers) ? authUsers : []);
+  }, [authUsers]);
+
   return (
     <div className="flex overflow-x-hidden">
       <SideBar />
       <main className="flex-1 min-w-0 flex flex-col items-center px-3 md:px-8 mt-6">
-        {/* Header */}
         <div className="w-full mb-6">
           <h2 className="font-medium text-2xl text-gray-900">
             Gerenciar Usuários
@@ -49,29 +70,44 @@ const Users = () => {
               </span>
             </div>
 
-            {/* Scroll horizontal somente na tabela */}
             <div className="overflow-x-auto  rounded border border-stone-200 w-full font-light shadow">
               <table className="w-full min-w-[700px] ">
                 <thead>
                   <tr className="bg-white border-b border-stone-200">
-                    <th className="px-4 py-3 text-left">Nome</th>
+                    <th className="px-4 py-3 text-left">Login</th>
                     <th className="px-4 py-3 text-left">Email</th>
                     <th className="px-4 py-3 text-left">Cargo</th>
+                    <th className="px-4 py-3 text-left">Telefone</th>
                     <th className="px-4 py-3 text-left">Status</th>
                     <th className="px-4 py-3 text-left">Ações</th>
                   </tr>
                 </thead>
+
                 <tbody>
-                  <tr className="border-b border-stone-200">
-                    <td className="px-4 py-4 border-b border-stone-200">João Silva</td>
-                    <td className="px-4 py-4 border-b border-stone-200">joao@exemplo.com</td>
-                    <td className="px-4 py-4 border-b border-stone-200">Administrador</td>
-                    <td className="px-4 py-4 border-b border-stone-200">Ativo</td>
-                    <td className="px-4 py-4 border-b border-stone-200 flex gap-3">
-                      <BiEdit className="cursor-pointer" />
-                      <FaRegTrashAlt className="cursor-pointer" />
-                    </td>
-                  </tr>
+                  {users.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={6}
+                        className="px-4 py-6 text-center text-gray-500"
+                      >
+                        Nenhum usuário encontrado
+                      </td>
+                    </tr>
+                  ) : (
+                    users.map((obj) => (
+                      <tr key={obj.id} className="border-b border-stone-200">
+                        <td className="px-4 py-4">{obj.login ?? obj.nome}</td>
+                        <td className="px-4 py-4">{obj.email}</td>
+                        <td className="px-4 py-4">{obj.cargo}</td>
+                        <td className="px-4 py-4">{obj.telefone}</td>
+                        <td className="px-4 py-4">status</td>
+                        <td className="px-4 py-4 flex gap-3">
+                          <BiEdit className="cursor-pointer" />
+                          <FaRegTrashAlt className="cursor-pointer" />
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
