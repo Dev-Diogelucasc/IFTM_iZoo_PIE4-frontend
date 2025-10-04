@@ -1,9 +1,9 @@
-import React from 'react'
 import SideBar from "../../components/sideBar/SideBar"
 
 const Dashboard = () => {
+
   return (
-    <div className='flex justify-between items-center'>
+    <div className='flex'>
       <SideBar />
       <p>teste</p>
     </div>
