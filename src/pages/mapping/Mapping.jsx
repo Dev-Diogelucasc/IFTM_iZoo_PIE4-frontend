@@ -3,7 +3,7 @@ import SideBar from '../../components/sideBar/SideBar'
 
 const Mapping = () => {
   return (
-    <div className='flex justify-between items-center'>
+    <div className='flex'>
       <SideBar />
       <p>teste</p>
     </div>

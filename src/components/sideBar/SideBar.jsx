@@ -62,7 +62,9 @@ const SideBar = () => {
         </div>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 px-4 py-2 m-6 border border-gray-300 rounded hover:bg-red-600 hover:text-white hover:border-red-600 transition-colors duration-200 text-gray-700"
+          className="flex items-center gap-2 px-4 py-2 m-6 border
+           border-gray-300 rounded hover:bg-red-600 hover:text-white
+            hover:border-red-600 transition-colors duration-200 text-gray-700"
         >
           <FiLogOut size={20} />
           <span>Sair</span>
@@ -70,6 +72,13 @@ const SideBar = () => {
       </aside>
 
       <div className="md:hidden">
+        {/* Overlay embaçado */}
+        {open && (
+          <div
+            className="fixed inset-0 z-40 backdrop-blur-sm transition-all"
+            onClick={() => setOpen(false)}
+          />
+        )}
         {!open && (
           <IoIosMenu
             onClick={() => setOpen(true)}
