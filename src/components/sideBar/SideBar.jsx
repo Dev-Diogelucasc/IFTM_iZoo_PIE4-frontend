@@ -27,7 +27,7 @@ const SideBar = () => {
 
   return (
     <>
-      <aside className="hidden md:flex bg-[#F8F8F8] h-screen w-64 border-r border-gray-200 flex-col justify-between shadow">
+      <aside className="hidden md:flex bg-[#F8F8F8] h-screen w-64 border border-gray-200 flex-col justify-between shadow">
         <div>
           <div className="flex items-center gap-3 px-6 py-6 border-b border-gray-200">
             <GiPlantsAndAnimals size={28} className="text-green-700" />

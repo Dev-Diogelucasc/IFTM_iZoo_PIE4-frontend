@@ -29,7 +29,7 @@ const Users = () => {
     <div className="flex overflow-x-hidden">
       <SideBar />
       <main className="flex-1 min-w-0 flex flex-col items-center px-3 md:px-8 mt-6">
-        <div className="w-full mb-6">
+        <div className="w-full mb-6 mr-10 md:mr-0">
           <h2 className="font-medium text-2xl text-gray-900">
             Gerenciar Usuários
           </h2>
