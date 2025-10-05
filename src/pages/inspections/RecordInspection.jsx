@@ -4,7 +4,7 @@ import { IoCameraOutline } from "react-icons/io5";
 
 const RecordInspection = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       <SideBar />
       <main className="flex-1 min-w-0 flex flex-col items-center px-3 md:px-8 mt-6">
         <div className="w-full mb-6 mr-10 md:mr-0">
