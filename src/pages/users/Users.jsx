@@ -37,7 +37,7 @@ const Users = () => {
             Administre usuários e permissões do sistema
           </span>
         </div>
-        <div className="w-full mb-8 mr-10 md:mr-0">
+        <div className="w-full mb-8 mr-15 md:mr-0">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Total de Usuários</p>
@@ -58,7 +58,7 @@ const Users = () => {
           </div>
         </div>
 
-        <div className="w-full mb-12 mr-10 md:mr-0 min-w-0">
+        <div className="w-full mb-12 mr-15 md:mr-0 min-w-0">
           <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-6">
             <div className="mb-4">
               <h3 className="font-semibold text-lg text-gray-900">
