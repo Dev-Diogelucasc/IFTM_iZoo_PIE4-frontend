@@ -46,10 +46,35 @@ export const AuthProvider = ({ children }) => {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         try {
+          // seta token e header para chamadas subsequentes
           setToken(storedToken);
           api.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${storedToken}`;
+
+          // tenta decodificar o payload do JWT para recuperar dados do usuário
+          try {
+            const payload = JSON.parse(atob(storedToken.split(".")[1]));
+            // payload pode ter diferentes formatos dependendo do backend
+            const possibleUser =
+              payload.usuario || payload.user || payload.usuarioLogado || null;
+            if (possibleUser) {
+              setUser(possibleUser);
+            } else {
+              // se não houver objeto 'usuario' no payload, tente campos diretos
+              const login =
+                payload.login || payload.sub || payload.email || null;
+              const cargo =
+                payload.cargo || payload.role || payload.roleName || null;
+              if (login) setUser({ login, cargo });
+            }
+          } catch (e) {
+            // token não contém payload JSON utilizável — opcional: buscar profile na API
+            // Exemplo (se seu backend expor /usuario/me):
+            // const resp = await api.get('/usuario/me');
+            // setUser(resp.data.usuario);
+            console.warn("Não foi possível decodificar payload do token:", e);
+          }
         } catch (error) {
           console.error("Token inválido:", error);
           logout();
@@ -103,32 +128,32 @@ export const AuthProvider = ({ children }) => {
   const registerAddress = async (residenceData) => {
     try {
       const response = await api.post("/endereco", residenceData);
-      return {success: true, data: response.data}
+      return { success: true, data: response.data };
     } catch (error) {
-      console.error("Erro ao registrar residncia", error)
-      throw error
+      console.error("Erro ao registrar residncia", error);
+      throw error;
     }
-  }
+  };
 
   const address = async () => {
     try {
-      const response = await api.get("/endereco")
-      return {success: true, data: response.data}
+      const response = await api.get("/endereco");
+      return { success: true, data: response.data };
     } catch (error) {
-      console.error("Erro ao buscar endereços", error)
-      throw error
+      console.error("Erro ao buscar endereços", error);
+      throw error;
     }
-  }
+  };
 
   const deleteAddress = async (id) => {
     try {
-      const response = await api.delete(`/endereco/${id}`)
-      return {success: true, data: response.data}
+      const response = await api.delete(`/endereco/${id}`);
+      return { success: true, data: response.data };
     } catch (error) {
-      console.error("Erro ao Deletar endereço:", error)
-      throw error
+      console.error("Erro ao Deletar endereço:", error);
+      throw error;
     }
-  }
+  };
 
   const isAuthenticated = () => {
     return !!token;
