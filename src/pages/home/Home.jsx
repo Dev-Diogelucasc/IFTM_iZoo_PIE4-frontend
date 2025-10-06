@@ -15,7 +15,7 @@ const Home = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const user = auth?.user;
-  const isLogged = Boolean(user) || Boolean(localStorage.getItem("token"));
+  const isLogged = Boolean(user)
 
   const handleMessage = () => {
     const cargo = user?.cargo;

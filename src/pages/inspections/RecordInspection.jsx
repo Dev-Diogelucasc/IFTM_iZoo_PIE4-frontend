@@ -20,17 +20,6 @@ const RecordInspection = () => {
               Preencha os dados da nova inspeção
             </span>
           </div>
-          <button
-            type="button"
-            className="flex items-center justify-center sm:gap-2 bg-green-50 border border-stone-300 rounded-md px-4 py-2 hover:bg-green-700 hover:text-white transition-colors duration-200 ease-in-out cursor-pointer font-medium mb-2"
-            aria-label="Escanear QR Code"
-            onClick={() => {
-              setOpen(true);
-            }}
-          >
-            <LuHousePlus className="text-lg" />
-            <span className="text-sm">Adicionar Residência</span>
-          </button>
         </div>
         <div className=" bg-[#F8F8F8] w-full border border-gray-200 rounded shadow p-5 mr-15 md:mr-0">
           <div className="flex flex-col mb-8">

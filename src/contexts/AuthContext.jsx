@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post("/usuario/registro", registerData);
       return { success: true, data: response.data };
     } catch (error) {
-      console.log("Erro no registro:", error);
+      console.error("Erro no registro:", error);
       throw error;
     }
   };
@@ -95,21 +95,37 @@ export const AuthProvider = ({ children }) => {
       const response = await api.get("/usuario");
       return { success: true, data: response.data };
     } catch (error) {
-      console.log("Erro ao buscar usuários:", error);
-      
-      if (error.response?.status === 403) {
-        throw new Error("Acesso negado. Apenas administradores podem ver a lista de usuários.");
-      } 
+      console.error("Erro ao buscar usuários:", error);
       throw error;
     }
   };
 
-  const registerResidence = async (residenceData) => {
+  const registerAddress = async (residenceData) => {
     try {
       const response = await api.post("/endereco", residenceData);
       return {success: true, data: response.data}
     } catch (error) {
-      console.log("Erro ao registrar residncia", error)
+      console.error("Erro ao registrar residncia", error)
+      throw error
+    }
+  }
+
+  const address = async () => {
+    try {
+      const response = await api.get("/endereco")
+      return {success: true, data: response.data}
+    } catch (error) {
+      console.error("Erro ao buscar endereços", error)
+      throw error
+    }
+  }
+
+  const deleteAddress = async (id) => {
+    try {
+      const response = await api.delete(`/endereco/${id}`)
+      return {success: true, data: response.data}
+    } catch (error) {
+      console.error("Erro ao Deletar endereço:", error)
       throw error
     }
   }
@@ -127,7 +143,9 @@ export const AuthProvider = ({ children }) => {
     loading,
     register,
     users,
-    registerResidence,
+    registerAddress,
+    address,
+    deleteAddress,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

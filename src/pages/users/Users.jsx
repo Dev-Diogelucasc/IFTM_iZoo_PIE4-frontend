@@ -75,7 +75,7 @@ const Users = () => {
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Agentes</p>
               <span className="font-semibold text-2xl">
-                {users.filter((user) => user.cargo === "AGENTE").length}
+                {users.filter((user) => user.cargo === "AGENT").length}
               </span>
             </div>
           </div>

@@ -12,6 +12,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import { IoIosMenu } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
+import { LuMapPinHouse } from "react-icons/lu";
 
 const SideBar = () => {
   const { logout } = useAuth();
@@ -54,6 +55,10 @@ const SideBar = () => {
               <BsGeoAlt size={20} />
               <span className="ml-3">Mapeamento</span>
             </NavLink>
+            <NavLink to="/endereco" className={navLinkClass}>
+              <LuMapPinHouse size={20} />
+              <span className="ml-3">Gerenciar Endereço</span>
+            </NavLink>
             <NavLink to="/usuarios" className={navLinkClass}>
               <BsPeople size={20} />
               <span className="ml-3">Gerenciar Usuários</span>
@@ -72,7 +77,6 @@ const SideBar = () => {
       </aside>
 
       <div className="md:hidden">
-        {/* Overlay embaçado */}
         {open && (
           <div
             className="fixed inset-0 z-40 backdrop-blur-sm transition-all"
@@ -140,6 +144,14 @@ const SideBar = () => {
                 >
                   <BsGeoAlt size={20} />
                   <span className="ml-3">Mapeamento</span>
+                </NavLink>
+                <NavLink
+                  to="/enderecoo"
+                  className={navLinkClass}
+                  onClick={() => setOpen(false)}
+                >
+                  <LuMapPinHouse size={20} />
+                  <span className="ml-3">Gerenciar Endereço</span>
                 </NavLink>
                 <NavLink
                   to="/usuarios"

@@ -21,6 +21,7 @@ import Mapping from "./pages/mapping/Mapping";
 import Users from "./pages/users/Users";
 import Home from "./pages/home/Home";
 import Dashboard from "./pages/dashboard/Dashboard";
+import Address from "./pages/address/Address";
 
 function App() {
   return (
@@ -68,6 +69,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Mapping />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/endereco"
+            element={
+              <ProtectedRoute>
+                <Address />
               </ProtectedRoute>
             }
           />

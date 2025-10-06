@@ -15,7 +15,7 @@ const RegisterResidence = ({ onClose }) => {
 
   const navigate = useNavigate();
 
-  const { registerResidence } = useAuth();
+  const { registerAddress } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,8 +32,8 @@ const RegisterResidence = ({ onClose }) => {
 
     try {
       setLoading(true);
-      await registerResidence(register);
-      navigate("/inspecoes/registar");
+      await registerAddress(register);
+      navigate("/endereco");
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(

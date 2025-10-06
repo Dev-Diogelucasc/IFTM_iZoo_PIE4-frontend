@@ -1,14 +1,12 @@
-import React from 'react'
-
-import SideBar from '../../components/sideBar/SideBar'
+import SideBar from "../../components/sideBar/SideBar";
 
 const Consult = () => {
-  return (
-    <div className='flex justify-between items-center'>
-      <SideBar />
-      <p>teste</p>
-    </div>
-  )
-}
 
-export default Consult
+  return (
+    <div className="flex">
+      <SideBar />
+    </div>
+  );
+};
+
+export default Consult;
