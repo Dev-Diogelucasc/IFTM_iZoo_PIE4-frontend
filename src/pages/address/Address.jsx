@@ -53,8 +53,8 @@ const Address = () => {
     }
   };
 
-  const handleGenerateQR = (item) => {
-    const url = `${window.location.origin}/endereco/${item.id}`;
+  const handleGenerateQR = (obj) => {
+    const url = `${obj.id}`;
     setQrValue(url);
     setQrOpen(true);
   };
