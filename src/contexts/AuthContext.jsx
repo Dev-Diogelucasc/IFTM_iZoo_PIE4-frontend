@@ -5,7 +5,6 @@ import {
   useEffect,
   useCallback,
 } from "react";
-import axios from "axios";
 import api from "../services/api";
 
 const AuthContext = createContext();
@@ -23,13 +22,13 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [loading, setLoading] = useState(true);
 
-  // Configurar axios para incluir o token em todas as requisições
+  // Configurar a instância api para incluir o token
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       localStorage.setItem("token", token);
     } else {
-      delete axios.defaults.headers.common["Authorization"];
+      delete api.defaults.headers.common["Authorization"];
       localStorage.removeItem("token");
     }
   }, [token]);
@@ -38,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setUser(null);
     localStorage.removeItem("token");
-    delete axios.defaults.headers.common["Authorization"];
+    delete api.defaults.headers.common["Authorization"];
   }, []);
 
   // Verificar se o usuário está autenticado ao carregar a aplicação
@@ -47,10 +46,8 @@ export const AuthProvider = ({ children }) => {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         try {
-          // Aqui você pode fazer uma requisição para validar o token
-          // Por enquanto, vamos apenas definir o token
           setToken(storedToken);
-          axios.defaults.headers.common[
+          api.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${storedToken}`;
         } catch (error) {
@@ -66,10 +63,6 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (loginData, senha) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
-      console.log("Tentando fazer login com API URL:", API_URL);
-      console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
-
       const response = await api.post("/usuario/login", {
         login: loginData,
         senha: senha,
@@ -89,10 +82,6 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (registerData) => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
-      console.log("Tentando fazer login com API URL:", API_URL);
-      console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
-
       const response = await api.post("/usuario/registro", registerData);
       return { success: true, data: response.data };
     } catch (error) {
@@ -101,16 +90,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const users = async (usersData) => {
+  const users = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
-      console.log("Tentando fazer login com API URL:", API_URL);
-      console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
-
-      const response = await api.get("/usuario", usersData);
+      const response = await api.get("/usuario");
       return { success: true, data: response.data };
     } catch (error) {
-      console.log("Erro no registro:", error);
+      console.log("Erro ao buscar usuários:", error);
       throw error;
     }
   };

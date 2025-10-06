@@ -8,21 +8,32 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-  // login, email, cargo, telefone
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { users: authUsers } = useAuth();
 
   useEffect(() => {
-    const load = async () => {
+    const loadUsers = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const response = await authUsers();
-        const data = response?.data ?? response
-        setUsers(data)
+        console.log(response);
+
+        if (response && response.success && response.data) {
+          setUsers(Array.isArray(response.data) ? response.data : []);
+        } else if (Array.isArray(response)) {
+          setUsers(response);
+        }
       } catch (error) {
         console.error("Erro ao carregar usuários:", error);
+        setUsers([]);
+      } finally {
+        setLoading(false);
       }
     };
-    load();
-    console.log("authUsers:", authUsers);
+    loadUsers();
   }, [authUsers]);
 
   return (
@@ -37,23 +48,30 @@ const Users = () => {
             Administre usuários e permissões do sistema
           </span>
         </div>
+
         <div className="w-full mb-8 mr-15 md:mr-0">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Total de Usuários</p>
-              <span className="font-semibold text-2xl">5</span>
+              <span className="font-semibold text-2xl">{users.length}</span>
             </div>
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Usuários Ativos</p>
-              <span className="font-semibold text-2xl">5</span>
+              <span className="font-semibold text-2xl">
+                {users.filter((user) => user.status === "ativo").length}
+              </span>
             </div>
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Admin</p>
-              <span className="font-semibold text-2xl">5</span>
+              <span className="font-semibold text-2xl">
+                {users.filter((user) => user.cargo === "admin").length}
+              </span>
             </div>
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Agentes</p>
-              <span className="font-semibold text-2xl">5</span>
+              <span className="font-semibold text-2xl">
+                {users.filter((user) => user.cargo === "agente").length}
+              </span>
             </div>
           </div>
         </div>
@@ -69,8 +87,18 @@ const Users = () => {
               </span>
             </div>
 
-            <div className="overflow-x-auto  rounded border border-stone-200 w-full font-light shadow">
-              <table className="w-full min-w-[700px] ">
+            {loading && (
+              <div className="text-center py-6 text-gray-500">
+                Carregando usuários...
+              </div>
+            )}
+
+            {error && (
+              <div className="text-center py-6 text-red-500">{error}</div>
+            )}
+
+            <div className="overflow-x-auto rounded border border-stone-200 w-full font-light shadow">
+              <table className="w-full min-w-[700px]">
                 <thead>
                   <tr className="bg-white border-b border-stone-200">
                     <th className="px-4 py-3 text-left">Login</th>
@@ -83,7 +111,7 @@ const Users = () => {
                 </thead>
 
                 <tbody>
-                  {users.length === 0 ? (
+                  {!loading && users.length === 0 ? (
                     <tr>
                       <td
                         colSpan={6}
@@ -93,13 +121,18 @@ const Users = () => {
                       </td>
                     </tr>
                   ) : (
-                    users.map((obj) => (
-                      <tr key={obj.id} className="border-b border-stone-200">
-                        <td className="px-4 py-4">{obj.login ?? obj.nome}</td>
-                        <td className="px-4 py-4">{obj.email}</td>
-                        <td className="px-4 py-4">{obj.cargo}</td>
-                        <td className="px-4 py-4">{obj.telefone}</td>
-                        <td className="px-4 py-4">{obj.status}</td>
+                    users.map((obj, index) => (
+                      <tr
+                        key={obj.id || index}
+                        className="border-b border-stone-200"
+                      >
+                        <td className="px-4 py-4">
+                          {obj.login ?? obj.nome ?? "N/A"}
+                        </td>
+                        <td className="px-4 py-4">{obj.email ?? "N/A"}</td>
+                        <td className="px-4 py-4">{obj.cargo ?? "N/A"}</td>
+                        <td className="px-4 py-4">{obj.telefone ?? "N/A"}</td>
+                        <td className="px-4 py-4">{obj.status ?? "N/A"}</td>
                         <td className="px-4 py-4 flex gap-3">
                           <BiEdit className="cursor-pointer" />
                           <FaRegTrashAlt className="cursor-pointer" />
