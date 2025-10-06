@@ -10,6 +10,7 @@ import FeatureCard from "../../components/FeatureCard/FeatureCard";
 import { useNavigate } from "react-router-dom";
 import Presentation from "../presentation/Presentation";
 import { useAuth } from "../../contexts/AuthContext";
+import { LuMapPinHouse } from "react-icons/lu";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -68,6 +69,15 @@ const Home = () => {
               description="Visualize geograficamente as ocorrências de zoonose na região"
               buttonLabel="Acessar"
               onButtonClick={() => navigate("/mapeamento")}
+            />
+          </div>
+          <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+            <FeatureCard
+              icon={<LuMapPinHouse size={28} className="text-green-700" />}
+              title="Endereço"
+              description="Cadastre e Gerencie os endereços"
+              buttonLabel="Acessar"
+              onButtonClick={() => navigate("/endereco")}
             />
           </div>
           <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
