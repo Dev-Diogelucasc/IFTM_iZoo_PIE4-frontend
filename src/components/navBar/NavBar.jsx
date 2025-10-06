@@ -26,7 +26,7 @@ const NavBar = () => {
       {isAuthenticated() ? (
         <div className="flex items-center gap-4">
           <span className="text-gray-700">
-            Olá, <span className="font-semibold">{user?.login}</span>
+            Olá, <span className="font-semibold text-green-600">{user?.login}</span>
           </span>
           <button
             onClick={handleLogout}

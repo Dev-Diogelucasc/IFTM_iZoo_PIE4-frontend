@@ -74,8 +74,8 @@ const Home = () => {
           <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
             <FeatureCard
               icon={<LuMapPinHouse size={28} className="text-green-700" />}
-              title="Endereço"
-              description="Cadastre e Gerencie os endereços"
+              title="Gerenciar Endereço"
+              description="Administre, Cadastre e Gerencie os endereços"
               buttonLabel="Acessar"
               onButtonClick={() => navigate("/endereco")}
             />

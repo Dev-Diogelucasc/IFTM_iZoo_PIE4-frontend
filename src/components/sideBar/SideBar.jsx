@@ -146,7 +146,7 @@ const SideBar = () => {
                   <span className="ml-3">Mapeamento</span>
                 </NavLink>
                 <NavLink
-                  to="/enderecoo"
+                  to="/endereco"
                   className={navLinkClass}
                   onClick={() => setOpen(false)}
                 >
