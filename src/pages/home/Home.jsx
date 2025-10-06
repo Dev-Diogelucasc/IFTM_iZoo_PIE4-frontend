@@ -14,7 +14,7 @@ import { useAuth } from "../../contexts/AuthContext";
 const Home = () => {
   const navigate = useNavigate();
   const auth = useAuth();
-  const user = auth?.user; // tenta pegar user do contexto
+  const user = auth?.user;
   const isLogged = Boolean(user) || Boolean(localStorage.getItem("token"));
 
   const handleMessage = () => {
