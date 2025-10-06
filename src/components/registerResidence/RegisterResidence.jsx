@@ -40,6 +40,7 @@ const RegisterResidence = ({ onClose }) => {
         error.response?.data?.error ||
           "Erro ao registrar. Verifique os dados e tente novamente."
       );
+    } finally {
       setLoading(false);
     }
   };
