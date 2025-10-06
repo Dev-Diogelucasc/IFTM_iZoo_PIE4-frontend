@@ -1,6 +1,3 @@
-// Icons
-// import { BsActivity } from "react-icons/bs";
-// import { GiPlantsAndAnimals } from "react-icons/gi";
 import { FiEdit } from "react-icons/fi";
 import {
   BsSearch,
@@ -9,15 +6,25 @@ import {
   BsPeople,
   BsPersonPlus,
 } from "react-icons/bs";
-
-// Components
 import FeatureCard from "../../components/FeatureCard/FeatureCard";
-
 import { useNavigate } from "react-router-dom";
 import Presentation from "../presentation/Presentation";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Home = () => {
   const navigate = useNavigate();
+  const auth = useAuth();
+  const user = auth?.user; // tenta pegar user do contexto
+  const isLogged = Boolean(user) || Boolean(localStorage.getItem("token"));
+
+  const handleMessage = () => {
+    const cargo = user?.cargo;
+    if (cargo === "ADMIN") {
+      navigate("/usuarios");
+    } else {
+      alert("Apenas administradores têm acesso");
+    }
+  };
 
   return (
     <section className="mt-6 flex flex-col items-center">
@@ -69,18 +76,20 @@ const Home = () => {
               title="Gerenciar Usuários"
               description="Administre permissões e controle de acesso da equipe"
               buttonLabel="Acessar"
-              onButtonClick={() => navigate("/usuarios")}
+              onButtonClick={handleMessage}
             />
           </div>
-          <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
-            <FeatureCard
-              icon={<BsPersonPlus size={28} className="text-green-700" />}
-              title="Cadastro"
-              description="Crie sua conta para acessar o sistema de controle"
-              buttonLabel="Acessar"
-              onButtonClick={() => navigate("/cadastro")}
-            />
-          </div>
+          {!isLogged && (
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsPersonPlus size={28} className="text-green-700" />}
+                title="Cadastro"
+                description="Crie sua conta para acessar o sistema de controle"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/cadastro")}
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>

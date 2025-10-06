@@ -10,7 +10,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { users: authUsers } = useAuth();
+  const { users: getUsers } = useAuth();
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -18,23 +18,24 @@ const Users = () => {
       setError(null);
 
       try {
-        const response = await authUsers();
-        console.log(response);
+        const response = await getUsers();
+        console.log("Response from API:", response);
 
         if (response && response.success && response.data) {
+          console.log("Users data:", response.data);
           setUsers(Array.isArray(response.data) ? response.data : []);
         } else if (Array.isArray(response)) {
           setUsers(response);
         }
       } catch (error) {
-        console.error("Erro ao carregar usuários:", error);
+        console.error("Erro completo:", error);
         setUsers([]);
       } finally {
         setLoading(false);
       }
     };
     loadUsers();
-  }, [authUsers]);
+  }, [getUsers]);
 
   return (
     <div className="flex overflow-x-hidden">
@@ -58,19 +59,23 @@ const Users = () => {
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Usuários Ativos</p>
               <span className="font-semibold text-2xl">
-                {users.filter((user) => user.status === "ativo").length}
+                {
+                  users.filter(
+                    (user) => user.status === "ATIVO" || user.status === "ativo"
+                  ).length
+                }
               </span>
             </div>
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Admin</p>
               <span className="font-semibold text-2xl">
-                {users.filter((user) => user.cargo === "admin").length}
+                {users.filter((user) => user.cargo === "ADMIN").length}
               </span>
             </div>
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Agentes</p>
               <span className="font-semibold text-2xl">
-                {users.filter((user) => user.cargo === "agente").length}
+                {users.filter((user) => user.cargo === "AGENTE").length}
               </span>
             </div>
           </div>
@@ -126,13 +131,11 @@ const Users = () => {
                         key={obj.id || index}
                         className="border-b border-stone-200"
                       >
-                        <td className="px-4 py-4">
-                          {obj.login ?? obj.nome ?? "N/A"}
-                        </td>
-                        <td className="px-4 py-4">{obj.email ?? "N/A"}</td>
-                        <td className="px-4 py-4">{obj.cargo ?? "N/A"}</td>
-                        <td className="px-4 py-4">{obj.telefone ?? "N/A"}</td>
-                        <td className="px-4 py-4">{obj.status ?? "N/A"}</td>
+                        <td className="px-4 py-4">{obj.login}</td>
+                        <td className="px-4 py-4">{obj.email}</td>
+                        <td className="px-4 py-4">{obj.cargo}</td>
+                        <td className="px-4 py-4">{obj.telefone}</td>
+                        <td className="px-4 py-4">{obj.status}</td>
                         <td className="px-4 py-4 flex gap-3">
                           <BiEdit className="cursor-pointer" />
                           <FaRegTrashAlt className="cursor-pointer" />

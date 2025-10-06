@@ -96,6 +96,10 @@ export const AuthProvider = ({ children }) => {
       return { success: true, data: response.data };
     } catch (error) {
       console.log("Erro ao buscar usuários:", error);
+      
+      if (error.response?.status === 403) {
+        throw new Error("Acesso negado. Apenas administradores podem ver a lista de usuários.");
+      } 
       throw error;
     }
   };
