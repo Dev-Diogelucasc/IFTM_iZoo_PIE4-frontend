@@ -100,6 +100,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const registerResidence = async (residenceData) => {
+    try {
+      const response = await api.post("/endereco", residenceData);
+      return {success: true, data: response.data}
+    } catch (error) {
+      console.log("Erro ao registrar residncia", error)
+      throw error
+    }
+  }
+
   const isAuthenticated = () => {
     return !!token;
   };
@@ -113,6 +123,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     register,
     users,
+    registerResidence,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

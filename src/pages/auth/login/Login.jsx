@@ -65,7 +65,7 @@ const Login = () => {
         <GiPlantsAndAnimals size={40} className="text-green-700" />
         <h1 className="text-2xl font-semibold mt-2 text-gray-800">Izoo</h1>
       </div>
-      <div className="bg-[#fafafa] border border-gray-200 shadow rounded-xl p-8 w-full max-w-md">
+      <div className="bg-[#fafafa] border border-gray-200 shadow rounded p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold mb-2 text-gray-800">Login</h2>
         <p className="text-gray-500 mb-6 text-sm">
           Entre com suas credenciais para acessar o sistema

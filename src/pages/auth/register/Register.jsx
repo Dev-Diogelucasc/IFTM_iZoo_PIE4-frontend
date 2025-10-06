@@ -54,7 +54,7 @@ const Register = () => {
         <GiPlantsAndAnimals size={40} className="text-green-700" />
         <h1 className="text-2xl font-semibold mt-2 text-gray-800">Izoo</h1>
       </div>
-      <div className="bg-[#fafafa] rounded-xl shadow-md p-8 w-full max-w-xl border border-gray-200">
+      <div className="bg-[#fafafa] rounded shadow-md p-8 w-full max-w-xl border border-gray-200">
         <h2 className="text-3xl font-bold mb-2 text-gray-800">Criar Conta</h2>
         <p className="text-gray-500 mb-6 text-sm">
           Preencha os dados abaixo para criar sua conta no sistema
