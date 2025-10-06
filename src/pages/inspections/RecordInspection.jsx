@@ -1,19 +1,30 @@
 import React from "react";
 import SideBar from "../../components/sideBar/SideBar";
 import { IoCameraOutline } from "react-icons/io5";
+import { LuHousePlus } from "react-icons/lu";
 
 const RecordInspection = () => {
   return (
     <div className="flex">
       <SideBar />
       <main className="flex-1 min-w-0 flex flex-col items-center px-3 md:px-8 mt-6">
-        <div className="w-full mb-6 mr-10 md:mr-0">
-          <h2 className="font-medium text-lg text-gray-900">
-            Gerenciar Usuários
-          </h2>
-          <span className="text-sm text-gray-500 font-light">
-            Administre usuários e permissões do sistema
-          </span>
+        <div className="w-full mb-6 mr-15 md:mr-0 flex justify-between">
+          <div>
+            <h2 className="font-medium text-lg text-gray-900">
+              Gerenciar Usuários
+            </h2>
+            <span className="text-sm text-gray-500 font-light">
+              Administre usuários e permissões do sistema
+            </span>
+          </div>
+          <button
+            type="button"
+            className="flex items-center justify-center sm:gap-2 bg-green-50 border border-stone-300 rounded-md px-4 py-2 hover:bg-green-700 hover:text-white transition-colors duration-200 ease-in-out cursor-pointer font-medium mb-2"
+            aria-label="Escanear QR Code"
+          >
+            <LuHousePlus className="text-lg" />
+            <span className="text-sm">Adicionar Residência</span>
+          </button>
         </div>
         <div className=" bg-[#F8F8F8] w-full border border-gray-200 rounded shadow p-5 mr-15 md:mr-0">
           <div className="flex flex-col mb-8">
