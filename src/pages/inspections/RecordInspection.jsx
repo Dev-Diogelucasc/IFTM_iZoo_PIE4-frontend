@@ -7,14 +7,14 @@ const RecordInspection = () => {
   return (
     <div className="flex">
       <SideBar />
-      <main className="flex-1 min-w-0 flex flex-col items-center px-3 md:px-8 mt-6">
+      <main className="flex-1 min-w-0 flex flex-col ml-2 items-center px-3 md:px-8 mt-6">
         <div className="w-full mb-6 mr-15 md:mr-0 flex justify-between">
           <div>
             <h2 className="font-medium text-lg text-gray-900">
-              Gerenciar Usuários
+              Registar Inspeção
             </h2>
             <span className="text-sm text-gray-500 font-light">
-              Administre usuários e permissões do sistema
+              Preencha os dados da nova inspeção
             </span>
           </div>
           <button
