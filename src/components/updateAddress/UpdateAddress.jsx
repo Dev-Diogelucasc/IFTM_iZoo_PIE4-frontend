@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
 
-const RegisterResidence = ({ onClose }) => {
+const UpdateAddress = ({ onClose }) => {
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
@@ -17,17 +16,12 @@ const RegisterResidence = ({ onClose }) => {
 
   const navigate = useNavigate();
 
-  const { registerAddress } = useAuth();
-
-  const notify = () => toast("Endereço Criado!");
+  const { updateAddress } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // evita submissão duplicada por cliques rápidos
-    if (loading) return;
-
-    const register = {
+    const update = {
       rua: street,
       numero: number,
       bairro: neighborhood,
@@ -40,9 +34,7 @@ const RegisterResidence = ({ onClose }) => {
 
     try {
       setLoading(true);
-      await registerAddress(register);
-      // Fecha o modal ao concluir para evitar manter o formulário aberto
-      if (typeof onClose === "function") onClose();
+      await updateAddress(update);
       navigate("/endereco");
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
@@ -57,18 +49,6 @@ const RegisterResidence = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/60 backdrop-blur-sm">
-      <ToastContainer
-        position="bottom-right"
-        autoClose={1000000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <div className="relative bg-white rounded-xl shadow-lg p-6 w-full max-w-md mx-4 border border-gray-200">
         {/* Botão de fechar */}
         <button
@@ -209,7 +189,6 @@ const RegisterResidence = ({ onClose }) => {
                 ? "bg-gray-400 text-gray-600 cursor-not-allowed"
                 : "bg-green-700 text-white hover:bg-green-800"
             }`}
-            onClick={notify}
           >
             {loading ? "Salvando..." : "Salvar Residência"}
           </button>
@@ -219,4 +198,4 @@ const RegisterResidence = ({ onClose }) => {
   );
 };
 
-export default RegisterResidence;
+export default UpdateAddress;

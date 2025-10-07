@@ -155,6 +155,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateAddress = async (id) => {
+    try {
+      const response = await api.put(`/endereco/${id}`);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Erro ao atualizar Dados:", error);
+      throw error;
+    }
+  };
+
   const isAuthenticated = () => {
     return !!token;
   };
@@ -171,6 +181,7 @@ export const AuthProvider = ({ children }) => {
     registerAddress,
     address,
     deleteAddress,
+    updateAddress,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

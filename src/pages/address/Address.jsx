@@ -8,16 +8,20 @@ import { IoQrCodeOutline } from "react-icons/io5";
 import { BiEdit } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import QRCode from "react-qr-code";
+import { ToastContainer, toast } from "react-toastify";
 
 const Address = () => {
   const [address, setAddress] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadAddress, setLoadAddress] = useState([]);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
   const [qrValue, setQrValue] = useState("");
 
-  const { address: getAddress, deleteAddress } = useAuth();
+  const { address: getAddress, deleteAddress, updateAddress } = useAuth();
+
+  const notify = () => toast("Endereço Excluido!");
 
   useEffect(() => {
     const loadAddress = async () => {
@@ -47,9 +51,19 @@ const Address = () => {
   const handleDelete = async (id) => {
     try {
       await deleteAddress(id);
-      setAddress((prev) => prev.filter((a) => (a._id || a.id) !== id)); // atualiza UI
+      setAddress((prev) => prev.filter((a) => (a._id || a.id) !== id));
     } catch (error) {
       console.error("Erro ao deletar", error);
+    }
+  };
+
+  const handleUpdate = async (id) => {
+    try {
+      await updateAddress(id);
+      alert("Endereço atualizado");
+      setLoadAddress((prev) => prev.filter((a) => (a._id || a.id) !== id));
+    } catch (error) {
+      console.error("Erro oa atualizar usuário", error);
     }
   };
 
@@ -63,6 +77,18 @@ const Address = () => {
     <div className="flex">
       <SideBar />
       <main className=" relative flex-1 min-w-0 flex flex-col ml-2 items-center px-3 md:px-8 mt-6">
+        <ToastContainer
+          position="bottom-right"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <div className=" w-full mb-6 mr-15 md:mr-0 flex justify-between items-center">
           <div>
             <h2 className="font-medium text-lg text-gray-900">
@@ -117,7 +143,7 @@ const Address = () => {
               <div className="mt-4 text-sm text-gray-600 space-y-2">
                 <div className="flex justify-between">
                   <span className="text-gray-500">CEP:</span>
-                  <span className="text-gray-900">01234-567</span>
+                  <span className="text-gray-900">{obj.cep}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">Coordenadas:</span>
@@ -129,7 +155,10 @@ const Address = () => {
                 <button
                   type="button"
                   className="flex-1 flex items-center justify-center gap-2 border border-stone-200 rounded-md px-3 py-2 hover:bg-green-100 transition text-sm cursor-pointer"
-                  onClick={() => handleGenerateQR(obj.id)}
+                  onClick={() => {
+                    handleGenerateQR(obj);
+                    notify();
+                  }}
                 >
                   <IoQrCodeOutline />
                   QR Code
@@ -139,6 +168,7 @@ const Address = () => {
                   type="button"
                   className="w-10 h-10 flex items-center justify-center border border-stone-200 rounded-md hover:bg-stone-100 cursor-pointer"
                   title="Editar"
+                  onClick={() => handleUpdate(obj.id)}
                 >
                   <BiEdit />
                 </button>
@@ -147,7 +177,10 @@ const Address = () => {
                   type="button"
                   className="w-10 h-10 flex items-center justify-center border border-stone-200 rounded-md hover:bg-red-100 text-red-600 cursor-pointer"
                   title="Excluir"
-                  onClick={() => handleDelete(obj.id)}
+                  onClick={() => {
+                    handleDelete(obj.id);
+                    notify();
+                  }}
                 >
                   <FaRegTrashAlt />
                 </button>

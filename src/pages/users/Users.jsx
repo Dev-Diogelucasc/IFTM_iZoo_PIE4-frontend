@@ -51,20 +51,10 @@ const Users = () => {
         </div>
 
         <div className="w-full mb-8 mr-15 md:mr-0">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 ">
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Total de Usuários</p>
               <span className="font-semibold text-2xl">{users.length}</span>
-            </div>
-            <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
-              <p className="font-light">Usuários Ativos</p>
-              <span className="font-semibold text-2xl">
-                {
-                  users.filter(
-                    (user) => user.status === "ATIVO" || user.status === "ativo"
-                  ).length
-                }
-              </span>
             </div>
             <div className="bg-[#F8F8F8] border border-gray-200 rounded shadow p-5 h-36 flex flex-col justify-between">
               <p className="font-light">Admin</p>
@@ -110,7 +100,6 @@ const Users = () => {
                     <th className="px-4 py-3 text-left">Email</th>
                     <th className="px-4 py-3 text-left">Cargo</th>
                     <th className="px-4 py-3 text-left">Telefone</th>
-                    <th className="px-4 py-3 text-left">Status</th>
                     <th className="px-4 py-3 text-left">Ações</th>
                   </tr>
                 </thead>
@@ -135,7 +124,6 @@ const Users = () => {
                         <td className="px-4 py-4">{obj.email}</td>
                         <td className="px-4 py-4">{obj.cargo}</td>
                         <td className="px-4 py-4">{obj.telefone}</td>
-                        <td className="px-4 py-4">{obj.status}</td>
                         <td className="px-4 py-4 flex gap-3">
                           <BiEdit className="cursor-pointer" />
                           <FaRegTrashAlt className="cursor-pointer" />
