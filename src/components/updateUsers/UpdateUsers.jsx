@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GiPlantsAndAnimals } from "react-icons/gi";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
 const UpdateUsers = ({ user, onClose }) => {
