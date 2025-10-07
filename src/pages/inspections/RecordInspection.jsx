@@ -2,10 +2,10 @@ import { useState } from "react";
 import SideBar from "../../components/sideBar/SideBar";
 import { IoCameraOutline } from "react-icons/io5";
 import { LuHousePlus } from "react-icons/lu";
-import RegisterResidence from "../../components/registerResidence/RegisterResidence";
+import ScannerQr from "../../components/scannerQr/ScannerQr";
 
 const RecordInspection = () => {
-  const [open, setOpen] = useState(false);
+  const [openQr, setOpenQr] = useState(false)
 
   return (
     <div className="flex">
@@ -39,6 +39,9 @@ const RecordInspection = () => {
                 type="button"
                 className="flex items-center justify-center gap-2 w-full bg-green-50 border border-stone-300 rounded-md px-4 py-2 hover:bg-green-700 hover:text-white transition-colors duration-200 ease-in-out cursor-pointer font-medium mb-2"
                 aria-label="Escanear QR Code"
+                onClick={() => {
+                  setOpenQr(true)
+                }}
               >
                 <IoCameraOutline className="text-lg" />
                 <span className="text-sm">Escanear QR Code</span>
@@ -50,8 +53,8 @@ const RecordInspection = () => {
           </div>
         </div>
 
-        {/* MODAL DENTRO DO MAIN */}
-        {open && <RegisterResidence onClose={() => setOpen(false)} />}
+        
+        {openQr && <ScannerQr onClose={() => setOpenQr(false)} />}
       </main>
     </div>
   );
