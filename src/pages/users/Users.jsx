@@ -176,7 +176,7 @@ const Users = () => {
         </div>
         {openUpdateUser && (
           <UpdateUsers
-            address={loadUpdateUser}
+            userLoad={loadUpdateUser}
             onClose={() => setTimeout(() => setOpenUpdateUser(false), 600)}
           />
         )}

@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { useAuth } from "../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
-const UpdateUsers = ({ user, onClose }) => {
-  const [email, setEmail] = useState(user?.email);
-  const [login, setLogin] = useState(user?.login);
-  const [phone, setPhone] = useState(user?.telefone);
-  const [cargo, setCargo] = useState(user?.cargo);
+const UpdateUsers = ({ userLoad, onClose }) => {
+  const [email, setEmail] = useState(userLoad?.email);
+  const [login, setLogin] = useState(userLoad?.login);
+  const [phone, setPhone] = useState(userLoad?.telefone);
+  const [cargo, setCargo] = useState(userLoad?.cargo);
   //   const [password, setPassword] = useState(user?.senha);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ const UpdateUsers = ({ user, onClose }) => {
   const { updateUser } = useAuth();
 
   const notify = () =>
-    toast("Conta criada com sucesso! Faça login para continuar.");
+    toast("Atualização feita com sucesso!");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,12 +42,15 @@ const UpdateUsers = ({ user, onClose }) => {
     }
   };
 
+  useEffect(() => {
+    setEmail(userLoad?.email);
+    setLogin(userLoad?.login);
+    setPhone(userLoad?.telefone);
+    setCargo(userLoad?.cargo);
+  }, [userLoad]);
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
-      <div className="flex gap-3 items-center mb-6  mt-8">
-        <GiPlantsAndAnimals size={40} className="text-green-700" />
-        <h1 className="text-2xl font-semibold mt-2 text-gray-800">Izoo</h1>
-      </div>
       <div className="bg-[#fafafa] rounded shadow-md p-8 w-full max-w-xl border border-gray-200">
         <h2 className="text-3xl font-bold mb-2 text-gray-800">Criar Conta</h2>
         <p className="text-gray-500 mb-6 text-sm">
