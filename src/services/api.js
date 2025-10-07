@@ -70,14 +70,6 @@ api.interceptors.response.use(
       url: error.config?.url,
     };
 
-    if (error.response?.status === 403) {
-      errorInfo.corsError =
-        "CORS Error - Backend não permite requisições deste domínio";
-      console.error(
-        "CORS Error: O backend precisa adicionar o domínio da Vercel nas configurações de CORS"
-      );
-    }
-
     if (error.message === "Network Error") {
       errorInfo.networkError =
         "Erro de rede - possível problema de CORS ou conectividade";

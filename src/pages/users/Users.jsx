@@ -5,12 +5,14 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { users: getUsers } = useAuth();
+  const { users: getUsers, user} = useAuth();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -36,6 +38,25 @@ const Users = () => {
     };
     loadUsers();
   }, [getUsers]);
+
+   // Bloqueia acesso se não for ADMIN
+  if (user?.cargo !== "ADMIN") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Acesso negado</h2>
+        <p className="text-gray-700">
+          Você não tem permissão para acessar esta página.
+        </p>
+        <button
+          className="mt-6 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
+          onClick={() => navigate("/")}
+        >
+          Voltar para o início
+        </button>
+      </div>
+    );
+  }
+
 
   return (
     <div className="flex overflow-x-hidden">
@@ -115,9 +136,9 @@ const Users = () => {
                       </td>
                     </tr>
                   ) : (
-                    users.map((obj, index) => (
+                    users.map((obj) => (
                       <tr
-                        key={obj.id || index}
+                        key={obj.id}
                         className="border-b border-stone-200"
                       >
                         <td className="px-4 py-4">{obj.login}</td>

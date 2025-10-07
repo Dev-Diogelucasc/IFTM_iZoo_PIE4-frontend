@@ -9,19 +9,24 @@ import { BiEdit } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import QRCode from "react-qr-code";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import UpdateAddress from "../../components/updateAddress/UpdateAddress";
 
 const Address = () => {
   const [address, setAddress] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadAddress, setLoadAddress] = useState([]);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
   const [qrValue, setQrValue] = useState("");
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [updateAddress, setUpdateAddress] = useState(null);
 
-  const { address: getAddress, deleteAddress, updateAddress } = useAuth();
+  const { address: getAddress, deleteAddress, user } = useAuth();
+  const navigate = useNavigate();
 
   const notify = () => toast("Endereço excluido com sucesso!");
+  const notifyQrCode = () => toast("Qr Code gerado com sucesso!");
 
   useEffect(() => {
     const loadAddress = async () => {
@@ -57,21 +62,29 @@ const Address = () => {
     }
   };
 
-  const handleUpdate = async (id) => {
-    try {
-      await updateAddress(id);
-      alert("Endereço atualizado");
-      setLoadAddress((prev) => prev.filter((a) => (a._id || a.id) !== id));
-    } catch (error) {
-      console.error("Erro oa atualizar usuário", error);
-    }
-  };
-
   const handleGenerateQR = (obj) => {
     const url = `${obj.id}`;
     setQrValue(url);
     setQrOpen(true);
   };
+
+  // Bloqueia acesso se não for ADMIN
+  if (user?.cargo !== "ADMIN") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Acesso negado</h2>
+        <p className="text-gray-700">
+          Você não tem permissão para acessar esta página.
+        </p>
+        <button
+          className="mt-6 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
+          onClick={() => navigate("/")}
+        >
+          Voltar para o início
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex">
@@ -93,7 +106,7 @@ const Address = () => {
             onClick={() => setOpen(true)}
           >
             <LuHousePlus className="text-lg" />
-            <span className="text-sm">Adicionar Residência</span>
+            <span className="text-sm">Adicionar Endereço</span>
           </button>
         </div>
 
@@ -145,7 +158,7 @@ const Address = () => {
                   className="flex-1 flex items-center justify-center gap-2 border border-stone-200 rounded-md px-3 py-2 hover:bg-green-100 transition text-sm cursor-pointer"
                   onClick={() => {
                     handleGenerateQR(obj);
-                    notify();
+                    notifyQrCode();
                   }}
                 >
                   <IoQrCodeOutline />
@@ -156,7 +169,10 @@ const Address = () => {
                   type="button"
                   className="w-10 h-10 flex items-center justify-center border border-stone-200 rounded-md hover:bg-stone-100 cursor-pointer"
                   title="Editar"
-                  onClick={() => handleUpdate(obj.id)}
+                  onClick={() => {
+                    setUpdateAddress(obj);
+                    setOpenUpdate(true);
+                  }}
                 >
                   <BiEdit />
                 </button>
@@ -180,6 +196,13 @@ const Address = () => {
         {open && (
           <RegisterResidence
             onClose={() => setTimeout(() => setOpen(false), 600)}
+          />
+        )}
+
+        {openUpdate && (
+          <UpdateAddress
+            address={updateAddress}
+            onClose={() => setTimeout(() => setOpenUpdate(false), 600)}
           />
         )}
 

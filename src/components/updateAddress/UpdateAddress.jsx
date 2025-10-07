@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
-const UpdateAddress = ({ onClose }) => {
-  const [street, setStreet] = useState("");
-  const [number, setNumber] = useState("");
-  const [neighborhood, setNeighborhood] = useState("");
-  const [cep, setCep] = useState("");
-  const [city, setCity] = useState("");
-  const [estado, setEstado] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+// 2 Parâmetros:
+// address, para preencher automatico os campos
+// onClose - funcionar a função de fechar no componente addess
+const UpdateAddress = ({ address, onClose }) => {
+  const [street, setStreet] = useState(address?.rua);
+  const [number, setNumber] = useState(address?.numero);
+  const [neighborhood, setNeighborhood] = useState(address?.bairro);
+  const [cep, setCep] = useState(address?.cep);
+  const [city, setCity] = useState(address?.cidade);
+  const [estado, setEstado] = useState(address?.estado);
+  const [latitude, setLatitude] = useState(address?.latitude);
+  const [longitude, setLongitude] = useState(address?.longitude);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -37,8 +40,9 @@ const UpdateAddress = ({ onClose }) => {
 
     try {
       setLoading(true);
-      await updateAddress(update);
+      await updateAddress(address.id, update);
       navigate("/endereco");
+      onClose()
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(
@@ -49,6 +53,16 @@ const UpdateAddress = ({ onClose }) => {
       setLoading(false);
     }
   };
+  // Atualiza os campos quando mudar
+  useEffect(() => {
+    setStreet(address?.rua);
+    setNumber(address?.numero);
+    setNeighborhood(address?.bairro);
+    setCep(address?.cep);
+    setCity(address?.cidade);
+    setEstado(address?.estado);
+    setLatitude(address?.latitude);
+  }, [address]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/60 backdrop-blur-sm">

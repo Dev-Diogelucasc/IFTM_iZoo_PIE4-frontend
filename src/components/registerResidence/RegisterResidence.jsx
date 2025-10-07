@@ -19,7 +19,7 @@ const RegisterResidence = ({ onClose }) => {
 
   const { registerAddress } = useAuth();
 
-  const notify = () => toast("Endereço Criado!");
+  const notify = () => toast("Endereço Criado com sucesso!");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -199,7 +199,7 @@ const RegisterResidence = ({ onClose }) => {
             }`}
             onClick={notify}
           >
-            {loading ? "Salvando..." : "Salvar Residência"}
+            {loading ? "Salvando..." : "Salvar Endereço"}
           </button>
         </form>
         <ToastContainer

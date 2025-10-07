@@ -125,6 +125,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Context Endereço
   const registerAddress = async (residenceData) => {
     try {
       const response = await api.post("/endereco", residenceData);
@@ -155,9 +156,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateAddress = async (id) => {
+  const updateAddress = async (id, data) => {
     try {
-      const response = await api.put(`/endereco/${id}`);
+      const response = await api.put(`/endereco/${id}`, data);
       return { success: true, data: response.data };
     } catch (error) {
       console.error("Erro ao atualizar Dados:", error);

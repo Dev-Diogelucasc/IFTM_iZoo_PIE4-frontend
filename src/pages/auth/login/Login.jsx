@@ -16,7 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-    const notify = () => toast("Login realizado com sucesso!");
+  const notify = () => toast("Login realizado com sucesso!");
 
   useEffect(() => {
     if (location.state?.message) {
@@ -147,17 +147,17 @@ const Login = () => {
         </Link>
       </div>
       <ToastContainer
-          position="bottom-right"
-          autoClose={600}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        position="bottom-right"
+        autoClose={800}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

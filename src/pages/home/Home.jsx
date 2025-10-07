@@ -18,7 +18,7 @@ const Home = () => {
   const user = auth?.user;
   const isLogged = Boolean(user)
 
-  const handleMessage = () => {
+  const handleMessageUser = () => {
     const cargo = user?.cargo;
     if (cargo === "ADMIN") {
       navigate("/usuarios");
@@ -26,6 +26,15 @@ const Home = () => {
       alert("Apenas administradores têm acesso");
     }
   };
+
+  const handleMessageAddress = () => {
+    const cargo = user?.cargo;
+    if(cargo === "ADMIN") {
+      navigate("/endereco")
+    } else {
+      alert("Apenas administradores têm acesso");
+    }
+  }
 
   return (
     <section className="mt-6 flex flex-col items-center">
@@ -77,7 +86,7 @@ const Home = () => {
               title="Gerenciar Endereço"
               description="Administre, Cadastre e Gerencie os endereços"
               buttonLabel="Acessar"
-              onButtonClick={() => navigate("/endereco")}
+              onButtonClick={handleMessageAddress}
             />
           </div>
           <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
@@ -86,7 +95,7 @@ const Home = () => {
               title="Gerenciar Usuários"
               description="Administre permissões e controle de acesso da equipe"
               buttonLabel="Acessar"
-              onButtonClick={handleMessage}
+              onButtonClick={handleMessageUser}
             />
           </div>
           {!isLogged && (
@@ -97,6 +106,7 @@ const Home = () => {
                 description="Crie sua conta para acessar o sistema de controle"
                 buttonLabel="Acessar"
                 onButtonClick={() => navigate("/cadastro")}
+                
               />
             </div>
           )}

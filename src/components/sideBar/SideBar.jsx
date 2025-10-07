@@ -24,7 +24,7 @@ const SideBar = () => {
   };
 
   const navLinkClass =
-    "flex items-center px-4 py-2 mb-2 rounded transition-colors duration-200 text-gray-700 hover:bg-gray-100";
+    "flex items-center px-4 py-2 mb-2 rounded transition-colors duration-200 text-gray-700 hover:bg-gray-200";
 
   return (
     <>
