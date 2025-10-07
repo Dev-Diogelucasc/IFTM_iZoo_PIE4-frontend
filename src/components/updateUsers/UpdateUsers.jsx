@@ -1,50 +1,43 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { useAuth } from "../../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
-const Register = () => {
-  // const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [login, setLogin] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const UpdateUsers = ({ user, onClose }) => {
+  const [email, setEmail] = useState(user?.email);
+  const [login, setLogin] = useState(user?.login);
+  const [phone, setPhone] = useState(user?.telefone);
+  const [cargo, setCargo] = useState(user?.cargo);
+  //   const [password, setPassword] = useState(user?.senha);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { register } = useAuth();
+  const { updateUser } = useAuth();
 
-  const navigate = useNavigate();
-
-  const notify = () => toast("Conta criada com sucesso! Faça login para continuar.");
+  const notify = () =>
+    toast("Conta criada com sucesso! Faça login para continuar.");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setError("As senhas não coincidem.");
-      return;
-    }
-
-    const registerData = {
+    const user = {
       login: login,
-      senha: password,
       email: email,
       telefone: "+55" + phone,
+      cargo: cargo,
     };
 
     try {
       setLoading(true);
-      await register(registerData);
-      navigate("/login");
+      await updateUser(user.id, user);
+      onClose();
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(
         error.response?.data?.error ||
           "Erro ao registrar. Verifique os dados e tente novamente."
       );
+    } finally {
       setLoading(false);
     }
   };
@@ -66,20 +59,6 @@ const Register = () => {
           </div>
         )}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* <div>
-            <label className="block font-semibold mb-1 text-gray-800">
-              Nome
-            </label>
-            <input
-              type="text"
-              className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
-              placeholder="Digite seu nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              autoComplete="name"
-            />
-          </div> */}
           <div>
             <label className="block font-semibold mb-1 text-gray-800">
               Login
@@ -125,54 +104,61 @@ const Register = () => {
           </div>
           <div>
             <label className="block font-semibold mb-1 text-gray-800">
-              Senha
+              Cargo
             </label>
-            <input
-              type="password"
-              placeholder="Digite sua senha"
+            <select
               className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={cargo}
+              onChange={(e) => setCargo(e.target.value)}
               required
-              autoComplete="off"
-            />
+            >
+              <option value="">Selecione o cargo</option>
+              <option value="ADMIN">Administrador</option>
+              <option value="USER">Usuário</option>
+              <option value="AGENT">Agente</option>
+            </select>
           </div>
-          <div>
-            <label className="block font-semibold mb-1 text-gray-800">
-              Confirmar Senha
-            </label>
-            <input
-              type="password"
-              placeholder="Confirme sua senha"
-              className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              autoComplete="off"
-            />
-          </div>
+          {/* <div>
+              <label className="block font-semibold mb-1 text-gray-800">
+                Senha
+              </label>
+              <input
+                type="password"
+                placeholder="Digite sua senha"
+                className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="off"
+              />
+            </div>
+            <div>
+              <label className="block font-semibold mb-1 text-gray-800">
+                Confirmar Senha
+              </label>
+              <input
+                type="password"
+                placeholder="Confirme sua senha"
+                className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                autoComplete="off"
+              />
+            </div> */}
           <button
             type="submit"
             disabled={loading}
-            onClick={notify}
+            onClick={() => notify()}
             className={`w-full font-bold py-2 rounded-md mt-2 transition ${
               loading
                 ? "bg-gray-400 text-gray-600 cursor-not-allowed"
                 : "bg-green-700 text-white hover:bg-green-800"
             }`}
           >
-            {loading ? "Criando Conta..." : "Criar Conta"}
+            {loading ? "Atualizando..." : "Atualizar Usuário"}
           </button>
         </form>
-      </div>
-      <div className="mt-4 text-gray-600">
-        Já tem uma conta?{" "}
-        <Link
-          to="/login"
-          className="text-green-700 font-semibold hover:underline"
-        >
-          Faça login
-        </Link>
       </div>
       <ToastContainer
         position="bottom-right"
@@ -190,4 +176,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default UpdateUsers;

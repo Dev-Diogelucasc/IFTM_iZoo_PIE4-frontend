@@ -56,7 +56,7 @@ const Address = () => {
   const handleDelete = async (id) => {
     try {
       await deleteAddress(id);
-      setAddress((prev) => prev.filter((a) => (a._id || a.id) !== id));
+      setAddress((prev) => prev.filter((address) => (address._id || address.id) !== id));
     } catch (error) {
       console.error("Erro ao deletar", error);
     }

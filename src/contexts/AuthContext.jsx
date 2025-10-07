@@ -105,6 +105,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Context Usuario
   const register = async (registerData) => {
     try {
       const response = await api.post("/usuario/registro", registerData);
@@ -125,13 +126,33 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteUser = async (id) => {
+    try {
+      const response = await api.delete(`/usuario/${id}`);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Erro ao deletar o usuário", error);
+      throw error;
+    }
+  };
+
+  const updateUser = async (id, data) => {
+    try {
+      const response = await api.put(`/usuario/${id}`, data)
+      return {success: true, data: response.data}
+    } catch (error) {
+      console.error("erro ao atualizar Usuário", error)
+      throw error
+    }
+  }
+
   // Context Endereço
   const registerAddress = async (residenceData) => {
     try {
       const response = await api.post("/endereco", residenceData);
       return { success: true, data: response.data };
     } catch (error) {
-      console.error("Erro ao registrar residncia", error);
+      console.error("Erro ao registrar residência", error);
       throw error;
     }
   };
@@ -161,7 +182,7 @@ export const AuthProvider = ({ children }) => {
       const response = await api.put(`/endereco/${id}`, data);
       return { success: true, data: response.data };
     } catch (error) {
-      console.error("Erro ao atualizar Dados:", error);
+      console.error("Erro ao atualizar endereço:", error);
       throw error;
     }
   };
@@ -179,6 +200,8 @@ export const AuthProvider = ({ children }) => {
     loading,
     register,
     users,
+    deleteUser,
+    updateUser,
     registerAddress,
     address,
     deleteAddress,

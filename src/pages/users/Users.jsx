@@ -6,13 +6,16 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import UpdateUsers from "../../components/updateUsers/UpdateUsers";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { users: getUsers, user} = useAuth();
-  const navigate = useNavigate()
+  const { users: getUsers, user, deleteUser } = useAuth();
+  const [loadUpdateUser, setLoadUpdateUser] = useState(null);
+  const [openUpdateUser, setOpenUpdateUser] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -39,7 +42,16 @@ const Users = () => {
     loadUsers();
   }, [getUsers]);
 
-   // Bloqueia acesso se não for ADMIN
+  const handleDelete = async (id) => {
+    try {
+      await deleteUser(id);
+      setUsers((prev) => prev.filter((user) => (user._id || user.id) !== id));
+    } catch (error) {
+      console.error("Erro ao deletar", error);
+    }
+  };
+
+  // Bloqueia acesso se não for ADMIN
   if (user?.cargo !== "ADMIN") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -56,7 +68,6 @@ const Users = () => {
       </div>
     );
   }
-
 
   return (
     <div className="flex overflow-x-hidden">
@@ -137,17 +148,23 @@ const Users = () => {
                     </tr>
                   ) : (
                     users.map((obj) => (
-                      <tr
-                        key={obj.id}
-                        className="border-b border-stone-200"
-                      >
+                      <tr key={obj.id} className="border-b border-stone-200">
                         <td className="px-4 py-4">{obj.login}</td>
                         <td className="px-4 py-4">{obj.email}</td>
                         <td className="px-4 py-4">{obj.cargo}</td>
                         <td className="px-4 py-4">{obj.telefone}</td>
                         <td className="px-4 py-4 flex gap-3">
-                          <BiEdit className="cursor-pointer" />
-                          <FaRegTrashAlt className="cursor-pointer" />
+                          <BiEdit
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setOpenUpdateUser(true);
+                              setLoadUpdateUser(obj);
+                            }}
+                          />
+                          <FaRegTrashAlt
+                            className="cursor-pointer"
+                            onClick={() => handleDelete(obj.id)}
+                          />
                         </td>
                       </tr>
                     ))
@@ -157,6 +174,12 @@ const Users = () => {
             </div>
           </div>
         </div>
+        {openUpdateUser && (
+          <UpdateUsers
+            address={loadUpdateUser}
+            onClose={() => setTimeout(() => setOpenUpdateUser(false), 600)}
+          />
+        )}
       </main>
     </div>
   );
