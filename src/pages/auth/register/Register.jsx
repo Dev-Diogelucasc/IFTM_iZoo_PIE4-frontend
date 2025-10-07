@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 //import { BsActivity } from "react-icons/bs";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { useAuth } from "../../../contexts/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
   // const [name, setName] = useState("");
@@ -17,6 +18,8 @@ const Register = () => {
   const { register } = useAuth();
 
   const navigate = useNavigate();
+
+  const notify = () => toast("Conta criada com sucesso! Faça login para continuar.");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +49,6 @@ const Register = () => {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
@@ -153,6 +155,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
+            onClick={notify}
             className={`w-full font-bold py-2 rounded-md mt-2 transition ${
               loading
                 ? "bg-gray-400 text-gray-600 cursor-not-allowed"
@@ -172,6 +175,18 @@ const Register = () => {
           Faça login
         </Link>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={600}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

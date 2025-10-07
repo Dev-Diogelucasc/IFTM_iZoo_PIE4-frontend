@@ -21,7 +21,7 @@ const Address = () => {
 
   const { address: getAddress, deleteAddress, updateAddress } = useAuth();
 
-  const notify = () => toast("Endereço Excluido!");
+  const notify = () => toast("Endereço excluido com sucesso!");
 
   useEffect(() => {
     const loadAddress = async () => {
@@ -77,18 +77,6 @@ const Address = () => {
     <div className="flex">
       <SideBar />
       <main className=" relative flex-1 min-w-0 flex flex-col ml-2 items-center px-3 md:px-8 mt-6">
-        <ToastContainer
-          position="bottom-right"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
         <div className=" w-full mb-6 mr-15 md:mr-0 flex justify-between items-center">
           <div>
             <h2 className="font-medium text-lg text-gray-900">
@@ -189,7 +177,11 @@ const Address = () => {
           ))}
         </div>
 
-        {open && <RegisterResidence onClose={() => setOpen(false)} />}
+        {open && (
+          <RegisterResidence
+            onClose={() => setTimeout(() => setOpen(false), 600)}
+          />
+        )}
 
         {qrOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
@@ -226,6 +218,18 @@ const Address = () => {
             </div>
           </div>
         )}
+        <ToastContainer
+          position="bottom-right"
+          autoClose={600}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </main>
     </div>
   );

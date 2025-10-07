@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const UpdateAddress = ({ onClose }) => {
   const [street, setStreet] = useState("");
@@ -17,6 +18,8 @@ const UpdateAddress = ({ onClose }) => {
   const navigate = useNavigate();
 
   const { updateAddress } = useAuth();
+
+  const notify = () => toast("Endereço Atualizado!");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -184,15 +187,28 @@ const UpdateAddress = ({ onClose }) => {
           <button
             type="submit"
             disabled={loading}
+            onClick={notify}
             className={`w-full font-bold py-2 rounded-md mt-2 transition ${
               loading
                 ? "bg-gray-400 text-gray-600 cursor-not-allowed"
                 : "bg-green-700 text-white hover:bg-green-800"
             }`}
           >
-            {loading ? "Salvando..." : "Salvar Residência"}
+            {loading ? "Salvando..." : "Atualizar Residência"}
           </button>
         </form>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={800}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </div>
   );

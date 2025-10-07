@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 // import { BsActivity } from "react-icons/bs";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { useAuth } from "../../../contexts/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [loginField, setLoginField] = useState("");
@@ -14,6 +15,8 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+    const notify = () => toast("Login realizado com sucesso!");
 
   useEffect(() => {
     if (location.state?.message) {
@@ -123,6 +126,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
+            onClick={notify}
             className={`rounded px-4 py-2 font-semibold transition w-full mt-2 ${
               loading
                 ? "bg-gray-400 text-gray-600 cursor-not-allowed"
@@ -142,6 +146,18 @@ const Login = () => {
           Cadastre-se
         </Link>
       </div>
+      <ToastContainer
+          position="bottom-right"
+          autoClose={600}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
     </div>
   );
 };
