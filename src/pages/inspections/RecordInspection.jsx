@@ -3,9 +3,31 @@ import SideBar from "../../components/sideBar/SideBar";
 import { IoCameraOutline } from "react-icons/io5";
 import { LuHousePlus } from "react-icons/lu";
 import ScannerQr from "../../components/scannerQr/ScannerQr";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const RecordInspection = () => {
-  const [openQr, setOpenQr] = useState(false)
+  const [openQr, setOpenQr] = useState(false);
+  const {user} = useAuth();
+  const navigate = useNavigate();
+
+  if (user?.cargo === "USER") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Acesso negado</h2>
+        <p className="text-gray-700">
+          Você não tem permissão para acessar esta página.
+        </p>
+        <button
+          className="mt-6 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
+          onClick={() => navigate("/")}
+        >
+          Voltar para o início
+        </button>
+      </div>
+    );
+  }
+
 
   return (
     <div className="flex">
@@ -40,7 +62,7 @@ const RecordInspection = () => {
                 className="flex items-center justify-center gap-2 w-full bg-green-50 border border-stone-300 rounded-md px-4 py-2 hover:bg-green-700 hover:text-white transition-colors duration-200 ease-in-out cursor-pointer font-medium mb-2"
                 aria-label="Escanear QR Code"
                 onClick={() => {
-                  setOpenQr(true)
+                  setOpenQr(true);
                 }}
               >
                 <IoCameraOutline className="text-lg" />
@@ -53,7 +75,7 @@ const RecordInspection = () => {
           </div>
         </div>
 
-          {openQr && (
+        {openQr && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-sm">
             <div className="bg-transparent p-6 mx-4">
               <ScannerQr onClose={() => setOpenQr(false)} />

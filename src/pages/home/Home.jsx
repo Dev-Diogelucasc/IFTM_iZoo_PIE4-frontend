@@ -14,27 +14,9 @@ import { LuMapPinHouse } from "react-icons/lu";
 
 const Home = () => {
   const navigate = useNavigate();
-  const auth = useAuth();
-  const user = auth?.user;
-  const isLogged = Boolean(user)
-
-  const handleMessageUser = () => {
-    const cargo = user?.cargo;
-    if (cargo === "ADMIN") {
-      navigate("/usuarios");
-    } else {
-      alert("Apenas administradores têm acesso");
-    }
-  };
-
-  const handleMessageAddress = () => {
-    const cargo = user?.cargo;
-    if(cargo === "ADMIN") {
-      navigate("/endereco")
-    } else {
-      alert("Apenas administradores têm acesso");
-    }
-  }
+  const { user } = useAuth();
+  const isLogged = Boolean(user);
+  const isCargo = user?.cargo;
 
   return (
     <section className="mt-6 flex flex-col items-center">
@@ -42,63 +24,142 @@ const Home = () => {
       <span className="text-2xl font-semibold mb-6">
         Funcionalidade do Sistema
       </span>
-      <div className="w-full flex justify-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
-          <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
-            <FeatureCard
-              icon={<FiEdit size={28} className="text-green-700" />}
-              title="Registrar Inspeção"
-              description="Cadastre novas inspeções com dados detalhados sobre ocorrências de zoonose"
-              buttonLabel="Acessar"
-              onButtonClick={() => navigate("/inspecoes/registar")}
-            />
+      {isCargo === "ADMIN" && (
+        <div className="w-full flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<FiEdit size={28} className="text-green-700" />}
+                title="Registrar Inspeção"
+                description="Cadastre novas inspeções com dados detalhados sobre ocorrências de zoonose"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/inspecoes/registar")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsSearch size={28} className="text-green-700" />}
+                title="Consultar Inspeções"
+                description="Busque e visualize histórico completo de inspeções realizadas"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/inspecoes/consultar")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={
+                  <BsFileEarmarkText size={28} className="text-green-700" />
+                }
+                title="Gerar Relatórios"
+                description="Crie relatórios detalhados e análises estatísticas das ocorrências"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/relatorios")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsGeoAlt size={28} className="text-green-700" />}
+                title="Mapeamento"
+                description="Visualize geograficamente as ocorrências de zoonose na região"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/mapeamento")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<LuMapPinHouse size={28} className="text-green-700" />}
+                title="Gerenciar Endereço"
+                description="Administre, Cadastre e Gerencie os endereços"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/endereco")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsPeople size={28} className="text-green-700" />}
+                title="Gerenciar Usuários"
+                description="Administre permissões e controle de acesso da equipe"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/usuarios")}
+              />
+            </div>
           </div>
-          <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
-            <FeatureCard
-              icon={<BsSearch size={28} className="text-green-700" />}
-              title="Consultar Inspeções"
-              description="Busque e visualize histórico completo de inspeções realizadas"
-              buttonLabel="Acessar"
-              onButtonClick={() => navigate("/inspecoes/consultar")}
-            />
+        </div>
+      )}
+
+      {isCargo === "AGENT" && (
+        <div className="w-full flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<FiEdit size={28} className="text-green-700" />}
+                title="Registrar Inspeção"
+                description="Cadastre novas inspeções com dados detalhados sobre ocorrências de zoonose"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/inspecoes/registar")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsSearch size={28} className="text-green-700" />}
+                title="Consultar Inspeções"
+                description="Busque e visualize histórico completo de inspeções realizadas"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/inspecoes/consultar")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={
+                  <BsFileEarmarkText size={28} className="text-green-700" />
+                }
+                title="Gerar Relatórios"
+                description="Crie relatórios detalhados e análises estatísticas das ocorrências"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/relatorios")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsGeoAlt size={28} className="text-green-700" />}
+                title="Mapeamento"
+                description="Visualize geograficamente as ocorrências de zoonose na região"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/mapeamento")}
+              />
+            </div>
           </div>
-          <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
-            <FeatureCard
-              icon={<BsFileEarmarkText size={28} className="text-green-700" />}
-              title="Gerar Relatórios"
-              description="Crie relatórios detalhados e análises estatísticas das ocorrências"
-              buttonLabel="Acessar"
-              onButtonClick={() => navigate("/relatorios")}
-            />
+        </div>
+      )}
+
+      {isCargo === "USER" && (
+        <div className="w-full flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsSearch size={28} className="text-green-700" />}
+                title="Consultar Inspeções"
+                description="Busque e visualize histórico completo de inspeções realizadas"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/inspecoes/consultar")}
+              />
+            </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsGeoAlt size={28} className="text-green-700" />}
+                title="Mapeamento"
+                description="Visualize geograficamente as ocorrências de zoonose na região"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/mapeamento")}
+              />
+            </div>
           </div>
-          <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
-            <FeatureCard
-              icon={<BsGeoAlt size={28} className="text-green-700" />}
-              title="Mapeamento"
-              description="Visualize geograficamente as ocorrências de zoonose na região"
-              buttonLabel="Acessar"
-              onButtonClick={() => navigate("/mapeamento")}
-            />
-          </div>
-          <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
-            <FeatureCard
-              icon={<LuMapPinHouse size={28} className="text-green-700" />}
-              title="Gerenciar Endereço"
-              description="Administre, Cadastre e Gerencie os endereços"
-              buttonLabel="Acessar"
-              onButtonClick={handleMessageAddress}
-            />
-          </div>
-          <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
-            <FeatureCard
-              icon={<BsPeople size={28} className="text-green-700" />}
-              title="Gerenciar Usuários"
-              description="Administre permissões e controle de acesso da equipe"
-              buttonLabel="Acessar"
-              onButtonClick={handleMessageUser}
-            />
-          </div>
-          {!isLogged && (
+        </div>
+      )}
+
+      {!isLogged && (
+        <div className="w-full flex justify-center">
+          <div className="grid grid-cols-1 max-w-6xl px-4 justify-center ">
             <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
               <FeatureCard
                 icon={<BsPersonPlus size={28} className="text-green-700" />}
@@ -106,12 +167,11 @@ const Home = () => {
                 description="Crie sua conta para acessar o sistema de controle"
                 buttonLabel="Acessar"
                 onButtonClick={() => navigate("/cadastro")}
-                
               />
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };
