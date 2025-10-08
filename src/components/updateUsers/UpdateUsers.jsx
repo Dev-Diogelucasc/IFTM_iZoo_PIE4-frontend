@@ -12,10 +12,9 @@ const UpdateUsers = ({ userLoad, onClose }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { updateUser } = useAuth();
+  const { updateUser, updateCargoUser } = useAuth();
 
-  const notify = () =>
-    toast("Atualização feita com sucesso!");
+  const notify = () => toast("Atualização feita com sucesso!");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +28,7 @@ const UpdateUsers = ({ userLoad, onClose }) => {
 
     try {
       setLoading(true);
-      await updateUser(user.id, user);
+      await updateUser(userLoad?.id, user);
       onClose();
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
@@ -42,6 +41,15 @@ const UpdateUsers = ({ userLoad, onClose }) => {
     }
   };
 
+  const handleCargo = async () => {
+    try {
+      await updateCargoUser(userLoad.id, { cargo });
+      setCargo({ cargo });
+    } catch (error) {
+      console.log("Erro ao atualizar cargo", error);
+    }
+  };
+
   useEffect(() => {
     setEmail(userLoad?.email);
     setLogin(userLoad?.login);
@@ -50,11 +58,19 @@ const UpdateUsers = ({ userLoad, onClose }) => {
   }, [userLoad]);
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-white">
-      <div className="bg-[#fafafa] rounded shadow-md p-8 w-full max-w-xl border border-gray-200">
-        <h2 className="text-3xl font-bold mb-2 text-gray-800">Criar Conta</h2>
+    <div className="flex flex-col items-center w-auto bg-white">
+      <div className="bg-[#fafafa] rounded shadow-md p-8 w-full max-w-xl border border-gray-200 relative">
+        {/* Botão de fechar */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+          aria-label="Fechar"
+        >
+          ×
+        </button>
+        <h2 className="text-2xl font-bold mb-2 text-gray-800">{`Dados do usuário ${userLoad?.login}`}</h2>
         <p className="text-gray-500 mb-6 text-sm">
-          Preencha os dados abaixo para criar sua conta no sistema
+          Preencha os dados abaixo para atualizar.
         </p>
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -114,6 +130,7 @@ const UpdateUsers = ({ userLoad, onClose }) => {
               value={cargo}
               onChange={(e) => setCargo(e.target.value)}
               required
+              onClick={() => handleCargo()}
             >
               <option value="">Selecione o cargo</option>
               <option value="ADMIN">Administrador</option>
@@ -121,34 +138,6 @@ const UpdateUsers = ({ userLoad, onClose }) => {
               <option value="AGENT">Agente</option>
             </select>
           </div>
-          {/* <div>
-              <label className="block font-semibold mb-1 text-gray-800">
-                Senha
-              </label>
-              <input
-                type="password"
-                placeholder="Digite sua senha"
-                className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="off"
-              />
-            </div>
-            <div>
-              <label className="block font-semibold mb-1 text-gray-800">
-                Confirmar Senha
-              </label>
-              <input
-                type="password"
-                placeholder="Confirme sua senha"
-                className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                autoComplete="off"
-              />
-            </div> */}
           <button
             type="submit"
             disabled={loading}
@@ -163,18 +152,7 @@ const UpdateUsers = ({ userLoad, onClose }) => {
           </button>
         </form>
       </div>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={600}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer position="bottom-right" autoClose={600} />
     </div>
   );
 };

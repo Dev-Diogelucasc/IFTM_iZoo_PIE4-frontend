@@ -175,10 +175,14 @@ const Users = () => {
           </div>
         </div>
         {openUpdateUser && (
-          <UpdateUsers
-            userLoad={loadUpdateUser}
-            onClose={() => setTimeout(() => setOpenUpdateUser(false), 600)}
-          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-sm">
+            <div className="bg-transparent p-6 mx-4">
+              <UpdateUsers
+                userLoad={loadUpdateUser}
+                onClose={() => setTimeout(() => setOpenUpdateUser(false), 600)}
+              />
+            </div>
+          </div>
         )}
       </main>
     </div>
