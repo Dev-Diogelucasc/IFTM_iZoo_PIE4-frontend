@@ -19,7 +19,7 @@ const RegisterResidence = ({ onClose }) => {
 
   const { registerAddress } = useAuth();
 
-  const notify = () => toast("Endereço Criado com sucesso!");
+  const notify = () => toast("Endereço Criado com Sucesso!");
 
   const handleSubmit = async (e) => {
     e.preventDefault();

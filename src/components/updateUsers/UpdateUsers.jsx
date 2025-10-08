@@ -3,7 +3,7 @@ import { GiPlantsAndAnimals } from "react-icons/gi";
 import { useAuth } from "../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
-const UpdateUsers = ({ userLoad, onClose, onUpdate }) => {
+const UpdateUsers = ({ userLoad, onClose }) => {
   const [email, setEmail] = useState(userLoad?.email);
   const [login, setLogin] = useState(userLoad?.login);
   const [phone, setPhone] = useState(userLoad?.telefone);
@@ -30,7 +30,6 @@ const UpdateUsers = ({ userLoad, onClose, onUpdate }) => {
       setLoading(true);
       await updateUser(userLoad?.id, user);
       onClose();
-      onUpdate();
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(
