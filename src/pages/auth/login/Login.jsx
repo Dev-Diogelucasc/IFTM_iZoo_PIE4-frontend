@@ -14,6 +14,9 @@ const Login = () => {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  // Permite acessar o objeto de localização atual da aplicação, retorna URL atual.
+  // ncluindo o caminho (pathname), a busca (search), o hash (hash) e, principalmente, o estado (state) que pode ser passado entre navegações.
   const location = useLocation();
 
   const notify = () => toast("Login realizado com sucesso!");
@@ -21,6 +24,13 @@ const Login = () => {
   useEffect(() => {
     if (location.state?.message) {
       setSuccessMessage(location.state.message);
+    }
+    // Preenche os campos se vierem cadastro
+    if (location.state?.loginField) {
+      setLoginField(location.state.loginField);
+    }
+    if (location.state?.password) {
+      setPassword(location.state.password);
     }
   }, [location]);
 
@@ -31,7 +41,6 @@ const Login = () => {
       setError("Por favor, preencha todos os campos");
       return;
     }
-
     setError("");
     setLoading(true);
 
@@ -42,7 +51,6 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       console.log("Erro detalhado:", error);
-      
     } finally {
       setLoading(false);
     }

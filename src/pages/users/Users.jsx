@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import UpdateUsers from "../../components/updateUsers/UpdateUsers";
+import { ToastContainer, toast } from "react-toastify";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -16,6 +17,8 @@ const Users = () => {
   const [loadUpdateUser, setLoadUpdateUser] = useState(null);
   const [openUpdateUser, setOpenUpdateUser] = useState(false);
   const navigate = useNavigate();
+
+  const notifyDelete = () => toast("Usuário, excluido com sucesso! ");
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -163,7 +166,10 @@ const Users = () => {
                           />
                           <FaRegTrashAlt
                             className="cursor-pointer"
-                            onClick={() => handleDelete(obj.id)}
+                            onClick={() => {
+                              handleDelete(obj.id);
+                              notifyDelete();
+                            }}
                           />
                         </td>
                       </tr>
@@ -185,6 +191,18 @@ const Users = () => {
           </div>
         )}
       </main>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={800}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

@@ -17,7 +17,7 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const notify = () => toast("Conta criada com sucesso! Faça login para continuar.");
+  const notify = () => toast("Conta criada com sucesso! ");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +37,13 @@ const Register = () => {
     try {
       setLoading(true);
       await register(registerData);
-      navigate("/login");
+      navigate("/login", {
+        // Enviar os estados ja preeenchidos, para login.
+        state: {
+          loginField: registerData.login,
+          password: registerData.senha
+        }
+      });
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(
