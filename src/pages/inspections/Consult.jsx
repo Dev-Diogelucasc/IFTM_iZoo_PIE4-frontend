@@ -47,20 +47,23 @@ const Consult = () => {
               <span className="text-gray-500 text-sm">
                 Lista completa de todas as inspeções registradas
               </span>
-              <div className="flex items-center mt-4 gap-4 mb-6">
-                <input
-                  type="text"
-                  placeholder="Buscar por ID ou local..."
-                  className="flex-1 px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700"
-                />
-                <select className="px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700 font-light">
+              <div className="flex flex-wrap gap-4 mt-4 mb-6">
+                <div className="relative flex-1 min-w-[220px]">
+                  <CiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
+                  <input
+                    type="text"
+                    placeholder="Buscar por ID ou local..."
+                    className="w-full pl-11 pr-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700"
+                  />
+                </div>
+                <select className="w-full md:w-auto min-w-[180px] px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700 font-light">
                   <option>Todos os tipos</option>
                   <option value="DENGUE">Foco em Dengue</option>
                   <option value="ROEDORES">Roedores</option>
                   <option value="ESPCORPIAO">Escorpiões</option>
                   <option value="MORCEGO">Morcegos</option>
                 </select>
-                <select className="px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700 font-light">
+                <select className="w-full md:w-auto min-w-[180px] px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700 font-light">
                   <option>Todos os status</option>
                   <option value="PENDENTE">Pendente</option>
                   <option value="ANDAMENTO">Em Andamento</option>
