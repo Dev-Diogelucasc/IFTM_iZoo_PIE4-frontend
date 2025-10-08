@@ -53,8 +53,13 @@ const RecordInspection = () => {
           </div>
         </div>
 
-        
-        {openQr && <ScannerQr onClose={() => setOpenQr(false)} />}
+          {openQr && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-sm">
+            <div className="bg-transparent p-6 mx-4">
+              <ScannerQr onClose={() => setOpenQr(false)} />
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
