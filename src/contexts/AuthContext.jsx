@@ -138,7 +138,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateUser = async (id, data) => {
     try {
-      const response = await api.put(`/usuario/${id}`, data)
+      const response = await api.patch(`/usuario/${id}`, data)
       return {success: true, data: response.data}
     } catch (error) {
       console.error("erro ao atualizar Usuário", error)
@@ -146,15 +146,15 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const updateCargoUser = async (id) => {
-    try {
-      const response = await api.patch(`/usuario/${id}/cargo`)
-      return {success: true, data: response.data}
-    } catch (error) {
-      console.error("erro ao atualizar Cargo", error)
-      throw error
-    }
-  }
+  // const updateCargoUser = async (id) => {
+  //   try {
+  //     const response = await api.patch(`/usuario/${id}/cargo`)
+  //     return {success: true, data: response.data}
+  //   } catch (error) {
+  //     console.error("erro ao atualizar Cargo", error)
+  //     throw error
+  //   }
+  // }
 
   // Context Endereço
   const registerAddress = async (residenceData) => {
@@ -212,7 +212,6 @@ export const AuthProvider = ({ children }) => {
     users,
     deleteUser,
     updateUser,
-    updateCargoUser,
     registerAddress,
     address,
     deleteAddress,

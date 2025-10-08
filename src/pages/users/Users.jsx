@@ -17,30 +17,31 @@ const Users = () => {
   const [openUpdateUser, setOpenUpdateUser] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadUsers = async () => {
-      setLoading(true);
-      setError(null);
+  const loadUsers = async () => {
+    setLoading(true);
+    setError(null);
 
-      try {
-        const response = await getUsers();
-        console.log("Response from API:", response);
+    try {
+      const response = await getUsers();
+      console.log("Response from API:", response);
 
-        if (response && response.success && response.data) {
-          console.log("Users data:", response.data);
-          setUsers(Array.isArray(response.data) ? response.data : []);
-        } else if (Array.isArray(response)) {
-          setUsers(response);
-        }
-      } catch (error) {
-        console.error("Erro completo:", error);
-        setUsers([]);
-      } finally {
-        setLoading(false);
+      if (response && response.success && response.data) {
+        console.log("Users data:", response.data);
+        setUsers(Array.isArray(response.data) ? response.data : []);
+      } else if (Array.isArray(response)) {
+        setUsers(response);
       }
-    };
+    } catch (error) {
+      console.error("Erro completo:", error);
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadUsers();
-  }, [getUsers]);
+  }, []);
 
   const handleDelete = async (id) => {
     try {
@@ -180,6 +181,7 @@ const Users = () => {
               <UpdateUsers
                 userLoad={loadUpdateUser}
                 onClose={() => setTimeout(() => setOpenUpdateUser(false), 600)}
+                onUpdate={loadUsers}
               />
             </div>
           </div>

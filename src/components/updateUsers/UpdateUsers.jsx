@@ -3,7 +3,7 @@ import { GiPlantsAndAnimals } from "react-icons/gi";
 import { useAuth } from "../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
-const UpdateUsers = ({ userLoad, onClose }) => {
+const UpdateUsers = ({ userLoad, onClose, onUpdate }) => {
   const [email, setEmail] = useState(userLoad?.email);
   const [login, setLogin] = useState(userLoad?.login);
   const [phone, setPhone] = useState(userLoad?.telefone);
@@ -12,7 +12,7 @@ const UpdateUsers = ({ userLoad, onClose }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { updateUser, updateCargoUser } = useAuth();
+  const { updateUser } = useAuth();
 
   const notify = () => toast("Atualização feita com sucesso!");
 
@@ -22,7 +22,7 @@ const UpdateUsers = ({ userLoad, onClose }) => {
     const user = {
       login: login,
       email: email,
-      telefone: "+55" + phone,
+      telefone: phone,
       cargo: cargo,
     };
 
@@ -30,6 +30,7 @@ const UpdateUsers = ({ userLoad, onClose }) => {
       setLoading(true);
       await updateUser(userLoad?.id, user);
       onClose();
+      onUpdate();
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(
@@ -41,14 +42,14 @@ const UpdateUsers = ({ userLoad, onClose }) => {
     }
   };
 
-  const handleCargo = async () => {
-    try {
-      await updateCargoUser(userLoad.id, { cargo });
-      setCargo({ cargo });
-    } catch (error) {
-      console.log("Erro ao atualizar cargo", error);
-    }
-  };
+  //   const handleCargo = async () => {
+  //     try {
+  //       await updateCargoUser(userLoad.id, { cargo });
+  //       setCargo({ cargo });
+  //     } catch (error) {
+  //       console.log("Erro ao atualizar cargo", error);
+  //     }
+  //   };
 
   useEffect(() => {
     setEmail(userLoad?.email);
@@ -130,7 +131,6 @@ const UpdateUsers = ({ userLoad, onClose }) => {
               value={cargo}
               onChange={(e) => setCargo(e.target.value)}
               required
-              onClick={() => handleCargo()}
             >
               <option value="">Selecione o cargo</option>
               <option value="ADMIN">Administrador</option>
