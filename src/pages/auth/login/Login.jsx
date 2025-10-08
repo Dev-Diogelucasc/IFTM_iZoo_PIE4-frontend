@@ -41,22 +41,8 @@ const Login = () => {
       // Redirecionar para a tela inicial após login bem-sucedido
       navigate("/");
     } catch (error) {
-      console.log(error);
-      if (error.response?.data?.message) {
-        setError(error.response.data.message);
-      } else if (error.response?.status === 401) {
-        setError("Credenciais inválidas. Verifique seu login e senha.");
-      } else if (error.response?.status === 403) {
-        setError(
-          "Erro de permissão. O servidor não permite acesso deste domínio. Entre em contato com o suporte."
-        );
-      } else if (error.message === "Network Error") {
-        setError(
-          "Erro de conexão com o servidor. Verifique sua internet ou tente novamente mais tarde."
-        );
-      } else {
-        setError("Erro ao fazer login. Tente novamente.");
-      }
+      console.log("Erro detalhado:", error);
+      
     } finally {
       setLoading(false);
     }

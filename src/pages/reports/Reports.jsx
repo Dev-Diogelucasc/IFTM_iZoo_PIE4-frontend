@@ -41,7 +41,7 @@ const Reports = () => {
   return (
     <div className="flex min-h-screen">
       <SideBar />
-      <main className="flex-1 mt-3 ">
+      <main className="flex-1 mt-3 sm:m-5">
         <div className="bg-[#F8F8F8] rounded-xl shadow p-8 mb-8 mr-10 sm:mr-0 border border-gray-200">
           <h2 className="text-2xl font-bold mb-2">Gerar Novo Relatório</h2>
           <p className="mb-6 text-gray-600">
