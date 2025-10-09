@@ -56,7 +56,9 @@ const Address = () => {
   const handleDelete = async (id) => {
     try {
       await deleteAddress(id);
-      setAddress((prev) => prev.filter((address) => (address._id || address.id) !== id));
+      setAddress((prev) =>
+        prev.filter((address) => (address._id || address.id) !== id)
+      );
     } catch (error) {
       console.error("Erro ao deletar", error);
     }
@@ -241,18 +243,7 @@ const Address = () => {
             </div>
           </div>
         )}
-        <ToastContainer
-          position="bottom-right"
-          autoClose={600}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        <ToastContainer position="bottom-right" autoClose={600} />
       </main>
     </div>
   );

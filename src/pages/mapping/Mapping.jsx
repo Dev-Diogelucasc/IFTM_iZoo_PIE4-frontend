@@ -9,7 +9,7 @@ const Mapping = () => {
       <SideBar />
       <main className="flex-1 flex flex-col">
         {/* Header */}
-        <div className="bg-[#F8F8F8] border-b border-gray-200 px-4 md:px-8 py-4">
+        <div className=" px-4 md:px-8 py-4">
           <h1 className="text-xl md:text-2xl font-bold text-gray-900">
             Mapeamento de Ocorrências
           </h1>
