@@ -42,15 +42,6 @@ const UpdateUsers = ({ userLoad, onClose, loadUsers }) => {
     }
   };
 
-  //   const handleCargo = async () => {
-  //     try {
-  //       await updateCargoUser(userLoad.id, { cargo });
-  //       setCargo({ cargo });
-  //     } catch (error) {
-  //       console.log("Erro ao atualizar cargo", error);
-  //     }
-  //   };
-
   useEffect(() => {
     setEmail(userLoad?.email);
     setLogin(userLoad?.login);
