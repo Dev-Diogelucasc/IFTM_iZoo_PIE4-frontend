@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 // 2 Parâmetros:
 // address, para preencher automatico os campos
 // onClose - funcionar a função de fechar no componente addess
-const UpdateAddress = ({ address, onClose }) => {
+const UpdateAddress = ({ address, onClose, loadAddress }) => {
   const [street, setStreet] = useState(address?.rua);
   const [number, setNumber] = useState(address?.numero);
   const [neighborhood, setNeighborhood] = useState(address?.bairro);
@@ -42,6 +42,7 @@ const UpdateAddress = ({ address, onClose }) => {
       setLoading(true);
       await updateAddress(address.id, update);
       navigate("/endereco");
+      loadAddress()
       onClose()
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);

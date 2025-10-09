@@ -13,7 +13,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { users: getUsers, user, deleteUser } = useAuth();
+  const { getUsers, user, deleteUser } = useAuth();
   const [loadUpdateUser, setLoadUpdateUser] = useState(null);
   const [openUpdateUser, setOpenUpdateUser] = useState(false);
   const navigate = useNavigate();

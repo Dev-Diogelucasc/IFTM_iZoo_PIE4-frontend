@@ -28,37 +28,36 @@ const Address = () => {
   const notify = () => toast("Endereço excluido com sucesso!");
   const notifyQrCode = () => toast("Qr Code gerado com sucesso!");
 
-  useEffect(() => {
-    const loadAddress = async () => {
-      setLoading(true);
-      setError(null);
+  const loadAddress = async () => {
+    setLoading(true);
+    setError(null);
 
-      try {
-        const response = await getAddress();
-        console.log("Response from API:", response);
+    try {
+      const response = await getAddress();
+      console.log("Response from API:", response);
 
-        if (response && response.success && response.data) {
-          console.log("Address data:", response.data);
-          setAddress(Array.isArray(response.data) ? response.data : []);
-        } else if (Array.isArray(response)) {
-          setAddress(response);
-        }
-      } catch (error) {
-        console.error("Erro completo", error);
-        setAddress([]);
-      } finally {
-        setLoading(false);
+      if (response && response.success && response.data) {
+        console.log("Address data:", response.data);
+        setAddress(Array.isArray(response.data) ? response.data : []);
+      } else if (Array.isArray(response)) {
+        setAddress(response);
       }
-    };
+    } catch (error) {
+      console.error("Erro completo", error);
+      setAddress([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadAddress();
-  }, [getAddress]);
+  }, []);
 
   const handleDelete = async (id) => {
     try {
       await deleteAddress(id);
-      setAddress((prev) =>
-        prev.filter((address) => (address._id || address.id) !== id)
-      );
+      loadAddress();
     } catch (error) {
       console.error("Erro ao deletar", error);
     }
@@ -205,6 +204,7 @@ const Address = () => {
           <UpdateAddress
             address={updateAddress}
             onClose={() => setTimeout(() => setOpenUpdate(false), 600)}
+            loadAddress={loadAddress}
           />
         )}
 

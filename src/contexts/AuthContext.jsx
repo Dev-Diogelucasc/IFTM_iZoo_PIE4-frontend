@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const users = async () => {
+  const getUsers = async () => {
     try {
       const response = await api.get("/usuario");
       return { success: true, data: response.data };
@@ -209,7 +209,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     loading,
     register,
-    users,
+    getUsers,
     deleteUser,
     updateUser,
     registerAddress,
