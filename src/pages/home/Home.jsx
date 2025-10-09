@@ -26,12 +26,12 @@ const Home = () => {
       </span>
       {cargo === "ADMIN" && (
         <div className="w-full flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
-            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 px-4 justify-center ">
+            <div className=" transition-transform transform hover:scale-100 hover:-translate-y-1">
               <FeatureCard
                 icon={<FiEdit size={28} className="text-green-700" />}
                 title="Registrar Inspeção"
-                description="Cadastre novas inspeções com dados detalhados sobre ocorrências de zoonose"
+                description="Cadastre novas inspeções com dados sobre ocorrências"
                 buttonLabel="Acessar"
                 onButtonClick={() => navigate("/inspecoes/registar")}
               />
@@ -40,7 +40,7 @@ const Home = () => {
               <FeatureCard
                 icon={<BsSearch size={28} className="text-green-700" />}
                 title="Consultar Inspeções"
-                description="Busque e visualize histórico completo de inspeções realizadas"
+                description="Busque e visualize histórico completo de inspeções"
                 buttonLabel="Acessar"
                 onButtonClick={() => navigate("/inspecoes/consultar")}
               />
@@ -51,7 +51,7 @@ const Home = () => {
                   <BsFileEarmarkText size={28} className="text-green-700" />
                 }
                 title="Gerar Relatórios"
-                description="Crie relatórios detalhados e análises estatísticas das ocorrências"
+                description="Crie relatórios detalhados e análises estatísticas"
                 buttonLabel="Acessar"
                 onButtonClick={() => navigate("/relatorios")}
               />
@@ -60,7 +60,7 @@ const Home = () => {
               <FeatureCard
                 icon={<BsGeoAlt size={28} className="text-green-700" />}
                 title="Mapeamento"
-                description="Visualize geograficamente as ocorrências de zoonose na região"
+                description="Visualize geograficamente as ocorrências"
                 buttonLabel="Acessar"
                 onButtonClick={() => navigate("/mapeamento")}
               />
