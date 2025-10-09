@@ -20,35 +20,36 @@ const Users = () => {
 
   const notifyDelete = () => toast("Usuário, excluido com sucesso! ");
 
-  useEffect(() => {
-    const loadUsers = async () => {
-      setLoading(true);
-      setError(null);
+  const loadUsers = async () => {
+    setLoading(true);
+    setError(null);
 
-      try {
-        const response = await getUsers();
-        console.log("Response from API:", response);
+    try {
+      const response = await getUsers();
+      console.log("Response from API:", response);
 
-        if (response && response.success && response.data) {
-          console.log("Users data:", response.data);
-          setUsers(Array.isArray(response.data) ? response.data : []);
-        } else if (Array.isArray(response)) {
-          setUsers(response);
-        }
-      } catch (error) {
-        console.error("Erro completo:", error);
-        setUsers([]);
-      } finally {
-        setLoading(false);
+      if (response && response.success && response.data) {
+        console.log("Users data:", response.data);
+        setUsers(Array.isArray(response.data) ? response.data : []);
+      } else if (Array.isArray(response)) {
+        setUsers(response);
       }
-    };
+    } catch (error) {
+      console.error("Erro completo:", error);
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
     loadUsers();
-  }, [getUsers]);
+  }, []);
 
   const handleDelete = async (id) => {
     try {
       await deleteUser(id);
-      setUsers((prev) => prev.filter((user) => (user._id || user.id) !== id));
+      loadUsers()
     } catch (error) {
       console.error("Erro ao deletar", error);
     }
@@ -186,6 +187,7 @@ const Users = () => {
               <UpdateUsers
                 userLoad={loadUpdateUser}
                 onClose={() => setTimeout(() => setOpenUpdateUser(false), 600)}
+                loadUsers={loadUsers}
               />
             </div>
           </div>

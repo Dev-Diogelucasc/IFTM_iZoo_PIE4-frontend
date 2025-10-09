@@ -24,7 +24,7 @@ const Home = () => {
       <span className="text-2xl font-semibold mb-6">
         Funcionalidade do Sistema
       </span>
-      {isCargo === "ADMIN" && (
+      {(isCargo === "ADMIN") && (
         <div className="w-full flex justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
             <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
