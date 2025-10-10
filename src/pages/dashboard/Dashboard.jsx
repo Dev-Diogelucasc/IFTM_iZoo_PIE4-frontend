@@ -21,7 +21,7 @@ const Dashboard = () => {
         </div>
         <section className="flex md:px-8">
           <div className=" w-full grid grid-cols-1 sm:crid-col-2 md:grid-cols-4 gap-4 mt-3 mr-10 sm:mr-0">
-            <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4">
+            <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
               <div className="flex justify-between items-center">
                 <h2 className="text-stone-600">Total de Inspeções</h2>
                 <FiActivity size={23} className="text-stone-600" />
@@ -30,7 +30,7 @@ const Dashboard = () => {
                 1,248
               </span>
             </div>
-            <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4">
+            <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
               <div className="flex justify-between items-center">
                 <h2 className="text-stone-600">Casos Ativos</h2>
                 <MdOutlineReport size={23} className="text-red-600" />
@@ -39,7 +39,7 @@ const Dashboard = () => {
                 47
               </span>
             </div>
-            <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4">
+            <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
               <div className="flex justify-between items-center">
                 <h2 className="text-stone-600">Casos Resolvidos</h2>
                 <BiCheckDouble size={23} className="text-green-600" />
@@ -48,7 +48,7 @@ const Dashboard = () => {
                 1,237
               </span>
             </div>
-            <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4">
+            <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
               <div className="flex justify-between items-center">
                 <h2 className="text-stone-600">Área Monitoradas</h2>
                 <LuMapPin size={23} className="text-stone-600" />
@@ -59,8 +59,8 @@ const Dashboard = () => {
             </div>
           </div>
         </section>
-        <section className="md:px-8 mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[#F8F8F8] rounded-xl shadow border border-gray-200 p-6">
+        <section className="md:px-8 mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 mr-10 sm:mr-0">
+          <div className="bg-[#F8F8F8] rounded shadow border border-gray-200 p-6">
             <header className="mb-4">
               <h2 className="text-lg font-semibold text-gray-900">
                 Inspeções Recentes
@@ -91,7 +91,7 @@ const Dashboard = () => {
             </ul>
           </div>
 
-          <div className="bg-[#F8F8F8] rounded-xl shadow border border-gray-200 p-6">
+          <div className="bg-[#F8F8F8] rounded shadow border border-gray-200 p-6">
             <header className="mb-4">
               <h2 className="text-lg font-semibold text-gray-900">
                 Alertas Prioritários
@@ -108,7 +108,7 @@ const Dashboard = () => {
                       bairro Boa Esperança
                     </span>
                   </div>
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-red-600">
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full text-white bg-red-600">
                     Alta
                   </span>
                 </li>
