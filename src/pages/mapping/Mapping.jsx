@@ -7,9 +7,9 @@ const Mapping = () => {
   return (
     <div className="flex min-h-screen">
       <SideBar />
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col mr-10 sm:mr-0">
         {/* Header */}
-        <div className=" px-4 md:px-8 py-4">
+        <div className=" md:px-8 py-4">
           <h1 className="text-xl md:text-2xl font-bold text-gray-900">
             Mapeamento de Ocorrências
           </h1>
@@ -20,7 +20,7 @@ const Mapping = () => {
 
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Mapa (esquerda) */}
-          <div className="flex-1 p-4 md:p-6">
+          <div className="flex-1 md:p-6">
             <div className="bg-[#F8F8F8] rounded-xl shadow border border-gray-200 h-full min-h-[400px] lg:min-h-0 flex flex-col">
               <div className="p-4 border-b border-gray-200">
                 <h2 className="font-bold text-lg">Mapa de Ocorrências</h2>
@@ -31,7 +31,7 @@ const Mapping = () => {
             </div>
           </div>
 
-          <div className="w-full lg:w-96 p-4 md:p-6 lg:border-l border-gray-200 overflow-y-auto overflow-x-auto">
+          <div className="w-full lg:w-96 py-3 md:p-6 lg:border-l border-gray-200 overflow-y-auto overflow-x-auto">
             {/* Ocorrências Recentes */}
             <div className="bg-[#F8F8F8] rounded-xl shadow border border-gray-200 p-4 mb-6">
               <h3 className="font-bold text-lg mb-3">Ocorrências Recentes</h3>

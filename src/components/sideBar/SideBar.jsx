@@ -29,7 +29,7 @@ const SideBar = () => {
 
   return (
     <>
-      <aside className="hidden md:flex bg-[#F8F8F8] h-screen w-64 border border-gray-200 flex-col justify-between shadow">
+      <aside className="hidden md:flex bg-[#F8F8F8] h-screen w-64 pt-6 border border-gray-200 flex-col justify-between shadow">
         {(isCargo === "ADMIN") && (
           <div>
             <nav className="mt-4 flex flex-col">
