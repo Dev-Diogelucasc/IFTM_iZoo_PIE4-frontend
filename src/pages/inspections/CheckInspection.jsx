@@ -77,7 +77,7 @@ const RecordInspection = () => {
                             Dados da inspeção
                         </span>
                         <span className="text-sm text-gray-500 font-light">
-                            Informe todos os detalhes da inspeção realizada
+                            Preencher após inspeção no endereço
                         </span>
                     </div>
                     <div className="flex flex-col">
@@ -100,8 +100,7 @@ const RecordInspection = () => {
                             </button>
                         </div>
                         <span className="text-sm text-gray-500 font-light ">
-                            Escaneie o QR Code do local para preencher os dados
-                            de localização
+                            Escaneie o QR Code do local para consultar todas as visitas
                         </span>
                     </div>
 
