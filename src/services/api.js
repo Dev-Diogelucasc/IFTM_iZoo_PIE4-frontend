@@ -109,4 +109,26 @@ export const createInspecao = async (inspecaoData) => {
     }
 };
 
+// Função para listar todas as inspeções
+export const getAllInspecoes = async () => {
+    try {
+        const response = await api.get("/inspecao");
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar inspeções:", error);
+        throw error;
+    }
+};
+
+// Função para buscar endereço por ID
+export const getEnderecoById = async (enderecoId) => {
+    try {
+        const response = await api.get(`/endereco/${enderecoId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar endereço:", error);
+        throw error;
+    }
+};
+
 export default api;
