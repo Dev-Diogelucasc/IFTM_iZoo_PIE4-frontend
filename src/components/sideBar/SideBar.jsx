@@ -5,6 +5,7 @@ import {
   BsFileEarmarkText,
   BsGeoAlt,
   BsPeople,
+  BsQrCodeScan,
 } from "react-icons/bs";
 import { GrHomeRounded } from "react-icons/gr";
 import { NavLink } from "react-router-dom";
@@ -40,6 +41,10 @@ const SideBar = () => {
               <NavLink to="/inspecoes/registar" className={navLinkClass}>
                 <FiEdit size={20} />
                 <span className="ml-3">Registrar Inspeção</span>
+              </NavLink>
+              <NavLink to="/inspecoes/endereco" className={navLinkClass}>
+                <BsQrCodeScan size={20} />
+                <span className="ml-3">Consultar endereço</span>
               </NavLink>
               <NavLink to="/inspecoes/consultar" className={navLinkClass}>
                 <BsSearch size={20} />
