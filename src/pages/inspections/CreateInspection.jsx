@@ -99,7 +99,7 @@ const CreateInspection = () => {
 
             // Redirecionar após 2 segundos
             setTimeout(() => {
-                navigate("/inspecoes/endereco");
+                navigate("/inspecoes/consultar");
             }, 2000);
         } catch (err) {
             console.error("Erro ao criar inspeção:", err);
