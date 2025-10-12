@@ -131,4 +131,15 @@ export const getEnderecoById = async (enderecoId) => {
     }
 };
 
+// Função para listar todos os endereços
+export const getAllEnderecos = async () => {
+    try {
+        const response = await api.get("/endereco");
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar endereços:", error);
+        throw error;
+    }
+};
+
 export default api;
