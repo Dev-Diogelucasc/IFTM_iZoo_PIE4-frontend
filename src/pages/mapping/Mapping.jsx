@@ -221,7 +221,7 @@ const Mapping = () => {
               <p className="text-sm text-gray-500 mb-4">
                 Últimas ocorrências cadastradas
               </p>
-              <div className="space-y-3">
+              <div className="space-y-3 h-80 overflow-y-auto">
                 {loading && (
                   <div className="text-center py-6 text-gray-500">
                     Carregando Inspeções...
