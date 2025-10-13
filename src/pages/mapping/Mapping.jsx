@@ -50,13 +50,6 @@ const Mapping = () => {
   const [loading, setLoading] = useState(false);
   const [inspections, setInspections] = useState([]);
 
-  // índice de endereços por id para lookup O(1)
-  const enderecosById = useMemo(() => {
-    const m = new Map();
-    for (const e of enderecos) m.set(e.id, e);
-    return m;
-  }, [enderecos]);
-
   // Função para calcular o centro do mapa baseado nos endereços
   const calcularCentroMapa = (enderecos) => {
     if (enderecos.length === 0) {
@@ -188,9 +181,9 @@ const Mapping = () => {
   return (
     <div className="flex min-h-screen">
       <SideBar />
-      <main className="flex-1 flex flex-col mr-10 sm:mr-0">
+      <main className="flex-1 flex flex-col mr-8 sm:mr-0">
         {/* Header */}
-        <div className=" md:px-8 py-4">
+        <div className=" md:px-8 py-2">
           <h1 className="text-xl md:text-2xl font-bold text-gray-900">
             Mapeamento de Ocorrências
           </h1>

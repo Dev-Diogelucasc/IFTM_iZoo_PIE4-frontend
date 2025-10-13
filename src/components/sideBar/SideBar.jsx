@@ -133,7 +133,7 @@ const SideBar = () => {
           <IoIosMenu
             onClick={() => setOpen(true)}
             className="cursor-pointer m-4 hover:bg-green-800 hover:text-white rounded"
-            size={30}
+            size={18}
           />
         )}
         {open && (
@@ -148,7 +148,7 @@ const SideBar = () => {
                 <IoIosClose
                   onClick={() => setOpen(false)}
                   className="ml-auto cursor-pointer hover:bg-green-800 hover:text-white rounded"
-                  size={30}
+                  size={18}
                 />
               </div>
               <nav className="mt-4 flex flex-col">
