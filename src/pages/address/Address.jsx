@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SideBar from "../../components/sideBar/SideBar";
 import { useAuth } from "../../contexts/AuthContext";
 import { LuHousePlus } from "react-icons/lu";
-import RegisterResidence from "../../components/registerResidence/RegisterResidence";
+import RegisterAddress from "./registerAddress/RegisterAddress";
 import { LuMapPinHouse } from "react-icons/lu";
 import { IoQrCodeOutline } from "react-icons/io5";
 import { BiEdit } from "react-icons/bi";
@@ -10,7 +10,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import QRCode from "react-qr-code";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import UpdateAddress from "../../components/updateAddress/UpdateAddress";
+import UpdateAddress from "./updateAddress/UpdateAddress";
 
 const Address = () => {
   const [address, setAddress] = useState([]);
@@ -28,6 +28,7 @@ const Address = () => {
   const notify = () => toast("Endereço excluido com sucesso!");
   const notifyQrCode = () => toast("Qr Code gerado com sucesso!");
 
+  // Função de Get da api
   const loadAddress = async () => {
     setLoading(true);
     setError(null);
@@ -54,6 +55,7 @@ const Address = () => {
     loadAddress();
   }, []);
 
+  // Função para deletar endereço
   const handleDelete = async (id) => {
     try {
       await deleteAddress(id);
@@ -63,6 +65,7 @@ const Address = () => {
     }
   };
 
+  // Função para Gerar qr Code
   const handleGenerateQR = (obj) => {
     const url = `${obj.id}`;
     setQrValue(url);
@@ -194,12 +197,14 @@ const Address = () => {
           ))}
         </div>
 
+        {/* Modal para registar nova residência */}
         {open && (
-          <RegisterResidence
+          <RegisterAddress
             onClose={() => setTimeout(() => setOpen(false), 600)}
           />
         )}
 
+        {/* Modal para Atualizar Residência */}
         {openUpdate && (
           <UpdateAddress
             address={updateAddress}
@@ -208,6 +213,7 @@ const Address = () => {
           />
         )}
 
+        {/* Modal do Qr code */}
         {qrOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
             <div className="bg-white rounded-lg p-6 w-full max-w-lg mx-4 shadow-xl">
@@ -226,6 +232,7 @@ const Address = () => {
 
               <div className="flex flex-col items-center gap-4 py-4">
                 <div className="bg-white p-2 rounded">
+                  {/* Componente que rendezira o Qr code */}
                   <QRCode value={qrValue} size={200} className="qr-svg" />
                 </div>
                 <p className="text-sm text-gray-500 text-center">

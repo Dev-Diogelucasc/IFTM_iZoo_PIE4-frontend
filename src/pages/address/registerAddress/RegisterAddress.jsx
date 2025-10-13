@@ -1,33 +1,87 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
-// 2 Parâmetros:
-// address, para preencher automatico os campos
-// onClose - funcionar a função de fechar no componente addess
-const UpdateAddress = ({ address, onClose, loadAddress }) => {
-  const [street, setStreet] = useState(address?.rua);
-  const [number, setNumber] = useState(address?.numero);
-  const [neighborhood, setNeighborhood] = useState(address?.bairro);
-  const [cep, setCep] = useState(address?.cep);
-  const [city, setCity] = useState(address?.cidade);
-  const [estado, setEstado] = useState(address?.estado);
-  const [latitude, setLatitude] = useState(address?.latitude);
-  const [longitude, setLongitude] = useState(address?.longitude);
+const RegisterAddress = ({ onClose }) => {
+  const [street, setStreet] = useState("");
+  const [number, setNumber] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [cep, setCep] = useState("");
+  const [city, setCity] = useState("");
+  const [estado, setEstado] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Estados para geolocalização
+  const [geoError, setGeoError] = useState("");
+  const [geoLoading, setGeoLoading] = useState(false);
+
   const navigate = useNavigate();
+  const { registerAddress } = useAuth();
 
-  const { updateAddress } = useAuth();
+  const notify = () => toast("Endereço Criado com Sucesso!");
 
-  const notify = () => toast("Endereço Atualizado!");
+  // Função de geolocalização
+  useEffect(() => {
+    // 1. Verifica se a API de Geolocalização está disponível
+    if (!navigator.geolocation) {
+      setGeoError("A Geolocation API não é suportada pelo seu navegador.");
+      return;
+    }
+
+    setGeoLoading(true);
+    setGeoError("");
+
+    // 2. Função de sucesso para a localização
+    const sucesso = (posicao) => {
+      const { latitude: lat, longitude: lng } = posicao.coords;
+      setLatitude(lat.toString());
+      setLongitude(lng.toString());
+      setGeoLoading(false);
+      setGeoError("");
+    };
+
+    // 3. Função de erro
+    const erroLocalizacao = (err) => {
+      let mensagem = "";
+      switch (err.code) {
+        case err.PERMISSION_DENIED:
+          mensagem = "Permissão negada pelo usuário.";
+          break;
+        case err.POSITION_UNAVAILABLE:
+          mensagem = "Informação de localização indisponível.";
+          break;
+        case err.TIMEOUT:
+          mensagem = "Tempo esgotado para obter a localização.";
+          break;
+        default:
+          mensagem = "Ocorreu um erro desconhecido.";
+      }
+      setGeoError(`Erro na geolocalização: ${mensagem}`);
+      setGeoLoading(false);
+    };
+
+    // 4. Opções
+    const opcoes = {
+      enableHighAccuracy: true, // Tenta obter a melhor precisão possível
+      timeout: 10000, // Tempo máximo para esperar por uma resposta
+      maximumAge: 60000, // Usar posições em cache por 1 minuto
+    };
+
+    // 5. Obtém a posição atual
+    navigator.geolocation.getCurrentPosition(sucesso, erroLocalizacao, opcoes);
+  }, []); // O array vazio garante que o efeito só rode uma vez
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const update = {
+    // evita submissão duplicada por cliques rápidos
+    if (loading) return;
+
+    const register = {
       rua: street,
       numero: number,
       bairro: neighborhood,
@@ -40,10 +94,10 @@ const UpdateAddress = ({ address, onClose, loadAddress }) => {
 
     try {
       setLoading(true);
-      await updateAddress(address.id, update);
+      await registerAddress(register);
+      // Fecha o modal ao concluir para evitar manter o formulário aberto
+      if (typeof onClose === "function") onClose();
       navigate("/endereco");
-      loadAddress()
-      onClose()
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(
@@ -54,16 +108,6 @@ const UpdateAddress = ({ address, onClose, loadAddress }) => {
       setLoading(false);
     }
   };
-  // Atualiza os campos quando mudar
-  useEffect(() => {
-    setStreet(address?.rua);
-    setNumber(address?.numero);
-    setNeighborhood(address?.bairro);
-    setCep(address?.cep);
-    setCity(address?.cidade);
-    setEstado(address?.estado);
-    setLatitude(address?.latitude);
-  }, [address]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/60 backdrop-blur-sm">
@@ -87,6 +131,7 @@ const UpdateAddress = ({ address, onClose, loadAddress }) => {
             {error}
           </div>
         )}
+        {/* Formulário para Cadastrar nova residência */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex gap-4">
             <div className="w-2/3">
@@ -173,17 +218,19 @@ const UpdateAddress = ({ address, onClose, loadAddress }) => {
               />
             </div>
           </div>
-          <div className="flex gap-4">
+          {/* Deixar Hidden para pegar latitude e longitude automático, caso queria alterar deve editar o endereço */}
+          <div className="hidden gap-4 ">
             <div className="w-1/2">
               <label className="block font-medium mb-1 text-gray-700">
                 Latitude
               </label>
               <input
                 type="text"
-                className="w-full border border-gray-200 bg-gray-50 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-green-600 transition cursor-pointer"
-                placeholder="Latitude"
+                className="w-full border border-gray-200 bg-gray-50 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-green-600 transition"
+                placeholder={geoLoading ? "Obtendo..." : "Digite a latitude"}
                 value={latitude}
                 onChange={(e) => setLatitude(e.target.value)}
+                disabled={geoLoading}
               />
             </div>
             <div className="w-1/2">
@@ -193,28 +240,44 @@ const UpdateAddress = ({ address, onClose, loadAddress }) => {
               <input
                 type="text"
                 className="w-full border border-gray-200 bg-gray-100 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-700"
-                placeholder="Longitude"
+                placeholder={geoLoading ? "Obtendo..." : "Digite a longitude"}
                 value={longitude}
                 onChange={(e) => setLongitude(e.target.value)}
+                disabled={geoLoading}
               />
             </div>
+          </div>
+
+          {/* Status da geolocalização */}
+          <div className="text-center">
+            {geoLoading && (
+              <p className="text-blue-600 text-sm">
+                🌍 Obtendo sua localização...
+              </p>
+            )}
+            {geoError && <p className="text-red-600 text-sm">⚠️ {geoError}</p>}
+            {latitude && longitude && !geoLoading && !geoError && (
+              <p className="text-green-800 text-sm">
+                ✅ Localização obtida automaticamente por GPS
+              </p>
+            )}
           </div>
           <button
             type="submit"
             disabled={loading}
-            onClick={notify}
             className={`w-full font-bold py-2 rounded-md mt-2 transition ${
               loading
                 ? "bg-gray-400 text-gray-600 cursor-not-allowed"
                 : "bg-green-700 text-white hover:bg-green-800"
             }`}
+            onClick={notify}
           >
-            {loading ? "Salvando..." : "Atualizar Residência"}
+            {loading ? "Salvando..." : "Salvar Endereço"}
           </button>
         </form>
         <ToastContainer
           position="bottom-right"
-          autoClose={800}
+          autoClose={1000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick={false}
@@ -229,4 +292,4 @@ const UpdateAddress = ({ address, onClose, loadAddress }) => {
   );
 };
 
-export default UpdateAddress;
+export default RegisterAddress;

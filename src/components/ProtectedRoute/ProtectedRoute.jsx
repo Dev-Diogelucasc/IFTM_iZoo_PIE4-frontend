@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
+// Função para bloquear acesso as rotas, sem estar autênticado
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 

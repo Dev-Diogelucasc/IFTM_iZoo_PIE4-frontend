@@ -10,21 +10,17 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
   // Permite acessar o objeto de localização atual da aplicação, retorna URL atual.
-  // ncluindo o caminho (pathname), a busca (search), o hash (hash) e, principalmente, o estado (state) que pode ser passado entre navegações.
+  // incluindo o caminho (pathname), a busca (search), o hash (hash) e, principalmente, o estado (state) que pode ser passado entre navegações.
   const location = useLocation();
 
   const notify = () => toast("Login realizado com sucesso!");
 
   useEffect(() => {
-    if (location.state?.message) {
-      setSuccessMessage(location.state.message);
-    }
     // Preenche os campos se vierem cadastro
     if (location.state?.loginField) {
       setLoginField(location.state.loginField);
@@ -34,6 +30,7 @@ const Login = () => {
     }
   }, [location]);
 
+  // Função para envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,16 +38,17 @@ const Login = () => {
       setError("Por favor, preencha todos os campos");
       return;
     }
+
     setError("");
     setLoading(true);
 
     try {
       await login(loginField, password);
-
       // Redirecionar para a tela inicial após login bem-sucedido
       navigate("/");
     } catch (error) {
       console.log("Erro detalhado:", error);
+      setError("Login ou Senha Inválidos.");
     } finally {
       setLoading(false);
     }
@@ -67,16 +65,12 @@ const Login = () => {
         <p className="text-gray-500 mb-6 text-sm">
           Entre com suas credenciais para acessar o sistema
         </p>
-        {successMessage && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            {successMessage}
-          </div>
-        )}
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
           </div>
         )}
+        {/* Formulário de Login */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="block text-gray-700 text-sm mb-1" htmlFor="login">
@@ -131,6 +125,7 @@ const Login = () => {
           </button>
         </form>
       </div>
+      {/* Se nã tiver conta, te redireciona para pagina de registro */}
       <div className="mt-6 text-center text-gray-600 text-sm">
         Não tem uma conta?{" "}
         <Link

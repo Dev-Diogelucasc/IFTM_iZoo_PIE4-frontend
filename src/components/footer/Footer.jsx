@@ -1,4 +1,4 @@
-import React from "react";
+// Rodapé da aplicação
 
 const Footer = () => {
   return (

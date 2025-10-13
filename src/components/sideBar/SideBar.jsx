@@ -125,7 +125,7 @@ const SideBar = () => {
       <div className="md:hidden">
         {open && (
           <div
-            className="fixed inset-0 z-40 backdrop-blur-sm transition-all"
+            className="fixed inset-0 z-50 backdrop-blur-sm transition-all"
             onClick={() => setOpen(false)}
           />
         )}

@@ -1,5 +1,3 @@
-import React from "react";
-// import { BsActivity } from "react-icons/bs";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -7,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 const NavBar = () => {
   const { isAuthenticated, user, logout } = useAuth();
 
+  // Função para Deslogar o acesso
   const handleLogout = () => {
     logout();
   };
@@ -23,6 +22,7 @@ const NavBar = () => {
         </div>
       </Link>
 
+      {/* Se o Usuário estiver autenticado */}
       {isAuthenticated() ? (
         <div className="flex items-center gap-4">
           <span className="text-gray-700">
@@ -35,6 +35,7 @@ const NavBar = () => {
             Sair
           </button>
         </div>
+        // Senão
       ) : (
         <div className="flex gap-2">
           <Link to="/login">

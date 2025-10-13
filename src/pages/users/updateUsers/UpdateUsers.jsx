@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { GiPlantsAndAnimals } from "react-icons/gi";
-import { useAuth } from "../../contexts/AuthContext";
+import { updateUser } from "../../../services/api";
 import { ToastContainer, toast } from "react-toastify";
 
 const UpdateUsers = ({ userLoad, onClose, loadUsers }) => {
@@ -8,14 +7,12 @@ const UpdateUsers = ({ userLoad, onClose, loadUsers }) => {
   const [login, setLogin] = useState(userLoad?.login);
   const [phone, setPhone] = useState(userLoad?.telefone);
   const [cargo, setCargo] = useState(userLoad?.cargo);
-  //   const [password, setPassword] = useState(user?.senha);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { updateUser } = useAuth();
-
   const notify = () => toast("Atualização feita com sucesso!");
 
+  //  Função para envio de formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,6 +39,7 @@ const UpdateUsers = ({ userLoad, onClose, loadUsers }) => {
     }
   };
 
+  // Trazer os dados do formulário preenchidos automaticamente
   useEffect(() => {
     setEmail(userLoad?.email);
     setLogin(userLoad?.login);
@@ -69,6 +67,7 @@ const UpdateUsers = ({ userLoad, onClose, loadUsers }) => {
             {error}
           </div>
         )}
+        {/* Formulario para atualizar o usuário */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="block font-semibold mb-1 text-gray-800">

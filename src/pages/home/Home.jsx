@@ -6,7 +6,7 @@ import {
   BsPeople,
   BsPersonPlus,
 } from "react-icons/bs";
-import FeatureCard from "../../components/FeatureCard/FeatureCard";
+import FeatureCard from "./FeatureCard/FeatureCard"
 import { useNavigate } from "react-router-dom";
 import Presentation from "../presentation/Presentation";
 import { useAuth } from "../../contexts/AuthContext";
@@ -132,7 +132,7 @@ const Home = () => {
       )}
       {cargo === "USER" && (
         <div className="w-full flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 max-w-6xl px-4 justify-center ">
             <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
               <FeatureCard
                 icon={<BsSearch size={28} className="text-green-700" />}

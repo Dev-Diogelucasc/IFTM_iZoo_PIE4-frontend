@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import SideBar from "../../components/sideBar/SideBar";
 import { BiEdit } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -6,14 +5,15 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import UpdateUsers from "../../components/updateUsers/UpdateUsers";
+import UpdateUsers from "./updateUsers/UpdateUsers";
 import { ToastContainer, toast } from "react-toastify";
+import { getUser, deleteUser } from "../../services/api";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { getUsers, user, deleteUser } = useAuth();
+  const { user } = useAuth();
   const [loadUpdateUser, setLoadUpdateUser] = useState(null);
   const [openUpdateUser, setOpenUpdateUser] = useState(false);
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Users = () => {
     setError(null);
 
     try {
-      const response = await getUsers();
+      const response = await getUser();
       console.log("Response from API:", response);
 
       if (response && response.success && response.data) {
@@ -41,7 +41,7 @@ const Users = () => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     loadUsers();
   }, []);
@@ -49,7 +49,7 @@ const Users = () => {
   const handleDelete = async (id) => {
     try {
       await deleteUser(id);
-      loadUsers()
+      loadUsers();
     } catch (error) {
       console.error("Erro ao deletar", error);
     }

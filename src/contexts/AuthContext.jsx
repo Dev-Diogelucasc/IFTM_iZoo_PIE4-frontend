@@ -105,57 +105,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Context Usuario
-  const register = async (registerData) => {
-    try {
-      const response = await api.post("/usuario/registro", registerData);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro no registro:", error);
-      throw error;
-    }
-  };
-
-  const getUsers = async () => {
-    try {
-      const response = await api.get("/usuario");
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao buscar usuários:", error);
-      throw error;
-    }
-  };
-
-  const deleteUser = async (id) => {
-    try {
-      const response = await api.delete(`/usuario/${id}`);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao deletar o usuário", error);
-      throw error;
-    }
-  };
-
-  const updateUser = async (id, data) => {
-    try {
-      const response = await api.patch(`/usuario/${id}`, data)
-      return {success: true, data: response.data}
-    } catch (error) {
-      console.error("erro ao atualizar Usuário", error)
-      throw error
-    }
-  }
-
-  // const updateCargoUser = async (id) => {
-  //   try {
-  //     const response = await api.patch(`/usuario/${id}/cargo`)
-  //     return {success: true, data: response.data}
-  //   } catch (error) {
-  //     console.error("erro ao atualizar Cargo", error)
-  //     throw error
-  //   }
-  // }
-
   // Context Endereço
   const registerAddress = async (residenceData) => {
     try {
@@ -208,10 +157,6 @@ export const AuthProvider = ({ children }) => {
     logout,
     isAuthenticated,
     loading,
-    register,
-    getUsers,
-    deleteUser,
-    updateUser,
     registerAddress,
     address,
     deleteAddress,

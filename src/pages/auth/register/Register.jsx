@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GiPlantsAndAnimals } from "react-icons/gi";
-import { useAuth } from "../../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import { registerUser } from "../../../services/api";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -13,12 +13,11 @@ const Register = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { register } = useAuth();
-
   const navigate = useNavigate();
 
   const notify = () => toast("Conta criada com sucesso! ");
 
+  // Função para envio formuláio de Registro
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,7 +35,7 @@ const Register = () => {
 
     try {
       setLoading(true);
-      await register(registerData);
+      await registerUser(registerData);
       navigate("/login", {
         // Enviar os estados ja preeenchidos, para login.
         state: {
@@ -70,6 +69,7 @@ const Register = () => {
             {error}
           </div>
         )}
+        {/* Formuláio de Registro */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="block font-semibold mb-1 text-gray-800">
@@ -156,6 +156,7 @@ const Register = () => {
           </button>
         </form>
       </div>
+      {/* Se ja tiver conta, te redireciona para pagina de login */}
       <div className="mt-4 text-gray-600">
         Já tem uma conta?{" "}
         <Link
