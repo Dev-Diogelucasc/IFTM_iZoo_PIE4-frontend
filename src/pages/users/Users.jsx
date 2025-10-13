@@ -2,7 +2,7 @@ import SideBar from "../../components/sideBar/SideBar";
 import { BiEdit } from "react-icons/bi";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import UpdateUsers from "./updateUsers/UpdateUsers";

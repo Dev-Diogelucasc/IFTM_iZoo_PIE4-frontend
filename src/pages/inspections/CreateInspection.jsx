@@ -3,7 +3,7 @@ import SideBar from "../../components/sideBar/SideBar";
 import { IoCameraOutline } from "react-icons/io5";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { getEnderecoParaInspecao, createInspecao } from "../../services/api";
+import { getAddressforInspection, createInspecao } from "../../services/api";
 import ScannerQr from "../../components/scannerQr/ScannerQr";
 
 const CreateInspection = () => {
@@ -33,7 +33,7 @@ const CreateInspection = () => {
       setEnderecoId(scannedEnderecoId);
 
       // Chama a API para buscar os dados do endereço
-      const data = await getEnderecoParaInspecao(scannedEnderecoId);
+      const data = await getAddressforInspection(scannedEnderecoId);
 
       setEnderecoData(data);
       setOpenQr(false);
