@@ -101,16 +101,88 @@ const RecordInspection = () => {
 
           {/* Exibir dados do endereço após scanear */}
           {enderecoData && (
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-md">
-              <h3 className="font-medium text-base text-gray-900 mb-2">
-                Dados do Endereço Escaneado:
-              </h3>
-              <div className="text-sm text-gray-700">
-                <pre className="whitespace-pre-wrap">
-                  {JSON.stringify(enderecoData, null, 2)}
-                </pre>
+            <>
+              <div className="mt-6 p-2 border-none bg-green-50 border border-green-200 rounded">
+                <h3 className=" text-base text-gray-900 mb-2">
+                  Dados do Endereço Escaneado:
+                </h3>
               </div>
-            </div>
+              <div className="overflow-x-auto rounded border border-stone-200 w-full font-light shadow">
+                <table className="w-full min-w-[700px]">
+                  <thead>
+                    <tr className="bg-white border-b border-stone-200">
+                      <th className="px-4 py-3 text-left">id</th>
+                      <th className="px-4 py-3 text-left">Tipo</th>
+                      <th className="px-4 py-3 text-left">Gravidade</th>
+                      <th className="px-4 py-3 text-left">Status</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {!loading && enderecoData.length === 0 ? (
+                      <tr>
+                        <td
+                          colSpan={6}
+                          className="px-4 py-6 text-center text-gray-500"
+                        >
+                          Nenhuma Inspeção encontrada!
+                        </td>
+                      </tr>
+                    ) : (
+                      enderecoData.map((obj) => (
+                        <tr
+                          key={obj.id || obj.enderecoId}
+                          className="border-b border-stone-200 items-center"
+                        >
+                          <td className="px-4 py-4">{obj.id}</td>
+                          <td className="px-4 py-4">{obj.tipo}</td>
+                          <td className="px-4 py-4">
+                            {(() => {
+                              const cls =
+                                obj.gravidade === "leve"
+                                  ? "bg-green-100 text-green-800 ring-green-200"
+                                  : obj.gravidade === "moderado"
+                                  ? "bg-yellow-100 text-yellow-800 ring-yellow-200"
+                                  : obj.gravidade === "grave"
+                                  ? "bg-orange-100 text-orange-800 ring-orange-200"
+                                  : obj.gravidade === "gravissimo" // cobre "gravíssimo"
+                                  ? "bg-red-100 text-red-800 ring-red-200"
+                                  : "bg-gray-100 text-gray-700 ring-gray-200";
+
+                              return (
+                                <span
+                                  className={`inline-flex items-center justify-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium ring-1 ring-inset ${cls}`}
+                                >
+                                  {obj.gravidade || "—"}
+                                </span>
+                              );
+                            })()}
+                          </td>
+                          <td className="px-4 py-4">
+                            <span
+                              className={`inline-flex items-center justify-center gap-1 px-2 py-0.5 rounded text-[11px] ${
+                                obj.status === "concluído"
+                                  ? "bg-green-100 text-green-800 ring-green-200"
+                                  : obj.status === "em andamento"
+                                  ? "bg-blue-100 text-blue-800 ring-blue-200"
+                                  : obj.status === "pendente"
+                                  ? "bg-yellow-100 text-yellow-800 ring-yellow-200"
+                                  : obj.status === "cancelado"
+                                  ? "bg-red-100 text-red-800 ring-red-200"
+                                  : "bg-gray-100 text-gray-700 ring-gray-200"
+                              }`}
+                            >
+                              {obj.status}
+                            </span>
+                          </td>
+                          <td className="px-4 py-4 flex gap-3"></td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
 
           {/* Exibir erro se houver */}

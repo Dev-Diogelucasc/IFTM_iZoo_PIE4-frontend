@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect} from "react";
 import SideBar from "../../components/sideBar/SideBar";
 import { LuMapPinHouse } from "react-icons/lu";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
@@ -232,15 +232,15 @@ const Mapping = () => {
                       <p className="font-semibold text-sm">{obj.tipo}</p>
                       <p className="text-xs text-gray-500">{obj.enderecoId}</p>
                       <span
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium ring-1 ring-inset ${
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] ${
                           obj.status === "concluído"
-                            ? "bg-green-100 text-green-800 ring-green-200"
+                            ? "text-green-600 bg-green-50 border-green-200"
                             : obj.status === "em andamento"
-                            ? "bg-blue-100 text-blue-800 ring-blue-200"
+                            ? "text-blue-600 bg-blue-50 border-blue-200"
                             : obj.status === "pendente"
-                            ? "bg-yellow-100 text-yellow-800 ring-yellow-200"
+                            ? "text-yellow-700 bg-yellow-50 border-yellow-200"
                             : obj.status === "cancelado"
-                            ? "bg-red-100 text-red-800 ring-red-200"
+                            ? "text-red-600 bg-red-50 border-red-200"
                             : "bg-gray-100 text-gray-700 ring-gray-200"
                         }`}
                       >
