@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import { updateAddress } from "../../../services/api";
 
 // address, para preencher automatico os campos
 // onClose - funcionar a função de fechar no componente address
@@ -19,8 +19,6 @@ const UpdateAddress = ({ address, onClose, loadAddress }) => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const { updateAddress } = useAuth();
 
   const notify = () => toast("Endereço Atualizado!");
 

@@ -11,6 +11,7 @@ import QRCode from "react-qr-code";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import UpdateAddress from "./updateAddress/UpdateAddress";
+import { getAllEnderecos, deleteAddress } from "../../services/api";
 
 const Address = () => {
   const [address, setAddress] = useState([]);
@@ -22,7 +23,7 @@ const Address = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [updateAddress, setUpdateAddress] = useState(null);
 
-  const { address: getAddress, deleteAddress, user } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const notify = () => toast("Endereço excluido com sucesso!");
@@ -34,7 +35,7 @@ const Address = () => {
     setError(null);
 
     try {
-      const response = await getAddress();
+      const response = await getAllEnderecos();
       console.log("Response from API:", response);
 
       if (response && response.success && response.data) {
@@ -201,6 +202,7 @@ const Address = () => {
         {open && (
           <RegisterAddress
             onClose={() => setTimeout(() => setOpen(false), 600)}
+            loadAddress={loadAddress}
           />
         )}
 

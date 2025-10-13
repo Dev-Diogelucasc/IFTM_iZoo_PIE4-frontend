@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import { registerAddress } from "../../../services/api";
 
-const RegisterAddress = ({ onClose }) => {
+const RegisterAddress = ({ onClose, loadAddress }) => {
   const [street, setStreet] = useState("");
   const [number, setNumber] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
@@ -20,7 +20,6 @@ const RegisterAddress = ({ onClose }) => {
   const [geoLoading, setGeoLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { registerAddress } = useAuth();
 
   const notify = () => toast("Endereço Criado com Sucesso!");
 
@@ -95,8 +94,9 @@ const RegisterAddress = ({ onClose }) => {
     try {
       setLoading(true);
       await registerAddress(register);
+      loadAddress();
       // Fecha o modal ao concluir para evitar manter o formulário aberto
-      if (typeof onClose === "function") onClose();
+      onClose();
       navigate("/endereco");
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);

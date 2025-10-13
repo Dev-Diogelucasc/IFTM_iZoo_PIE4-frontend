@@ -105,47 +105,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Context Endereço
-  const registerAddress = async (residenceData) => {
-    try {
-      const response = await api.post("/endereco", residenceData);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao registrar residência", error);
-      throw error;
-    }
-  };
-
-  const address = async () => {
-    try {
-      const response = await api.get("/endereco");
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao buscar endereços", error);
-      throw error;
-    }
-  };
-
-  const deleteAddress = async (id) => {
-    try {
-      const response = await api.delete(`/endereco/${id}`);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao Deletar endereço:", error);
-      throw error;
-    }
-  };
-
-  const updateAddress = async (id, data) => {
-    try {
-      const response = await api.put(`/endereco/${id}`, data);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao atualizar endereço:", error);
-      throw error;
-    }
-  };
-
   const isAuthenticated = () => {
     return !!token;
   };
@@ -157,10 +116,6 @@ export const AuthProvider = ({ children }) => {
     logout,
     isAuthenticated,
     loading,
-    registerAddress,
-    address,
-    deleteAddress,
-    updateAddress,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import SideBar from "../../components/sideBar/SideBar";
 import { IoCameraOutline } from "react-icons/io5";
-import { LuHousePlus } from "react-icons/lu";
 import ScannerQr from "../../components/scannerQr/ScannerQr";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { getEnderecoParaInspecao } from "../../services/api";
+import { getAddressforInspection } from "../../services/api";
 
 const RecordInspection = () => {
   const [openQr, setOpenQr] = useState(false);
@@ -24,7 +23,7 @@ const RecordInspection = () => {
       const enderecoId = scannedData;
 
       // Chama a API para buscar os dados do endereço
-      const data = await getEnderecoParaInspecao(enderecoId);
+      const data = await getAddressforInspection(enderecoId);
 
       setEnderecoData(data);
       setOpenQr(false);

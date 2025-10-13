@@ -132,7 +132,7 @@ export const deleteUser = async (id) => {
 };
 
 // Função para buscar endereço por ID para inspeção
-export const getEnderecoParaInspecao = async (enderecoId) => {
+export const getAddressforInspection = async (enderecoId) => {
   try {
     const response = await api.get(`/inspecao/endereco/${enderecoId}`);
     return response.data;
@@ -185,5 +185,38 @@ export const getAllEnderecos = async () => {
     throw error;
   }
 };
+
+  // Função para Registrar Endereço
+  export const registerAddress = async (residenceData) => {
+    try {
+      const response = await api.post("/endereco", residenceData);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Erro ao registrar residência", error);
+      throw error;
+    }
+  };
+
+    // Função para Atualizar Endereço
+    export const updateAddress = async (id, data) => {
+    try {
+      const response = await api.put(`/endereco/${id}`, data);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Erro ao atualizar endereço:", error);
+      throw error;
+    }
+  };
+
+  // Função para Deletar Endereço
+  export const deleteAddress = async (id) => {
+    try {
+      const response = await api.delete(`/endereco/${id}`);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Erro ao Deletar endereço:", error);
+      throw error;
+    }
+  };
 
 export default api;
