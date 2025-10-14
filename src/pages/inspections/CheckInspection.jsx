@@ -4,12 +4,11 @@ import { IoCameraOutline } from "react-icons/io5";
 import ScannerQr from "../../components/scannerQr/ScannerQr";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { getAddressforInspection, getAllEnderecos } from "../../services/api";
+import { getAddressforInspection } from "../../services/api";
 
 const RecordInspection = () => {
   const [openQr, setOpenQr] = useState(false);
   const [enderecoData, setEnderecoData] = useState(null);
-  const [endereco, setEndereco] = useState("")
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { user } = useAuth();
@@ -37,28 +36,6 @@ const RecordInspection = () => {
       setLoading(false);
     }
   };
-
-  const loadAddress = async () => {
-      setLoading(true);
-      setError(null);
-  
-      try {
-        const response = await getAllEnderecos();
-        console.log("Response from API:", response);
-  
-        if (response && response.success && response.data) {
-          console.log("Users data:", response.data);
-          setEndereco(Array.isArray(response.data) ? response.data : []);
-        } else if (Array.isArray(response)) {
-          setEndereco(response);
-        }
-      } catch (error) {
-        console.error("Erro completo:", error);
-        setEndereco([]);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -137,7 +114,7 @@ const RecordInspection = () => {
           {/* Exibir dados do endereço após scanear */}
           {enderecoData && (
             <>
-              <div className="mt-6 p-2 border-none bg-green-50 border border-green-200 rounded">
+              <div className="mt-6 p-2 border-none overflow-x-auto h-90 overflow-y-auto bg-green-50 border border-green-200 rounded">
                 <h3 className=" text-base text-gray-900 mb-2">
                   Dados do Endereço Escaneado:
                 </h3>

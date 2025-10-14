@@ -222,7 +222,7 @@ const Consult = () => {
             )}
 
             {!loading && !error && (
-              <div className="overflow-x-auto rounded border border-stone-200 w-full font-light shadow">
+              <div className="overflow-x-auto rounded border h-90 overflow-y-auto border-stone-200 w-full font-light shadow">
                 <table className="w-full min-w-[700px]">
                   <thead>
                     <tr className="bg-white border-b border-stone-200">
