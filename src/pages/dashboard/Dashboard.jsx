@@ -88,11 +88,11 @@ const Dashboard = () => {
             </div>
             <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
               <div className="flex justify-between items-center">
-                <h2 className="text-stone-600">Área Monitoradas</h2>
+                <h2 className="text-stone-600">Locais Monitorados</h2>
                 <LuMapPin size={23} className="text-stone-600" />
               </div>
               <span className="font-semibold mt-6 text-2xl text-stone-800">
-                23
+                {address.length}
               </span>
             </div>
           </div>
