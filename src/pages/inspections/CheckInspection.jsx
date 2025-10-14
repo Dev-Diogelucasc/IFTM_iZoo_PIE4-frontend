@@ -114,7 +114,7 @@ const RecordInspection = () => {
           {/* Exibir dados do endereço após scanear */}
           {enderecoData && (
             <>
-              <div className="mt-6 p-2 border-none overflow-x-auto h-90 overflow-y-auto bg-green-50 border border-green-200 rounded">
+              <div className="mt-6 p-2 border-none bg-green-50 border border-green-200 rounded">
                 <h3 className=" text-base text-gray-900 mb-2">
                   Dados do Endereço Escaneado:
                 </h3>
