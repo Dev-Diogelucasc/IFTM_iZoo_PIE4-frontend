@@ -24,6 +24,7 @@ import Home from "./pages/home/Home";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Address from "./pages/address/Address";
 import RecoverPassword from "./pages/auth/recoverpassword/RecoverPassword";
+import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
 
 function App() {
   return (
@@ -91,6 +92,7 @@ function App() {
             }
           />
           <Route path="/esqueceu_senha" element={<RecoverPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/usuarios"
             element={

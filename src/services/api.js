@@ -109,16 +109,16 @@ export const getUser = async () => {
   }
 };
 
-  // Função para Atualizar Usuário
-  export const updateUser = async (id, data) => {
-    try {
-      const response = await api.patch(`/usuario/${id}`, data)
-      return {success: true, data: response.data}
-    } catch (error) {
-      console.error("erro ao atualizar Usuário", error)
-      throw error
-    }
+// Função para Atualizar Usuário
+export const updateUser = async (id, data) => {
+  try {
+    const response = await api.patch(`/usuario/${id}`, data);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("erro ao atualizar Usuário", error);
+    throw error;
   }
+};
 
 // Função para Deletar Usuário
 export const deleteUser = async (id) => {
@@ -186,37 +186,70 @@ export const getAllEnderecos = async () => {
   }
 };
 
-  // Função para Registrar Endereço
-  export const registerAddress = async (residenceData) => {
-    try {
-      const response = await api.post("/endereco", residenceData);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao registrar residência", error);
-      throw error;
-    }
-  };
+// Função para Registrar Endereço
+export const registerAddress = async (residenceData) => {
+  try {
+    const response = await api.post("/endereco", residenceData);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao registrar residência", error);
+    throw error;
+  }
+};
 
-    // Função para Atualizar Endereço
-    export const updateAddress = async (id, data) => {
-    try {
-      const response = await api.put(`/endereco/${id}`, data);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao atualizar endereço:", error);
-      throw error;
-    }
-  };
+// Função para Atualizar Endereço
+export const updateAddress = async (id, data) => {
+  try {
+    const response = await api.put(`/endereco/${id}`, data);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao atualizar endereço:", error);
+    throw error;
+  }
+};
 
-  // Função para Deletar Endereço
-  export const deleteAddress = async (id) => {
-    try {
-      const response = await api.delete(`/endereco/${id}`);
-      return { success: true, data: response.data };
-    } catch (error) {
-      console.error("Erro ao Deletar endereço:", error);
-      throw error;
-    }
-  };
+// Função para Deletar Endereço
+export const deleteAddress = async (id) => {
+  try {
+    const response = await api.delete(`/endereco/${id}`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao Deletar endereço:", error);
+    throw error;
+  }
+};
+
+// Função para Validar o token de Recuperação de senha
+export const verifyToken = async (data) => {
+  try {
+    const response = await api.post("/recuperacao-senha/validar-token", data);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao verificar token:", error);
+    throw error;
+  }
+};
+
+// Função Solicitar recuperação de senha
+export const requestPassword = async (data) => {
+  try {
+    const response = await api.post("/recuperacao-senha/solicitar", data);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao solicitar nova Senha:", error);
+    throw error;
+  }
+};
+
+// Função para redefinir senha
+export const resetPassword = async (data) => {
+  try {
+    const response = await api.post("/recuperacao-senha/redefinir", data);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao redefinir senha:", error);
+    throw error;
+  }
+};
 
 export default api;

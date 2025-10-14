@@ -1,13 +1,70 @@
 import { useState } from "react";
 import { GiPlantsAndAnimals } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { requestPassword, verifyToken } from "../../../services/api";
 
 const RecoverPassword = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const isValidEmail = (value) => /^\S+@\S+\.\S+$/.test(value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setMessage("");
+
+    if (!isValidEmail(email)) {
+      setError("Informe um e-mail válido.");
+      return;
+    }
+
+    // Se não tiver código, solicita envio do token
+    if (!code) {
+      setLoading(true);
+      try {
+        await requestPassword({ email });
+        setMessage(
+          "Token enviado para o seu e-mail."
+        );
+      } catch (error) {
+        console.error("Erro ao solicitar token:", error);
+        setError("Erro ao solicitar token.");
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await verifyToken({ token: code });
+      navigate("/reset-password", { state: { email, token: code } });
+    } catch (error) {
+      console.error("Erro ao validar token:", error);
+      setError("Código inválido.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    setError("");
+    setMessage("");
+    setLoading(true);
+    try {
+      await requestPassword({ email });
+      setMessage("Token reenviado. Verifique seu e-mail.");
+    } catch (err) {
+      console.error("Erro ao reenviar token:", err);
+      setError("Falha ao reenviar token.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -26,7 +83,7 @@ const RecoverPassword = () => {
             Informe seu e-mail para receber o código de recuperação.
           </p>
 
-          <form onChange={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-stone-700 mb-1">
                 E-mail
@@ -34,11 +91,12 @@ const RecoverPassword = () => {
               <input
                 type="email"
                 required
-                className="w-full px-4 py-2 rounded-md border border-stone-200 bg-stone-50 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-green-300"
+                className="w-full px-4 py-2 rounded-md border border-stone-200 bg-stone-50 placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Digite seu Email"
                 autoComplete="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                disabled={loading}
               />
             </div>
 
@@ -50,27 +108,47 @@ const RecoverPassword = () => {
                 type="text"
                 inputMode="numeric"
                 maxLength={6}
-                className="w-48 px-4 py-2 rounded-md border border-stone-200 bg-white placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-300 tracking-widest text-center"
+                className="w-48 px-4 py-2 rounded-md border border-stone-200 bg-white placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-amber-300 tracking-widest text-center"
                 placeholder="••••••"
                 aria-label="Senha lógica"
                 onChange={(e) => setCode(e.target.value)}
                 value={code}
+                disabled={loading}
               />
               <p className="mt-1 text-xs text-stone-400">
-                Digite o código de 6 dígitos recebido.
+                Deixe vazio e clique em Enviar para receber o código. Informe o
+                código e clique em Verificar código.
               </p>
             </div>
+
+            {message && <p className="text-sm text-green-600">{message}</p>}
+            {error && <p className="text-sm text-red-600">{error}</p>}
 
             <div className="flex items-center justify-between">
               <button
                 type="submit"
                 className="w-full py-2 px-4 bg-green-700 hover:bg-green-800 cursor-pointer text-white font-semibold rounded-md shadow-sm"
+                disabled={loading}
               >
-                Enviar
+                {loading
+                  ? !code
+                    ? "Enviando..."
+                    : "Verificando..."
+                  : !code
+                  ? "Enviar"
+                  : "Verificar código"}
               </button>
             </div>
 
-            <div className="text-center mt-3">
+            <div className="flex justify-between mt-2">
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={loading}
+                className="text-sm text-stone-600 hover:underline"
+              >
+                Reenviar código
+              </button>
               <Link
                 to="/login"
                 className="text-sm text-green-600 hover:underline"
