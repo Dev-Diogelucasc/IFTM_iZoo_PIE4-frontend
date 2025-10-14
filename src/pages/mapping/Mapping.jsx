@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import SideBar from "../../components/sideBar/SideBar";
 import { LuMapPinHouse } from "react-icons/lu";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
@@ -115,6 +115,17 @@ const Mapping = () => {
     loadInspecions();
   }, []);
 
+  // forma simples e compacta para achar o tipo mais comum
+  const tipoMaisComum = (() => {
+    if (!inspections?.length) return null;
+    const cont = inspections.reduce((acc, { tipo }) => {
+      const t = (tipo || "—").trim();
+      acc[t] = (acc[t] || 0) + 1;
+      return acc;
+    }, {});
+    return Object.keys(cont).reduce((a, b) => (cont[a] >= cont[b] ? a : b));
+  })();
+
   let conteudoMapa;
   if (carregando) {
     conteudoMapa = <p className="p-4">Carregando endereços do mapa...</p>;
@@ -125,7 +136,7 @@ const Mapping = () => {
 
     // Define o mapa OpenStreetMap usando react-leaflet
     conteudoMapa = (
-      <div className="w-full z-30 h-full">
+      <div className="relative z-0 w-full h-full">
         <MapContainer
           center={mapCenter}
           zoom={zoom}
@@ -180,7 +191,9 @@ const Mapping = () => {
 
   return (
     <div className="flex min-h-screen">
-      <SideBar />
+      <div>
+        <SideBar />
+      </div>
       <main className="flex-1 flex flex-col mr-8 sm:mr-0">
         {/* Header */}
         <div className=" md:px-8 py-2">
@@ -195,7 +208,7 @@ const Mapping = () => {
         <div className="flex flex-col lg:flex-row flex-1">
           {/* Mapa (esquerda) */}
           <div className="flex-1 md:p-6">
-            <div className="bg-[#F8F8F8] rounded-xl shadow border border-gray-200 h-full min-h-[400px] lg:min-h-0 flex flex-col">
+            <div className="bg-[#F8F8F8] rounded shadow border border-gray-200 h-full min-h-[400px] lg:min-h-0 flex flex-col">
               <div className="p-4 border-b border-gray-200">
                 <h2 className="font-bold text-lg">Mapa de Ocorrências</h2>
                 <p className="text-sm text-gray-500">
@@ -209,69 +222,96 @@ const Mapping = () => {
           {erro && <div className="text-center py-6 text-red-500">{erro}</div>}
           <div className="w-full lg:w-96 py-3 md:p-6 lg:border-l border-gray-200 overflow-y-auto overflow-x-auto">
             {/* Ocorrências Recentes */}
-            <div className="bg-[#F8F8F8] rounded-xl shadow border border-gray-200 p-4 mb-6">
+            <div className="bg-[#F8F8F8] rounded shadow border border-gray-200 p-4 mb-6">
               <h3 className="font-bold text-lg mb-3">Ocorrências Recentes</h3>
               <p className="text-sm text-gray-500 mb-4">
                 Últimas ocorrências cadastradas
               </p>
-              <div className="space-y-3 h-80 overflow-y-auto">
+              <div className="space-y-3 h-80 overflow-y-auto ">
                 {loading && (
                   <div className="text-center py-6 text-gray-500">
                     Carregando Inspeções...
                   </div>
                 )}
-                {inspections.map((obj) => (
-                  <div
-                    key={obj.id}
-                    className="flex items-start gap-3 pb-3 border-b border-gray-100 last:border-0"
-                  >
-                    <div className="w-3 h-3 rounded-full mt-1">
-                      <LuMapPinHouse key={obj.id} />
+                {inspections.map((obj) => {
+                  const endereco = enderecos.find(
+                    (e) => e.id === obj.enderecoId
+                  );
+                  return (
+                    <div
+                      key={obj.id}
+                      className="flex items-start gap-3 pb-3 border-b border-stone-200 last:border-0"
+                    >
+                      <div className="w-3 h-3 rounded-full mt-1">
+                        <LuMapPinHouse />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm">{obj.tipo}</p>
+                        <p className="text-xs text-gray-500">
+                          {endereco ? (
+                            <>
+                              {endereco.rua || "N/A"},{" "}
+                              {endereco.numero || "S/N"}
+                              <br />
+                              <span className="text-xs text-gray-500">
+                                {endereco.bairro || ""}
+                              </span>
+                            </>
+                          ) : (
+                            "Endereço não disponível"
+                          )}
+                        </p>
+                        <span
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] ${
+                            obj.status === "concluído"
+                              ? "text-green-600 bg-green-50 border-green-200"
+                              : obj.status === "em andamento"
+                              ? "text-blue-600 bg-blue-50 border-blue-200"
+                              : obj.status === "pendente"
+                              ? "text-yellow-700 bg-yellow-50 border-yellow-200"
+                              : obj.status === "cancelado"
+                              ? "text-red-600 bg-red-50 border-red-200"
+                              : "bg-gray-100 text-gray-700 ring-gray-200"
+                          }`}
+                        >
+                          {obj.status || "—"}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <p className="font-semibold text-sm">{obj.tipo}</p>
-                      <p className="text-xs text-gray-500">{obj.enderecoId}</p>
-                      <span
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] ${
-                          obj.status === "concluído"
-                            ? "text-green-600 bg-green-50 border-green-200"
-                            : obj.status === "em andamento"
-                            ? "text-blue-600 bg-blue-50 border-blue-200"
-                            : obj.status === "pendente"
-                            ? "text-yellow-700 bg-yellow-50 border-yellow-200"
-                            : obj.status === "cancelado"
-                            ? "text-red-600 bg-red-50 border-red-200"
-                            : "bg-gray-100 text-gray-700 ring-gray-200"
-                        }`}
-                      >
-                        {obj.status || "—"}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
+                {/* Tabelas Informativas */}
             <div className="space-y-3">
-              <div className="bg-[#F8F8F8] rounded-lg shadow-sm border border-gray-200 p-3">
+              {/* <div className="bg-[#F8F8F8] rounded shadow-sm border border-gray-200 p-3">
                 <p className="text-xs text-gray-500 mb-1">Área Mais Afetada</p>
                 <p className="text-lg font-bold text-gray-900">Bairro Centro</p>
                 <p className="text-xs text-gray-400">
                   47 ocorrências registadas
                 </p>
-              </div>
-              <div className="bg-[#F8F8F8] rounded-lg shadow-sm border border-gray-200 p-3">
+              </div> */}
+              <div className="bg-[#F8F8F8] rounded shadow-sm border border-gray-200 p-3">
                 <p className="text-xs text-gray-500 mb-1">Tipo mais Comum</p>
                 <p className="text-lg font-bold text-gray-900">
-                  Foco de Dengue
+                  {tipoMaisComum || "—"}
                 </p>
-                <p className="text-xs text-gray-400">38% do total de casos</p>
+                <p className="text-xs text-gray-400">
+                  {tipoMaisComum
+                    ? `${
+                        inspections.filter(
+                          (i) => (i.tipo || "—").trim() === tipoMaisComum
+                        ).length
+                      } ocorrências`
+                    : ""}
+                </p>
               </div>
-              <div className="bg-[#F8F8F8] rounded-lg shadow-sm border border-gray-200 p-3">
+              {/* <div className="bg-[#F8F8F8] rounded shadow-sm border border-gray-200 p-3">
                 <p className="text-xs text-gray-500 mb-1">Raio de Cobertura</p>
                 <p className="text-lg font-bold text-gray-900">23Km²</p>
                 <p className="text-xs text-gray-400">Área monitorada</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

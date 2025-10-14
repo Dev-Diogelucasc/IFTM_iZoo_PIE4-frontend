@@ -4,11 +4,12 @@ import { IoCameraOutline } from "react-icons/io5";
 import ScannerQr from "../../components/scannerQr/ScannerQr";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { getAddressforInspection } from "../../services/api";
+import { getAddressforInspection, getEnderecoById } from "../../services/api";
 
 const RecordInspection = () => {
   const [openQr, setOpenQr] = useState(false);
   const [enderecoData, setEnderecoData] = useState(null);
+  const [address, setAddress] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { user } = useAuth();
@@ -22,13 +23,23 @@ const RecordInspection = () => {
       // O QR code deve conter o ID do endereço
       const enderecoId = scannedData;
 
-      // Chama a API para buscar os dados do endereço
+      // Chama a API para buscar os dados do endereço (inspeções)
       const data = await getAddressforInspection(enderecoId);
 
       setEnderecoData(data);
+
+      // Buscar dados do endereço (rua, numero, bairro) usando o mesmo id
+      try {
+        const addr = await getEnderecoById(enderecoId);
+        setAddress(addr ? [addr] : []);
+      } catch (addrErr) {
+        console.error("Não foi possível buscar dados do endereço:", addrErr);
+        setAddress([]);
+      }
+
       setOpenQr(false);
 
-      console.log("Dados do endereço:", data);
+      console.log("Dados do endereço (inspeções):", data);
     } catch (err) {
       console.error("Erro ao buscar endereço:", err);
       setError("Erro ao buscar dados do endereço. Verifique o QR Code.");
@@ -37,7 +48,7 @@ const RecordInspection = () => {
     }
   };
 
-    const formatDate = (dateString) => {
+  const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     return date.toLocaleDateString("pt-BR", {
@@ -142,31 +153,42 @@ const RecordInspection = () => {
                         </td>
                       </tr>
                     ) : (
-                      enderecoData.map((obj) => (
+                      enderecoData.map((insp) => (
                         <tr
-                          key={obj.id || obj.enderecoId}
+                          key={insp.id || insp.enderecoId}
                           className="border-b border-stone-200 items-center"
                         >
-                          <td className="px-4 py-4">{formatDate(obj.createdAt)}</td>
-                          <td className="px-4 py-4">{obj.tipo}</td>
-                          <td className="px-4 py-4 text-sm">
-                            {obj.endereco?.rua || "N/A"},{" "}
-                            {obj.endereco?.numero || "S/N"}
-                            <br />
-                            <span className="text-xs text-gray-500">
-                              {obj.endereco?.bairro || ""}
-                            </span>
+                          <td className="px-4 py-4">
+                            {formatDate(insp.createdAt)}
                           </td>
+                          <td className="px-4 py-4">{insp.tipo}</td>
+
+                          {/* Coluna Local: usa o primeiro endereço em `address` */}
+                          <td className="px-4 py-4 text-sm">
+                            {address && address.length > 0 ? (
+                              <>
+                                {address[0]?.rua || "N/A"},{" "}
+                                {address[0]?.numero || "S/N"}
+                                <br />
+                                <span className="text-xs text-gray-500">
+                                  {address[0]?.bairro || ""}
+                                </span>
+                              </>
+                            ) : (
+                              "N/A"
+                            )}
+                          </td>
+
                           <td className="px-4 py-4">
                             {(() => {
                               const cls =
-                                obj.gravidade === "leve"
+                                insp.gravidade === "leve"
                                   ? "bg-green-100 text-green-800 ring-green-200"
-                                  : obj.gravidade === "moderado"
+                                  : insp.gravidade === "moderado"
                                   ? "bg-yellow-100 text-yellow-800 ring-yellow-200"
-                                  : obj.gravidade === "grave"
+                                  : insp.gravidade === "grave"
                                   ? "bg-orange-100 text-orange-800 ring-orange-200"
-                                  : obj.gravidade === "gravissimo" // cobre "gravíssimo"
+                                  : insp.gravidade === "gravissimo"
                                   ? "bg-red-100 text-red-800 ring-red-200"
                                   : "bg-gray-100 text-gray-700 ring-gray-200";
 
@@ -174,7 +196,7 @@ const RecordInspection = () => {
                                 <span
                                   className={`inline-flex items-center justify-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium ring-1 ring-inset ${cls}`}
                                 >
-                                  {obj.gravidade || "—"}
+                                  {insp.gravidade || "—"}
                                 </span>
                               );
                             })()}
@@ -182,18 +204,18 @@ const RecordInspection = () => {
                           <td className="px-4 py-4">
                             <span
                               className={`inline-flex items-center justify-center gap-1 px-2 py-0.5 rounded text-[11px] ${
-                                obj.status === "concluído"
+                                insp.status === "concluído"
                                   ? "bg-green-100 text-green-800 ring-green-200"
-                                  : obj.status === "em andamento"
+                                  : insp.status === "em andamento"
                                   ? "bg-blue-100 text-blue-800 ring-blue-200"
-                                  : obj.status === "pendente"
+                                  : insp.status === "pendente"
                                   ? "bg-yellow-100 text-yellow-800 ring-yellow-200"
-                                  : obj.status === "cancelado"
+                                  : insp.status === "cancelado"
                                   ? "bg-red-100 text-red-800 ring-red-200"
                                   : "bg-gray-100 text-gray-700 ring-gray-200"
                               }`}
                             >
-                              {obj.status}
+                              {insp.status}
                             </span>
                           </td>
                           <td className="px-4 py-4 flex gap-3"></td>

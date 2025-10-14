@@ -3,9 +3,41 @@ import { BiCheckDouble } from "react-icons/bi";
 import { MdOutlineReport } from "react-icons/md";
 import { FiActivity } from "react-icons/fi";
 import { LuMapPin } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import { getAllInspecoes, getAllEnderecos } from "../../services/api";
 
 const Dashboard = () => {
+  const [inspections, setInspections] = useState([]);
+  const [address, setAddress] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchAllInspecoes = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await getAllInspecoes();
+        console.log("Response From API: ", response);
+        setInspections(response?.data ?? response);
+      } catch (error) {
+        console.error("Erro ao buscar inspeções: ", error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+
+      try {
+        const responseAddress = await getAllEnderecos();
+        console.log("Response From API (enderecos):", responseAddress);
+        setAddress(responseAddress?.data ?? responseAddress);
+      } catch (errorAddr) {
+        console.error("Erro ao buscar endereço", errorAddr);
+      }
+    };
+
+    fetchAllInspecoes();
+  }, []);
   return (
     <div className="flex min-h-screen">
       <SideBar />
@@ -27,7 +59,7 @@ const Dashboard = () => {
                 <FiActivity size={23} className="text-stone-600" />
               </div>
               <span className="font-semibold mt-6 text-2xl text-stone-800">
-                1,248
+                {inspections.length}
               </span>
             </div>
             <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
@@ -36,7 +68,7 @@ const Dashboard = () => {
                 <MdOutlineReport size={23} className="text-red-600" />
               </div>
               <span className="font-semibold mt-6 text-2xl text-stone-800">
-                47
+                {inspections.filter((insp) => insp.status !== "concluído").length}
               </span>
             </div>
             <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
@@ -45,7 +77,7 @@ const Dashboard = () => {
                 <BiCheckDouble size={23} className="text-green-600" />
               </div>
               <span className="font-semibold mt-6 text-2xl text-stone-800">
-                1,237
+                {inspections.filter((insp) => insp.status === "concluído").length}
               </span>
             </div>
             <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
@@ -65,29 +97,82 @@ const Dashboard = () => {
               <h2 className="text-lg font-semibold text-gray-900">
                 Inspeções Recentes
               </h2>
+
               <p className="text-sm text-gray-500">
-                Últimas 5 inspeções registradas
+                Últimas 4 inspeções registradas
               </p>
+
+              {error && (
+                <div className="text-center py-6 text-red-500">{error}</div>
+              )}
             </header>
             <ul className="divide-y divide-gray-200 border-b border-stone-300 ">
-                <li className="py-4 flex justify-between items-start gap-4">
-                  <div>
-                    <p className="font-semibold text-gray-900">
-                      INS-001
-                    </p>
-                    <span className="text-sm text-gray-500">
-                      Rua Dezessete, 710
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <p>
-                      Concluida
-                    </p>
-                    <span className="text-xs text-gray-500">
-                      15/01/2025
-                    </span>
-                  </div>
+              {loading && (
+                <div className="text-center py-6 text-gray-500">
+                  Carregando inspeções...
+                </div>
+              )}
+
+              {!loading && inspections.length === 0 ? (
+                <li className="py-4">
+                  <span>Nenhuma Inspeção encontrada!</span>
                 </li>
+              ) : (
+                // mapeia cada inspeção em um <li> separado (com key)
+                inspections.slice(0, 4).map((insp) => {
+                  const endereco = address.find(
+                    (e) => e.id === insp.enderecoId
+                  );
+                  return (
+                    <li
+                      key={insp.id}
+                      className="py-4 flex justify-between items-start gap-4"
+                    >
+                      <div>
+                        <p className="font-semibold text-gray-900">{`ID: ${insp.id}`}</p>
+                        <span className="text-sm text-gray-500">
+                          {endereco ? (
+                            <>
+                              {endereco.rua || "N/A"},{" "}
+                              {endereco.numero || "S/N"}
+                              <br />
+                              <span className="text-xs text-gray-500">
+                                {endereco.bairro || ""}
+                              </span>
+                            </>
+                          ) : (
+                            "Endereço não disponível"
+                          )}
+                        </span>
+                      </div>
+                      <div className="text-right flex flex-col items-end gap-1">
+                        <span
+                          className={`inline-flex gap-1 px-2 py-0.5 rounded text-[11px] ${
+                            insp.status === "concluído"
+                              ? "text-green-600 bg-green-50 border-green-200"
+                              : insp.status === "em andamento"
+                              ? "text-blue-600 bg-blue-50 border-blue-200"
+                              : insp.status === "pendente"
+                              ? "text-yellow-700 bg-yellow-50 border-yellow-200"
+                              : insp.status === "cancelado"
+                              ? "text-red-600 bg-red-50 border-red-200"
+                              : "bg-gray-100 text-gray-700 ring-gray-200"
+                          }`}
+                        >
+                          {insp.status || "—"}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          {insp.createdAt
+                            ? new Date(insp.createdAt).toLocaleDateString(
+                                "pt-BR"
+                              )
+                            : "15/01/2025"}
+                        </span>
+                      </div>
+                    </li>
+                  );
+                })
+              )}
             </ul>
           </div>
 
@@ -101,17 +186,17 @@ const Dashboard = () => {
               </p>
             </header>
             <ul className="divide-y divide-gray-200 border-b border-stone-300">
-                <li className="py-4 flex justify-between items-start gap-4">
-                  <div>
-                    <p className="font-semibold text-gray-900">Foco em Dengue</p>
-                    <span className="text-sm text-gray-500">
-                      bairro Boa Esperança
-                    </span>
-                  </div>
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full text-white bg-red-600">
-                    Alta
+              <li className="py-4 flex justify-between items-start gap-4">
+                <div>
+                  <p className="font-semibold text-gray-900">Foco em Dengue</p>
+                  <span className="text-sm text-gray-500">
+                    bairro Boa Esperança
                   </span>
-                </li>
+                </div>
+                <span className="text-xs font-semibold px-3 py-1 rounded-full text-white bg-red-600">
+                  Alta
+                </span>
+              </li>
             </ul>
           </div>
         </section>
