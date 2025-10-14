@@ -23,85 +23,87 @@ import Users from "./pages/users/Users";
 import Home from "./pages/home/Home";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Address from "./pages/address/Address";
+import RecoverPassword from "./pages/auth/recoverpassword/RecoverPassword";
 
 function App() {
-    return (
-        <AuthProvider>
-            <div>
-                <NavBar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/cadastro" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedRoute>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/inspecoes/endereco"
-                        element={
-                            <ProtectedRoute>
-                                <CheckInspection />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/inspecoes/registar"
-                        element={
-                            <ProtectedRoute>
-                                <CreateInspection />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/inspecoes/consultar"
-                        element={
-                            <ProtectedRoute>
-                                <Consult />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/relatorios"
-                        element={
-                            <ProtectedRoute>
-                                <Reports />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/mapeamento"
-                        element={
-                            <ProtectedRoute>
-                                <Mapping />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/endereco"
-                        element={
-                            <ProtectedRoute>
-                                <Address />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/usuarios"
-                        element={
-                            <ProtectedRoute>
-                                <Users />
-                            </ProtectedRoute>
-                        }
-                    />
-                </Routes>
-                <Footer />
-            </div>
-        </AuthProvider>
-    );
+  return (
+    <AuthProvider>
+      <div>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cadastro" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inspecoes/endereco"
+            element={
+              <ProtectedRoute>
+                <CheckInspection />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inspecoes/registar"
+            element={
+              <ProtectedRoute>
+                <CreateInspection />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inspecoes/consultar"
+            element={
+              <ProtectedRoute>
+                <Consult />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/relatorios"
+            element={
+              <ProtectedRoute>
+                <Reports />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mapeamento"
+            element={
+              <ProtectedRoute>
+                <Mapping />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/endereco"
+            element={
+              <ProtectedRoute>
+                <Address />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/esqueceu_senha" element={<RecoverPassword />} />
+          <Route
+            path="/usuarios"
+            element={
+              <ProtectedRoute>
+                <Users />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <Footer />
+      </div>
+    </AuthProvider>
+  );
 }
 
 export default App;

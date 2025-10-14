@@ -105,7 +105,7 @@ const Login = () => {
           </div>
           <div className="flex items-center justify-between text-sm">
             <Link
-              to="/esqueceu-senha"
+              to="/esqueceu_senha"
               className="text-green-700 hover:underline"
             >
               Esqueceu a senha?
