@@ -4,11 +4,12 @@ import { IoCameraOutline } from "react-icons/io5";
 import ScannerQr from "../../components/scannerQr/ScannerQr";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { getAddressforInspection } from "../../services/api";
+import { getAddressforInspection, getAllEnderecos } from "../../services/api";
 
 const RecordInspection = () => {
   const [openQr, setOpenQr] = useState(false);
   const [enderecoData, setEnderecoData] = useState(null);
+  const [endereco, setEndereco] = useState("")
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { user } = useAuth();
@@ -35,6 +36,40 @@ const RecordInspection = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const loadAddress = async () => {
+      setLoading(true);
+      setError(null);
+  
+      try {
+        const response = await getAllEnderecos();
+        console.log("Response from API:", response);
+  
+        if (response && response.success && response.data) {
+          console.log("Users data:", response.data);
+          setEndereco(Array.isArray(response.data) ? response.data : []);
+        } else if (Array.isArray(response)) {
+          setEndereco(response);
+        }
+      } catch (error) {
+        console.error("Erro completo:", error);
+        setEndereco([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   if (user?.cargo === "USER") {
@@ -111,8 +146,9 @@ const RecordInspection = () => {
                 <table className="w-full min-w-[700px]">
                   <thead>
                     <tr className="bg-white border-b border-stone-200">
-                      <th className="px-4 py-3 text-left">id</th>
+                      <th className="px-4 py-3 text-left">Data</th>
                       <th className="px-4 py-3 text-left">Tipo</th>
+                      <th className="px-4 py-3 text-left">Local</th>
                       <th className="px-4 py-3 text-left">Gravidade</th>
                       <th className="px-4 py-3 text-left">Status</th>
                     </tr>
@@ -134,8 +170,16 @@ const RecordInspection = () => {
                           key={obj.id || obj.enderecoId}
                           className="border-b border-stone-200 items-center"
                         >
-                          <td className="px-4 py-4">{obj.id}</td>
+                          <td className="px-4 py-4">{formatDate(obj.createdAt)}</td>
                           <td className="px-4 py-4">{obj.tipo}</td>
+                          <td className="px-4 py-4 text-sm">
+                            {obj.endereco?.rua || "N/A"},{" "}
+                            {obj.endereco?.numero || "S/N"}
+                            <br />
+                            <span className="text-xs text-gray-500">
+                              {obj.endereco?.bairro || ""}
+                            </span>
+                          </td>
                           <td className="px-4 py-4">
                             {(() => {
                               const cls =
