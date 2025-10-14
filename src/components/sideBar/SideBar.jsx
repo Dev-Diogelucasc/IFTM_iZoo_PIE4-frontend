@@ -31,7 +31,7 @@ const SideBar = () => {
   return (
     <>
       <aside className="hidden md:flex bg-[#F8F8F8] h-screen w-64 pt-6 border border-gray-200 flex-col justify-between shadow">
-        {(isCargo === "ADMIN") && (
+        {isCargo === "ADMIN" && (
           <div>
             <nav className="mt-4 flex flex-col">
               <NavLink to="/dashboard" className={navLinkClass}>
@@ -70,46 +70,50 @@ const SideBar = () => {
           </div>
         )}
 
-        {(isCargo === "AGENT") && (
-           <div>
-          <nav className="mt-4 flex flex-col">
-            <NavLink to="/dashboard" className={navLinkClass}>
-              <GrHomeRounded size={20} />
-              <span className="ml-3">Dashboard</span>
-            </NavLink>
-            <NavLink to="/inspecoes/registar" className={navLinkClass}>
-              <FiEdit size={20} />
-              <span className="ml-3">Registrar Inspeção</span>
-            </NavLink>
-            <NavLink to="/inspecoes/consultar" className={navLinkClass}>
-              <BsSearch size={20} />
-              <span className="ml-3">Consultar Inspeções</span>
-            </NavLink>
-            <NavLink to="/relatorios" className={navLinkClass}>
-              <BsFileEarmarkText size={20} />
-              <span className="ml-3">Relatórios</span>
-            </NavLink>
-            <NavLink to="/mapeamento" className={navLinkClass}>
-              <BsGeoAlt size={20} />
-              <span className="ml-3">Mapeamento</span>
-            </NavLink>
-          </nav>
-        </div>
+        {isCargo === "AGENT" && (
+          <div>
+            <nav className="mt-4 flex flex-col">
+              <NavLink to="/dashboard" className={navLinkClass}>
+                <GrHomeRounded size={20} />
+                <span className="ml-3">Dashboard</span>
+              </NavLink>
+              <NavLink to="/inspecoes/registar" className={navLinkClass}>
+                <FiEdit size={20} />
+                <span className="ml-3">Registrar Inspeção</span>
+              </NavLink>
+              <NavLink to="/inspecoes/endereco" className={navLinkClass}>
+                <BsQrCodeScan size={20} />
+                <span className="ml-3">Consultar endereço</span>
+              </NavLink>
+              <NavLink to="/inspecoes/consultar" className={navLinkClass}>
+                <BsSearch size={20} />
+                <span className="ml-3">Consultar Inspeções</span>
+              </NavLink>
+              <NavLink to="/relatorios" className={navLinkClass}>
+                <BsFileEarmarkText size={20} />
+                <span className="ml-3">Relatórios</span>
+              </NavLink>
+              <NavLink to="/mapeamento" className={navLinkClass}>
+                <BsGeoAlt size={20} />
+                <span className="ml-3">Mapeamento</span>
+              </NavLink>
+            </nav>
+          </div>
         )}
 
-        {(isCargo === "USER") && (
-           <div>
-          <nav className="mt-4 flex flex-col">
-            <NavLink to="/inspecoes/consultar" className={navLinkClass}>
-              <BsSearch size={20} />
-              <span className="ml-3">Consultar Inspeções</span>
-            </NavLink>
-            <NavLink to="/mapeamento" className={navLinkClass}>
-              <BsGeoAlt size={20} />
-              <span className="ml-3">Mapeamento</span>
-            </NavLink>
-          </nav>
-        </div>
+        {isCargo === "USER" && (
+          <div>
+            <nav className="mt-4 flex flex-col">
+              <NavLink to="/inspecoes/endereco" className={navLinkClass}>
+                <BsQrCodeScan size={20} />
+                <span className="ml-3">Consultar endereço</span>
+              </NavLink>
+              <NavLink to="/mapeamento" className={navLinkClass}>
+                <BsGeoAlt size={20} />
+                <span className="ml-3">Mapeamento</span>
+              </NavLink>
+            </nav>
+          </div>
         )}
         <button
           onClick={handleLogout}
@@ -138,171 +142,174 @@ const SideBar = () => {
         )}
         {open && (
           <aside className="fixed inset-y-0 left-0 z-50 bg-[#F8F8F8] h-screen w-64 border-r border-gray-200 flex flex-col justify-between shadow">
-            {(isCargo === "ADMIN") && (
+            {isCargo === "ADMIN" && (
               <div>
-              <div className="flex items-center gap-3 px-6 py-6 border-b border-gray-200">
-                <GiPlantsAndAnimals size={28} className="text-green-700" />
-                <span className="text-lg font-semibold text-gray-800">
-                  Izoo
-                </span>
-                <IoIosClose
-                  onClick={() => setOpen(false)}
-                  className="ml-auto cursor-pointer hover:bg-green-800 hover:text-white rounded"
-                  size={20}
-                />
+                <div className="flex items-center gap-3 px-6 py-6 border-b border-gray-200">
+                  <GiPlantsAndAnimals size={28} className="text-green-700" />
+                  <span className="text-lg font-semibold text-gray-800">
+                    Izoo
+                  </span>
+                  <IoIosClose
+                    onClick={() => setOpen(false)}
+                    className="ml-auto cursor-pointer hover:bg-green-800 hover:text-white rounded"
+                    size={20}
+                  />
+                </div>
+                <nav className="mt-4 flex flex-col">
+                  <NavLink
+                    to="/dashboard"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <GrHomeRounded size={20} />
+                    <span className="ml-3">Dashboard</span>
+                  </NavLink>
+                  <NavLink
+                    to="/inspecoes/registar"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <FiEdit size={20} />
+                    <span className="ml-3">Registrar Inspeção</span>
+                  </NavLink>
+                  <NavLink to="/inspecoes/endereco" className={navLinkClass}>
+                    <BsQrCodeScan size={20} />
+                    <span className="ml-3">Consultar endereço</span>
+                  </NavLink>
+                  <NavLink
+                    to="/inspecoes/consultar"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsSearch size={20} />
+                    <span className="ml-3">Consultar Inspeções</span>
+                  </NavLink>
+                  <NavLink
+                    to="/relatorios"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsFileEarmarkText size={20} />
+                    <span className="ml-3">Relatórios</span>
+                  </NavLink>
+                  <NavLink
+                    to="/mapeamento"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsGeoAlt size={20} />
+                    <span className="ml-3">Mapeamento</span>
+                  </NavLink>
+                  <NavLink
+                    to="/endereco"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <LuMapPinHouse size={20} />
+                    <span className="ml-3">Gerenciar Endereço</span>
+                  </NavLink>
+                  <NavLink
+                    to="/usuarios"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsPeople size={20} />
+                    <span className="ml-3">Gerenciar Usuários</span>
+                  </NavLink>
+                </nav>
               </div>
-              <nav className="mt-4 flex flex-col">
-                <NavLink
-                  to="/dashboard"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <GrHomeRounded size={20} />
-                  <span className="ml-3">Dashboard</span>
-                </NavLink>
-                <NavLink
-                  to="/inspecoes/registar"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <FiEdit size={20} />
-                  <span className="ml-3">Registrar Inspeção</span>
-                </NavLink>
-                <NavLink
-                  to="/inspecoes/consultar"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsSearch size={20} />
-                  <span className="ml-3">Consultar Inspeções</span>
-                </NavLink>
-                <NavLink
-                  to="/relatorios"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsFileEarmarkText size={20} />
-                  <span className="ml-3">Relatórios</span>
-                </NavLink>
-                <NavLink
-                  to="/mapeamento"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsGeoAlt size={20} />
-                  <span className="ml-3">Mapeamento</span>
-                </NavLink>
-                <NavLink
-                  to="/endereco"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <LuMapPinHouse size={20} />
-                  <span className="ml-3">Gerenciar Endereço</span>
-                </NavLink>
-                <NavLink
-                  to="/usuarios"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsPeople size={20} />
-                  <span className="ml-3">Gerenciar Usuários</span>
-                </NavLink>
-              </nav>
-            </div>
             )}
 
-            {(isCargo === "AGENT") && (
+            {isCargo === "AGENT" && (
               <div>
-              <div className="flex items-center gap-3 px-6 py-6 border-b border-gray-200">
-                <GiPlantsAndAnimals size={28} className="text-green-700" />
-                <span className="text-lg font-semibold text-gray-800">
-                  Izoo
-                </span>
-                <IoIosClose
-                  onClick={() => setOpen(false)}
-                  className="ml-auto cursor-pointer hover:bg-green-800 hover:text-white rounded"
-                  size={30}
-                />
+                <div className="flex items-center gap-3 px-6 py-6 border-b border-gray-200">
+                  <GiPlantsAndAnimals size={28} className="text-green-700" />
+                  <span className="text-lg font-semibold text-gray-800">
+                    Izoo
+                  </span>
+                  <IoIosClose
+                    onClick={() => setOpen(false)}
+                    className="ml-auto cursor-pointer hover:bg-green-800 hover:text-white rounded"
+                    size={30}
+                  />
+                </div>
+                <nav className="mt-4 flex flex-col">
+                  <NavLink
+                    to="/dashboard"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <GrHomeRounded size={20} />
+                    <span className="ml-3">Dashboard</span>
+                  </NavLink>
+                  <NavLink
+                    to="/inspecoes/registar"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <FiEdit size={20} />
+                    <span className="ml-3">Registrar Inspeção</span>
+                  </NavLink>
+                  <NavLink to="/inspecoes/endereco" className={navLinkClass}>
+                    <BsQrCodeScan size={20} />
+                    <span className="ml-3">Consultar endereço</span>
+                  </NavLink>
+                  <NavLink
+                    to="/inspecoes/consultar"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsSearch size={20} />
+                    <span className="ml-3">Consultar Inspeções</span>
+                  </NavLink>
+                  <NavLink
+                    to="/relatorios"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsFileEarmarkText size={20} />
+                    <span className="ml-3">Relatórios</span>
+                  </NavLink>
+                  <NavLink
+                    to="/mapeamento"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsGeoAlt size={20} />
+                    <span className="ml-3">Mapeamento</span>
+                  </NavLink>
+                </nav>
               </div>
-              <nav className="mt-4 flex flex-col">
-                <NavLink
-                  to="/dashboard"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <GrHomeRounded size={20} />
-                  <span className="ml-3">Dashboard</span>
-                </NavLink>
-                <NavLink
-                  to="/inspecoes/registar"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <FiEdit size={20} />
-                  <span className="ml-3">Registrar Inspeção</span>
-                </NavLink>
-                <NavLink
-                  to="/inspecoes/consultar"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsSearch size={20} />
-                  <span className="ml-3">Consultar Inspeções</span>
-                </NavLink>
-                <NavLink
-                  to="/relatorios"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsFileEarmarkText size={20} />
-                  <span className="ml-3">Relatórios</span>
-                </NavLink>
-                <NavLink
-                  to="/mapeamento"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsGeoAlt size={20} />
-                  <span className="ml-3">Mapeamento</span>
-                </NavLink>
-              </nav>
-            </div>
             )}
 
-            {(isCargo === "USER") && (
+            {isCargo === "USER" && (
               <div>
-              <div className="flex items-center gap-3 px-6 py-6 border-b border-gray-200">
-                <GiPlantsAndAnimals size={28} className="text-green-700" />
-                <span className="text-lg font-semibold text-gray-800">
-                  Izoo
-                </span>
-                <IoIosClose
-                  onClick={() => setOpen(false)}
-                  className="ml-auto cursor-pointer hover:bg-green-800 hover:text-white rounded"
-                  size={30}
-                />
+                <div className="flex items-center gap-3 px-6 py-6 border-b border-gray-200">
+                  <GiPlantsAndAnimals size={28} className="text-green-700" />
+                  <span className="text-lg font-semibold text-gray-800">
+                    Izoo
+                  </span>
+                  <IoIosClose
+                    onClick={() => setOpen(false)}
+                    className="ml-auto cursor-pointer hover:bg-green-800 hover:text-white rounded"
+                    size={30}
+                  />
+                </div>
+                <nav className="mt-4 flex flex-col">
+                  <NavLink to="/inspecoes/endereco" className={navLinkClass}>
+                    <BsQrCodeScan size={20} />
+                    <span className="ml-3">Consultar endereço</span>
+                  </NavLink>
+                  <NavLink
+                    to="/mapeamento"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsGeoAlt size={20} />
+                    <span className="ml-3">Mapeamento</span>
+                  </NavLink>
+                </nav>
               </div>
-              <nav className="mt-4 flex flex-col">
-                <NavLink
-                  to="/inspecoes/consultar"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsSearch size={20} />
-                  <span className="ml-3">Consultar Inspeções</span>
-                </NavLink>
-                <NavLink
-                  to="/mapeamento"
-                  className={navLinkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  <BsGeoAlt size={20} />
-                  <span className="ml-3">Mapeamento</span>
-                </NavLink>
-
-              </nav>
-            </div>
             )}
             <button
               onClick={() => {

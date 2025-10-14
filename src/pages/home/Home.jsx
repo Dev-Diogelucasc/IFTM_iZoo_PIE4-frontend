@@ -5,8 +5,9 @@ import {
   BsGeoAlt,
   BsPeople,
   BsPersonPlus,
+  BsQrCodeScan,
 } from "react-icons/bs";
-import FeatureCard from "./FeatureCard/FeatureCard"
+import FeatureCard from "./FeatureCard/FeatureCard";
 import { useNavigate } from "react-router-dom";
 import Presentation from "../presentation/Presentation";
 import { useAuth } from "../../contexts/AuthContext";
@@ -34,6 +35,15 @@ const Home = () => {
                 description="Cadastre novas inspeções com dados sobre ocorrências"
                 buttonLabel="Acessar"
                 onButtonClick={() => navigate("/inspecoes/registar")}
+              />
+            </div>
+            <div className=" transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsQrCodeScan size={28} className="text-green-700" />}
+                title="Consultar Endereço"
+                description="Consulte as ultimas inspeções em sua residência"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/inspecoes/endereco")}
               />
             </div>
             <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
@@ -98,6 +108,15 @@ const Home = () => {
                 onButtonClick={() => navigate("/inspecoes/registar")}
               />
             </div>
+            <div className=" transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsQrCodeScan size={28} className="text-green-700" />}
+                title="Consultar Endereço"
+                description="Consulte as ultimas inspeções em sua residência"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/inspecoes/endereco")}
+              />
+            </div>
             <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
               <FeatureCard
                 icon={<BsSearch size={28} className="text-green-700" />}
@@ -133,13 +152,13 @@ const Home = () => {
       {cargo === "USER" && (
         <div className="w-full flex justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 max-w-6xl px-4 justify-center ">
-            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+            <div className=" transition-transform transform hover:scale-100 hover:-translate-y-1">
               <FeatureCard
-                icon={<BsSearch size={28} className="text-green-700" />}
-                title="Consultar Inspeções"
-                description="Busque e visualize histórico completo de inspeções realizadas"
+                icon={<BsQrCodeScan size={28} className="text-green-700" />}
+                title="Consultar Endereço"
+                description="Consulte as ultimas inspeções em sua residência"
                 buttonLabel="Acessar"
-                onButtonClick={() => navigate("/inspecoes/consultar")}
+                onButtonClick={() => navigate("/inspecoes/endereco")}
               />
             </div>
             <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
