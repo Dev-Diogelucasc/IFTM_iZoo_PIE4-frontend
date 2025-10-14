@@ -68,7 +68,10 @@ const Dashboard = () => {
                 <MdOutlineReport size={23} className="text-red-600" />
               </div>
               <span className="font-semibold mt-6 text-2xl text-stone-800">
-                {inspections.filter((insp) => insp.status !== "concluído").length}
+                {
+                  inspections.filter((insp) => insp.status !== "concluído")
+                    .length
+                }
               </span>
             </div>
             <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
@@ -77,7 +80,10 @@ const Dashboard = () => {
                 <BiCheckDouble size={23} className="text-green-600" />
               </div>
               <span className="font-semibold mt-6 text-2xl text-stone-800">
-                {inspections.filter((insp) => insp.status === "concluído").length}
+                {
+                  inspections.filter((insp) => insp.status === "concluído")
+                    .length
+                }
               </span>
             </div>
             <div className=" bg-[#F8F8F8] flex flex-col rounded shadow font-medium p-4 border border-gray-200">
@@ -185,19 +191,60 @@ const Dashboard = () => {
                 Casos que requerem atenção
               </p>
             </header>
-            <ul className="divide-y divide-gray-200 border-b border-stone-300">
-              <li className="py-4 flex justify-between items-start gap-4">
-                <div>
-                  <p className="font-semibold text-gray-900">Foco em Dengue</p>
-                  <span className="text-sm text-gray-500">
-                    bairro Boa Esperança
-                  </span>
-                </div>
-                <span className="text-xs font-semibold px-3 py-1 rounded-full text-white bg-red-600">
-                  Alta
-                </span>
-              </li>
-            </ul>
+            {(() => {
+              const prioritarios = inspections.filter((insp) =>
+                ["grave", "gravíssimo"].includes(insp.gravidade)
+              );
+
+              if (prioritarios.length === 0) {
+                return (
+                  <div className="text-center py-6 text-gray-500">
+                    Nenhum alerta prioritário
+                  </div>
+                );
+              }
+
+              return (
+                <ul className="divide-y divide-gray-200 border-b border-stone-300">
+                  {prioritarios.map((insp) => {
+                    const endereco = address.find(
+                      (e) => e.id === insp.enderecoId
+                    );
+
+                    return (
+                      <li
+                        key={insp.id}
+                        className="py-4 flex justify-between items-start gap-4"
+                      >
+                        <div>
+                          <p className="font-semibold text-gray-900">
+                            {insp.tipo}
+                          </p>
+                          <span className="text-sm text-gray-500">
+                            {endereco
+                              ? `${endereco.rua || "N/A"}, ${
+                                  endereco.numero || "S/N"
+                                }`
+                              : "Endereço não disponível"}
+                          </span>
+                        </div>
+                        <span
+                          className={`inline-flex items-center justify-center gap-1 px-2 py-0.5 rounded text-[11px] ${
+                             insp.gravidade === "grave"
+                                  ? "bg-orange-100 text-orange-800 ring-orange-200"
+                                  : insp.gravidade === "gravíssimo"
+                                  ? "bg-red-100 text-red-800 ring-red-200"
+                                  : "bg-gray-100 text-gray-700 ring-gray-200"
+                          }`}
+                        >
+                          {insp.gravidade}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              );
+            })()}
           </div>
         </section>
       </main>
