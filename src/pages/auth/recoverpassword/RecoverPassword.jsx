@@ -11,33 +11,20 @@ const RecoverPassword = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const isValidEmail = (value) => /^\S+@\S+\.\S+$/.test(value);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setMessage("");
+    setLoading(true);
 
-    if (!isValidEmail(email)) {
-      setError("Informe um e-mail válido.");
-      return;
-    }
-
-    // Se não tiver código, solicita envio do token
-    if (!code) {
-      setLoading(true);
-      try {
-        await requestPassword({ email });
-        setMessage(
-          "Token enviado para o seu e-mail."
-        );
-      } catch (error) {
-        console.error("Erro ao solicitar token:", error);
-        setError("Erro ao solicitar token.");
-      } finally {
-        setLoading(false);
-      }
-      return;
+    try {
+      await requestPassword({ email });
+      setMessage("Token enviado para o seu e-mail.");
+    } catch (error) {
+      console.error("Erro ao solicitar token:", error);
+      setError("Erro ao solicitar token.");
+    } finally {
+      setLoading(false);
     }
 
     setLoading(true);
