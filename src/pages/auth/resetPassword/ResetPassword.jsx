@@ -1,28 +1,61 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { resetPassword, verifyToken } from "../../../services/api";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [password, setPassord] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const location = useLocation()
+  const location = useLocation();
 
-    const handleSubmit = async (e) => {
-        e.preventDeafault()
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setMessage("");
+    setLoading(true);
+
+    if(!code) {
+      setError("Informe o código recebido por e-mail")
     }
 
-    useEffect(() => {
-        // Preenche os campos se vierem cadastro
-        if (location.state?.loginField) {
-          setEmail(location.state.loginField);
-        }
-        if (location.state?.password) {
-          setCode(location.state.password);
-        }
-      }, [location]);
+    if (password !== confirmPassword) {
+      setError("As senhas não coincidem");
+      return;
+    }
 
+    try {
+      await verifyToken({ token: code });
+      await resetPassword({ email, token: code, novaSenha: password });
+      navigate("/");
+    } catch (error) {
+      console.error("Erro ao validar token:", error);
+      setError("Código inválido.");
+    } finally {
+      setLoading(false);
+    }
+
+    setLoading(true);
+
+  };
+
+  useEffect(() => {
+    // Preenche os campos se vierem cadastro
+    if (location.state?.loginField) {
+      setEmail(location.state.loginField);
+    }
+    if (location.state?.password) {
+      setCode(location.state.password);
+    }
+  }, [location]);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
@@ -85,8 +118,8 @@ const ResetPassword = () => {
                 className="w-full px-4 py-2 rounded-md border border-stone-200 bg-stone-50 placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-green-300"
                 placeholder="Digite sua Nova Senha"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                onChange={(e) => setPassord(e.target.value)}
+                value={password}
               />
             </div>
 
@@ -100,9 +133,27 @@ const ResetPassword = () => {
                 className="w-full px-4 py-2 rounded-md border border-stone-200 bg-stone-50 placeholder-stone-400 focus:outline-none focus:ring-1 focus:ring-green-300"
                 placeholder="Digite sua Senha Novamente"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
               />
+            </div>
+            {message && <p className="text-sm text-green-600">{message}</p>}
+            {error && <p className="text-sm text-red-600">{error}</p>}
+
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                className="w-full py-2 px-4 bg-green-700 hover:bg-green-800 cursor-pointer text-white font-semibold rounded-md shadow-sm"
+                disabled={loading}
+              >
+                {loading
+                  ? !code
+                    ? "Enviando..."
+                    : "Verificando..."
+                  : !code
+                  ? "Enviar"
+                  : "Verificar código"}
+              </button>
             </div>
 
             <div className="text-center mt-3">
