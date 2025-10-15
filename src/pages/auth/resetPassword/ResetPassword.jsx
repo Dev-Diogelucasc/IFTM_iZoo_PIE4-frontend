@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import { resetPassword, verifyToken } from "../../../services/api";
+import { resetPassword } from "../../../services/api";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -33,9 +33,9 @@ const ResetPassword = () => {
     }
 
     try {
-      await verifyToken({ token: code });
+      // await verifyToken({ token: code });
       await resetPassword({ email, token: code, novaSenha: password });
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error("Erro ao validar token:", error);
       setError("Código inválido.");
@@ -51,9 +51,6 @@ const ResetPassword = () => {
     // Preenche os campos se vierem cadastro
     if (location.state?.email) {
       setEmail(location.state.email);
-    }
-    if (location.state?.code) {
-      setCode(location.state.code);
     }
   }, [location]);
 

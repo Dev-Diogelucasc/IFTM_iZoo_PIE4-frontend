@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
-import { requestPassword, verifyToken } from "../../../services/api";
+import { requestPassword } from "../../../services/api";
 
 const RecoverPassword = () => {
   const [email, setEmail] = useState("");
@@ -29,8 +29,8 @@ const RecoverPassword = () => {
 
     setLoading(true);
     try {
-      await verifyToken({ token: code });
-      navigate("/reset-password", { state: { email, token: code } });
+      // await verifyToken({ token: code });
+      navigate("/reset-password", { state: { email} });
     } catch (error) {
       console.error("Erro ao validar token:", error);
       setError("Código inválido.");

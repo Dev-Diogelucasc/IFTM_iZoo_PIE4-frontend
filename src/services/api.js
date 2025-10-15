@@ -219,16 +219,16 @@ export const deleteAddress = async (id) => {
   }
 };
 
-// Função para Validar o token de Recuperação de senha
-export const verifyToken = async (data) => {
-  try {
-    const response = await api.post("/recuperacao-senha/validar-token", data);
-    return { success: true, data: response.data };
-  } catch (error) {
-    console.error("Erro ao verificar token:", error);
-    throw error;
-  }
-};
+// // Função para Validar o token de Recuperação de senha
+// export const verifyToken = async (data) => {
+//   try {
+//     const response = await api.post("/recuperacao-senha/validar-token", data);
+//     return { success: true, data: response.data };
+//   } catch (error) {
+//     console.error("Erro ao verificar token:", error);
+//     throw error;
+//   }
+// };
 
 // Função Solicitar recuperação de senha
 export const requestPassword = async (data) => {
