@@ -49,11 +49,11 @@ const ResetPassword = () => {
 
   useEffect(() => {
     // Preenche os campos se vierem cadastro
-    if (location.state?.loginField) {
-      setEmail(location.state.loginField);
+    if (location.state?.email) {
+      setEmail(location.state.email);
     }
-    if (location.state?.password) {
-      setCode(location.state.password);
+    if (location.state?.code) {
+      setCode(location.state.code);
     }
   }, [location]);
 
