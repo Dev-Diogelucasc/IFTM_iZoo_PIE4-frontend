@@ -7,6 +7,7 @@ import {
   BsPersonPlus,
   BsQrCodeScan,
 } from "react-icons/bs";
+import { GrHomeRounded } from "react-icons/gr";
 import FeatureCard from "./FeatureCard/FeatureCard";
 import { useNavigate } from "react-router-dom";
 import Presentation from "../presentation/Presentation";
@@ -28,6 +29,15 @@ const Home = () => {
       {cargo === "ADMIN" && (
         <div className="w-full flex justify-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 px-4 justify-center ">
+            <div className=" transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<GrHomeRounded size={28} className="text-green-700" />}
+                title="Dashboard"
+                description="Acesse as principais informações das inspeções"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/dashboard")}
+              />
+            </div>
             <div className=" transition-transform transform hover:scale-100 hover:-translate-y-1">
               <FeatureCard
                 icon={<FiEdit size={28} className="text-green-700" />}
@@ -98,7 +108,16 @@ const Home = () => {
       )}
       {cargo === "AGENT" && (
         <div className="w-full flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 max-w-6xl px-4 justify-center ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 px-4 justify-center ">
+            <div className=" transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<GrHomeRounded size={28} className="text-green-700" />}
+                title="Dashboard"
+                description="Acesse as principais informações das inspeções"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/dashboard")}
+              />
+            </div>
             <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
               <FeatureCard
                 icon={<FiEdit size={28} className="text-green-700" />}
@@ -151,7 +170,7 @@ const Home = () => {
       )}
       {cargo === "USER" && (
         <div className="w-full flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-6xl px-4 justify-center ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 px-4 justify-center ">
             <div className=" transition-transform transform hover:scale-100 hover:-translate-y-1">
               <FeatureCard
                 icon={<BsQrCodeScan size={28} className="text-green-700" />}
