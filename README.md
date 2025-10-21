@@ -27,7 +27,7 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
 | Categoria                           | Tecnologia / Biblioteca                                                                                                                             | Descrição                                          |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| 💻 **Framework principal**          | [React](https://react.dev/)                                                                                                                         | Biblioteca para construção da interface do usuário |
+| 💻 **Biblioteca principal**          | [React](https://react.dev/)                                                                                                                         | Biblioteca para construção da interface do usuário |
 | ⚡ **Ambiente de build**             | [Vite](https://vitejs.dev/)                                                                                                                         | Ferramenta de build rápida e moderna               |
 | 🧭 **Roteamento**                   | [React Router DOM](https://reactrouter.com/)                                                                                                        | Gerencia rotas e navegação entre páginas           |
 | 🎨 **Estilização**                  | [Tailwind CSS](https://tailwindcss.com/)                                                                                                            | Framework CSS utilitário para design responsivo    |
@@ -51,6 +51,7 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 - Interface **totalmente responsiva** desenvolvida com Tailwind CSS.
 - Integração com **API backend iZoo**.
 
+---
 
 ## 📁 Estrutura de Pastas
 
@@ -121,3 +122,58 @@ IFTM_iZoo_PIE4-frontend/
 ├── README.md                   # Documentação principal
 └── vercel.json                 # Configuração de deploy (Vercel)
 
+```
+--- 
+
+## ⚙️ Como Executar o Projeto
+
+### 🔹 Pré-requisitos
+
+Antes de começar, verifique se você possui as seguintes ferramentas instaladas no seu ambiente:
+
+- [Node.js](https://nodejs.org/en/) **(versão 18 ou superior)**
+- [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
+
+> 💡 Dica: Para verificar as versões instaladas, execute:
+> ```bash
+> node -v
+> npm -v
+> ```
+
+---
+
+### 🔹 Passos para execução local
+
+1️⃣ **Clonar o repositório**
+
+```bash
+git clone https://github.com/Dev-Diogelucasc/IFTM_iZoo_PIE4-frontend.git
+```
+
+2️⃣ **Acessar o diretório do projeto**
+
+```bash
+cd IFTM_iZoo_PIE4-frontend
+```
+
+3️⃣ **Instalar as dependências**
+
+```bash
+npm install
+# ou
+yarn install
+```
+
+4️⃣ **Iniciar o servidor de desenvolvimento**
+
+```bash
+npm run dev
+# ou
+yarn dev
+```
+
+## 🧠 O servidor será iniciado e o projeto estará disponível em:
+
+```bash
+http://localhost:5173
+```
