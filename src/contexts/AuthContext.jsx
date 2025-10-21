@@ -42,37 +42,43 @@ export const AuthProvider = ({ children }) => {
 
   // Verificar se o usuário está autenticado ao carregar a aplicação
   useEffect(() => {
+    let logoutTimer;
     const checkAuth = async () => {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         try {
-          // seta token e header para chamadas subsequentes
           setToken(storedToken);
           api.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${storedToken}`;
-
-          // tenta decodificar o payload do JWT para recuperar dados do usuário
           try {
             const payload = JSON.parse(atob(storedToken.split(".")[1]));
-            // payload pode ter diferentes formatos dependendo do backend
             const possibleUser =
               payload.usuario || payload.user || payload.usuarioLogado || null;
             if (possibleUser) {
               setUser(possibleUser);
             } else {
-              // se não houver objeto 'usuario' no payload, tente campos diretos
               const login =
                 payload.login || payload.sub || payload.email || null;
               const cargo =
                 payload.cargo || payload.role || payload.roleName || null;
               if (login) setUser({ login, cargo });
             }
+            // logout automático pelo exp do token
+            if (payload.exp) {
+              const expMs = payload.exp * 1000;
+              const nowMs = Date.now();
+              const timeoutMs = expMs - nowMs;
+              if (timeoutMs > 0) {
+                logoutTimer = setTimeout(() => {
+                  logout();
+                }, timeoutMs);
+              } else {
+                logout();
+              }
+            }
+            // --- FIM NOVO ---
           } catch (e) {
-            // token não contém payload JSON utilizável — opcional: buscar profile na API
-            // Exemplo (se seu backend expor /usuario/me):
-            // const resp = await api.get('/usuario/me');
-            // setUser(resp.data.usuario);
             console.warn("Não foi possível decodificar payload do token:", e);
           }
         } catch (error) {
@@ -84,7 +90,12 @@ export const AuthProvider = ({ children }) => {
     };
 
     checkAuth();
-  }, [logout]);
+
+    // Limpa o timer ao desmontar ou trocar token
+    return () => {
+      if (logoutTimer) clearTimeout(logoutTimer);
+    };
+  }, [logout, token]);
 
   const login = async (loginData, senha) => {
     try {

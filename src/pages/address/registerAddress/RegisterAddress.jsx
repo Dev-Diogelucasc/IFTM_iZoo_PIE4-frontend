@@ -74,7 +74,7 @@ const RegisterAddress = ({ onClose, loadAddress }) => {
     navigator.geolocation.getCurrentPosition(sucesso, erroLocalizacao, opcoes);
   }, []); // O array vazio garante que o efeito só rode uma vez
 
-  // Função buscar pelo CEP
+  // Função buscar pelo CEP e preencher os campos
   const fetchAddressCep = async (cepValue) => {
     if (!cepValue || cepValue.length < 8) return;
     try {
