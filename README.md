@@ -1,6 +1,6 @@
 <h1 align="center"> iZoo Frontend</h1>
 
-<p align="center">
+<!-- <p align="center">
   <strong>Interface web desenvolvida em React para o sistema iZoo - Projeto Integrador PIE4 (IFTM)</strong>
 </p>
 
@@ -11,13 +11,18 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/Licença-MIT-green.svg?style=flat"></a>
 </p>
 
----
+--- -->
 
 ## 📖 Sobre o Projeto
 
-O **iZoo Frontend** é a interface web do projeto **PIE4 - Instituto Federal do Triângulo Mineiro (IFTM)**, desenvolvida para facilitar a interação com o sistema **iZoo**, uma plataforma voltada à **gestão, exibição e controle de informações sobre zoológicos**.
+O **iZoo Frontend** é uma aplicação web desenvolvida com **React** que tem como objetivo **modernizar o controle de zoonoses**, substituindo o processo tradicional feito em papel por uma solução totalmente digital.
 
-O objetivo é oferecer uma experiência fluida e intuitiva, com **design responsivo**, **componentização** e **boas práticas de desenvolvimento frontend moderno**.
+A ideia surgiu a partir da necessidade de facilitar o trabalho de agentes de saúde e oferecer mais transparência para a população.  
+Cada residência cadastrada recebe um **QR Code exclusivo**, que permite registrar e consultar **inspeções e ocorrências** realizadas no local.
+
+Além disso, qualquer cidadão pode acessar o **mapeamento das inspeções** em sua região, visualizando informações atualizadas diretamente pelo sistema — tudo de forma **intuitiva, responsiva e integrada ao backend**.
+
+> 💡 Em resumo: o iZoo torna o controle de zoonoses mais eficiente, sustentável e acessível, unindo tecnologia e saúde pública.
 
 ---
 
