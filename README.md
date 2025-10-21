@@ -1,4 +1,4 @@
-<h1 align="center"> iZoo Frontend</h1>
+<h1 align="center"> iZoo </h1>
 
 <!-- <p align="center">
   <strong>Interface web desenvolvida em React para o sistema iZoo - Projeto Integrador PIE4 (IFTM)</strong>
@@ -15,7 +15,7 @@
 
 ## 📖 Sobre o Projeto
 
-O **iZoo Frontend** é uma aplicação web desenvolvida com **React** que tem como objetivo **modernizar o controle de zoonoses**, substituindo o processo tradicional feito em papel por uma solução totalmente digital.
+**iZoo** é uma aplicação web desenvolvida com **React** que tem como objetivo **modernizar o controle de zoonoses**, substituindo o processo tradicional feito em papel por uma solução totalmente digital.
 
 A ideia surgiu a partir da necessidade de facilitar o trabalho de agentes de saúde e oferecer mais transparência para a população.  
 Cada residência cadastrada recebe um **QR Code exclusivo**, que permite registrar e consultar **inspeções e ocorrências** realizadas no local.
