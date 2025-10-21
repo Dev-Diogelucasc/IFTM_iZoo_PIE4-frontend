@@ -1,4 +1,4 @@
-<h1 align="center"> iZoo </h1>
+<h1 align="center"> iZoo</h1>
 
 <!-- <p align="center">
   <strong>Interface web desenvolvida em React para o sistema iZoo - Projeto Integrador PIE4 (IFTM)</strong>
@@ -15,7 +15,7 @@
 
 ## 📖 Sobre o Projeto
 
-**iZoo** é uma aplicação web desenvolvida com **React** que tem como objetivo **modernizar o controle de zoonoses**, substituindo o processo tradicional feito em papel por uma solução totalmente digital.
+**iZoo** é a interface web do projeto **PIE4 - Instituto Federal do Triângulo Mineiro (IFTM)**, desenvolvida para facilitar a interação com o sistema **iZoo**, uma plataforma voltada à **gestão, exibição e controle de informações sobre zoonoses**.
 
 A ideia surgiu a partir da necessidade de facilitar o trabalho de agentes de saúde e oferecer mais transparência para a população.  
 Cada residência cadastrada recebe um **QR Code exclusivo**, que permite registrar e consultar **inspeções e ocorrências** realizadas no local.
@@ -32,8 +32,8 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
 | Categoria                           | Tecnologia / Biblioteca                                                                                                                             | Descrição                                          |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| 💻 **Biblioteca principal**          | [React](https://react.dev/)                                                                                                                         | Biblioteca para construção da interface do usuário |
-| ⚡ **Ambiente de build**             | [Vite](https://vitejs.dev/)                                                                                                                         | Ferramenta de build rápida e moderna               |
+| 💻 **Biblioteca principal**         | [React](https://react.dev/)                                                                                                                         | Biblioteca para construção da interface do usuário |
+| ⚡ **Ambiente de build**            | [Vite](https://vitejs.dev/)                                                                                                                         | Ferramenta de build rápida e moderna               |
 | 🧭 **Roteamento**                   | [React Router DOM](https://reactrouter.com/)                                                                                                        | Gerencia rotas e navegação entre páginas           |
 | 🎨 **Estilização**                  | [Tailwind CSS](https://tailwindcss.com/)                                                                                                            | Framework CSS utilitário para design responsivo    |
 | 🧱 **Ícones**                       | [React Icons](https://react-icons.github.io/react-icons/)                                                                                           | Coleção de ícones de várias bibliotecas            |
@@ -128,7 +128,8 @@ IFTM_iZoo_PIE4-frontend/
 └── vercel.json                 # Configuração de deploy (Vercel)
 
 ```
---- 
+
+---
 
 ## ⚙️ Como Executar o Projeto
 
@@ -140,6 +141,7 @@ Antes de começar, verifique se você possui as seguintes ferramentas instaladas
 - [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
 
 > 💡 Dica: Para verificar as versões instaladas, execute:
+>
 > ```bash
 > node -v
 > npm -v
