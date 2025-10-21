@@ -49,7 +49,7 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
 ## 🧠 Principais Recursos Técnicos
 
-- Sistema de leitura de **código de barras** para identificação rápida de animais ou itens.
+- Sistema de leitura de **código de barras** para registro de inspeções
 - Geração de **QR Codes dinâmicos** com informações detalhadas.
 - Visualização geográfica através de **mapas interativos (Leaflet)**.
 - Feedbacks instantâneos com **notificações (React Toastify)**.
