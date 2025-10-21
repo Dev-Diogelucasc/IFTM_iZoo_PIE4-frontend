@@ -74,6 +74,23 @@ const RegisterAddress = ({ onClose, loadAddress }) => {
     navigator.geolocation.getCurrentPosition(sucesso, erroLocalizacao, opcoes);
   }, []); // O array vazio garante que o efeito só rode uma vez
 
+  // Função buscar pelo CEP
+  const fetchAddressCep = async (cepValue) => {
+    if (!cepValue || cepValue.length < 8) return;
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cepValue}/json`);
+      const data = await response.json();
+      setStreet(data.logradouro || "");
+      setNeighborhood(data.bairro || "");
+      setCity(data.localidade || "");
+      setEstado(data.uf || "");
+      setError("");
+    } catch (error) {
+      console.error("Erro ao buscar CEP ", error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -185,6 +202,7 @@ const RegisterAddress = ({ onClose, loadAddress }) => {
                 placeholder="Digite o CEP"
                 value={cep}
                 onChange={(e) => setCep(e.target.value)}
+                onBlur={() => fetchAddressCep(cep)}
                 required
               />
             </div>
