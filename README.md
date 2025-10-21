@@ -21,7 +21,7 @@ O objetivo é oferecer uma experiência fluida e intuitiva, com **design respons
 
 ---
 
-## Tecnologias Utilizadas
+## 🚀 Tecnologias Utilizadas
 
 Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
@@ -54,77 +54,70 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
 ## 📁 Estrutura de Pastas
 
-IFTM_iZoo_PIE4-frontend
-├─ eslint.config.js
-├─ index.html
-├─ package-lock.json
-├─ package.json
-├─ public
-│  ├─ green-house.png
-│  ├─ orange-house.png
-│  ├─ red-house.png
-│  └─ vite.svg
-├─ README.md
-├─ src
-│  ├─ App.css
-│  ├─ App.jsx
-│  ├─ assets
-│  │  └─ react.svg
-│  ├─ components
-│  │  ├─ footer
-│  │  │  └─ Footer.jsx
-│  │  ├─ navBar
-│  │  │  └─ NavBar.jsx
-│  │  ├─ ProtectedRoute
-│  │  │  └─ ProtectedRoute.jsx
-│  │  ├─ scannerQr
-│  │  │  └─ ScannerQr.jsx
-│  │  └─ sideBar
-│  │     └─ SideBar.jsx
-│  ├─ contexts
-│  │  └─ AuthContext.jsx
-│  ├─ index.css
-│  ├─ main.jsx
-│  ├─ pages
-│  │  ├─ address
-│  │  │  ├─ Address.jsx
-│  │  │  ├─ registerAddress
-│  │  │  │  └─ RegisterAddress.jsx
-│  │  │  └─ updateAddress
-│  │  │     └─ UpdateAddress.jsx
-│  │  ├─ auth
-│  │  │  ├─ login
-│  │  │  │  └─ Login.jsx
-│  │  │  ├─ recoverpassword
-│  │  │  │  └─ RecoverPassword.jsx
-│  │  │  ├─ register
-│  │  │  │  └─ Register.jsx
-│  │  │  └─ resetPassword
-│  │  │     └─ ResetPassword.jsx
-│  │  ├─ dashboard
-│  │  │  └─ Dashboard.jsx
-│  │  ├─ home
-│  │  │  ├─ FeatureCard
-│  │  │  │  └─ FeatureCard.jsx
-│  │  │  └─ Home.jsx
-│  │  ├─ inspections
-│  │  │  ├─ CheckInspection.jsx
-│  │  │  ├─ Consult.jsx
-│  │  │  └─ CreateInspection.jsx
-│  │  ├─ mapping
-│  │  │  └─ Mapping.jsx
-│  │  ├─ presentation
-│  │  │  └─ Presentation.jsx
-│  │  ├─ reports
-│  │  │  └─ Reports.jsx
-│  │  └─ users
-│  │     ├─ updateUsers
-│  │     │  └─ UpdateUsers.jsx
-│  │     └─ Users.jsx
-│  ├─ services
-│  │  └─ api.js
-│  └─ utils
-├─ vercel.json
-└─ vite.config.js
-
 ```
+IFTM_iZoo_PIE4-frontend/
+├── public/                     # Arquivos públicos (imagens, favicon, etc)
+├── src/
+│   ├── assets/                 # Recursos visuais e ícones (ex: green-house.png)
+│   ├── components/             # Componentes reutilizáveis da interface
+│   │   ├── footer/             # Rodapé da aplicação
+│   │   │   └── Footer.jsx
+│   │   ├── navBar/             # Barra de navegação
+│   │   │   └── NavBar.jsx
+│   │   ├── sideBar/            # Menu lateral
+│   │   │   └── SideBar.jsx
+│   │   ├── scannerQr/          # Leitor de QR Code
+│   │   │   └── ScannerQr.jsx
+│   │   └── ProtectedRoute/     # Proteção de rotas privadas
+│   │       └── ProtectedRoute.jsx
+│   │
+│   ├── context/                # Contextos globais da aplicação
+│   │   └── AuthContext.jsx
+│   │
+│   ├── pages/                  # Páginas principais do sistema
+│   │   ├── address/            # Cadastro e atualização de endereços
+│   │   │   ├── Address.jsx
+│   │   │   ├── RegisterAddress.jsx
+│   │   │   └── UpdateAddress.jsx
+│   │   ├── auth/               # Autenticação de usuários
+│   │   │   ├── login/          # Tela de login
+│   │   │   │   └── Login.jsx
+│   │   │   ├── register/       # Tela de cadastro de usuário
+│   │   │   │   └── Register.jsx
+│   │   │   ├── recoverpassword/# Recuperação de senha
+│   │   │   │   └── RecoverPassword.jsx
+│   │   │   └── resetPassword/  # Redefinição de senha
+│   │   │       └── ResetPassword.jsx
+│   │   ├── dashboard/          # Painel principal
+│   │   │   └── Dashboard.jsx
+│   │   ├── home/               # Página inicial
+│   │   │   ├── Home.jsx
+│   │   │   └── FeatureCard.jsx
+│   │   ├── inspections/        # Módulo de inspeções
+│   │   │   ├── CheckInspection.jsx
+│   │   │   └── CreateInspection.jsx
+│   │   ├── mapping/            # Módulo de mapeamento
+│   │   │   └── Mapping.jsx
+│   │   ├── presentation/       # Página de apresentação institucional
+│   │   │   └── Presentation.jsx
+│   │   ├── reports/            # Relatórios do sistema
+│   │   │   └── Reports.jsx
+│   │   └── users/              # Gestão de usuários
+│   │       ├── Users.jsx
+│   │       └── UpdateUsers.jsx
+│   │
+│   ├── services/               # Comunicação com a API backend
+│   │   └── api.js
+│   │
+│   ├── utils/                  # Funções utilitárias (helpers)
+│   ├── App.jsx                 # Componente raiz
+│   ├── App.css                 # Estilos globais
+│   ├── main.jsx                # Ponto de entrada principal
+│   └── index.css               # Configuração base de estilos
+│
+├── vite.config.js              # Configuração do Vite
+├── eslint.config.js            # Regras de lint
+├── package.json                # Dependências e scripts do projeto
+├── README.md                   # Documentação principal
+└── vercel.json                 # Configuração de deploy (Vercel)
+
