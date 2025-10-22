@@ -2,6 +2,7 @@ import { useState } from "react";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
 import { requestPassword } from "../../../services/api";
+import { ToastContainer, toast } from "react-toastify";
 
 const RecoverPassword = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,9 @@ const RecoverPassword = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const notify = () => toast(`Código enviado para e-mail: ${email}`);
+  const notifyResend = () => toast(`Código reenviado para e-mail: ${email}`);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +34,7 @@ const RecoverPassword = () => {
     setLoading(true);
     try {
       // await verifyToken({ token: code });
-      navigate("/reset-password", { state: { email} });
+      navigate("/reset-password", { state: { email } });
     } catch (error) {
       console.error("Erro ao validar token:", error);
       setError("Código inválido.");
@@ -39,20 +43,20 @@ const RecoverPassword = () => {
     }
   };
 
-  const handleResend = async () => {
-    setError("");
-    setMessage("");
-    setLoading(true);
-    try {
-      await requestPassword({ email });
-      setMessage("Token reenviado. Verifique seu e-mail.");
-    } catch (err) {
-      console.error("Erro ao reenviar token:", err);
-      setError("Falha ao reenviar token.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handleResend = async () => {
+  //   setError("");
+  //   setMessage("");
+  //   setLoading(true);
+  //   try {
+  //     await requestPassword({ email });
+  //     setMessage("Token reenviado. Verifique seu e-mail.");
+  //   } catch (err) {
+  //     console.error("Erro ao reenviar token:", err);
+  //     setError("Falha ao reenviar token.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
@@ -116,6 +120,7 @@ const RecoverPassword = () => {
                 type="submit"
                 className="w-full py-2 px-4 bg-green-700 hover:bg-green-800 cursor-pointer text-white font-semibold rounded-md shadow-sm"
                 disabled={loading}
+                onClick={() => notify()}
               >
                 {loading
                   ? !code
@@ -128,14 +133,17 @@ const RecoverPassword = () => {
             </div>
 
             <div className="flex justify-between mt-2">
-              <button
+              {/* <button
                 type="button"
-                onClick={handleResend}
+                onClick={() => {
+                  handleResend()
+                  notifyResend()
+                }}
                 disabled={loading}
                 className="text-sm text-stone-600 hover:underline"
               >
                 Reenviar código
-              </button>
+              </button> */}
               <Link
                 to="/login"
                 className="text-sm text-green-600 hover:underline"
@@ -146,6 +154,18 @@ const RecoverPassword = () => {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

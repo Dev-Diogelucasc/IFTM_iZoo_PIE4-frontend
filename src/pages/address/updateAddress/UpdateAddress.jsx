@@ -20,7 +20,7 @@ const UpdateAddress = ({ address, onClose, loadAddress }) => {
 
   const navigate = useNavigate();
 
-  const notify = () => toast("Endereço Atualizado!");
+  const notify = () => toast("Endereço atualizado com sucesso!");
 
   // Função para envio de formulário
   const handleSubmit = async (e) => {

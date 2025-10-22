@@ -230,11 +230,11 @@ const Dashboard = () => {
                         </div>
                         <span
                           className={`inline-flex items-center justify-center gap-1 px-2 py-0.5 rounded text-[11px] ${
-                             insp.gravidade === "grave"
-                                  ? "bg-orange-100 text-orange-800 ring-orange-200"
-                                  : insp.gravidade === "gravíssimo"
-                                  ? "bg-red-100 text-red-800 ring-red-200"
-                                  : "bg-gray-100 text-gray-700 ring-gray-200"
+                            insp.gravidade === "grave"
+                              ? "bg-orange-100 text-orange-800 ring-orange-200"
+                              : insp.gravidade === "gravíssimo"
+                              ? "bg-red-100 text-red-800 ring-red-200"
+                              : "bg-gray-100 text-gray-700 ring-gray-200"
                           }`}
                         >
                           {insp.gravidade}

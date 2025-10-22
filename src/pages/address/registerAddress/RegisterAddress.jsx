@@ -21,7 +21,7 @@ const RegisterAddress = ({ onClose, loadAddress }) => {
 
   const navigate = useNavigate();
 
-  const notify = () => toast("Endereço Criado com Sucesso!");
+  const notify = () => toast("Endereço criado com sucesso!");
 
   // Função de geolocalização
   useEffect(() => {

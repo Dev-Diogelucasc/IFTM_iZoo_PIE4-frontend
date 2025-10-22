@@ -18,7 +18,7 @@ const Users = () => {
   const [openUpdateUser, setOpenUpdateUser] = useState(false);
   const navigate = useNavigate();
 
-  const notifyDelete = () => toast("Usuário, excluido com sucesso! ");
+  const notifyDelete = () => toast("Usuário excluido com sucesso! ");
 
   const loadUsers = async () => {
     setLoading(true);
@@ -128,8 +128,8 @@ const Users = () => {
               <div className="text-center py-6 text-red-500">{error}</div>
             )}
 
-            <div className="overflow-x-auto rounded border border-stone-200 w-full font-light shadow">
-              <table className="w-full min-w-[700px]">
+            <div className="overflow-auto rounded border border-stone-200 w-full h-85 font-light shadow">
+              <table className="w-full ">
                 <thead>
                   <tr className="bg-white border-b border-stone-200">
                     <th className="px-4 py-3 text-left">Login</th>

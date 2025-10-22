@@ -10,7 +10,7 @@ const UpdateUsers = ({ userLoad, onClose, loadUsers }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const notify = () => toast("Atualização feita com sucesso!");
+  const notify = () => toast("Atualização realizada com sucesso!");
 
   //  Função para envio de formulário
   const handleSubmit = async (e) => {
@@ -26,7 +26,7 @@ const UpdateUsers = ({ userLoad, onClose, loadUsers }) => {
     try {
       setLoading(true);
       await updateUser(userLoad?.id, user);
-      loadUsers()
+      loadUsers();
       onClose();
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);

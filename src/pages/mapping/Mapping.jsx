@@ -283,7 +283,7 @@ const Mapping = () => {
               </div>
             </div>
 
-                {/* Tabelas Informativas */}
+            {/* Tabelas Informativas */}
             <div className="space-y-3">
               {/* <div className="bg-[#F8F8F8] rounded shadow-sm border border-gray-200 p-3">
                 <p className="text-xs text-gray-500 mb-1">Área Mais Afetada</p>

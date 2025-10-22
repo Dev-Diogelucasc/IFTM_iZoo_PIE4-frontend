@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { GiPlantsAndAnimals } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { resetPassword } from "../../../services/api";
+import { ToastContainer, toast } from "react-toastify";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,8 @@ const ResetPassword = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const notify = () => toast("Senha alterada com sucesso!");
 
   const location = useLocation();
 
@@ -142,6 +145,7 @@ const ResetPassword = () => {
                 type="submit"
                 className="w-full py-2 px-4 bg-green-700 hover:bg-green-800 cursor-pointer text-white font-semibold rounded-md shadow-sm"
                 disabled={loading}
+                onClick={() => notify()}
               >
                 {loading
                   ? !code
@@ -164,6 +168,18 @@ const ResetPassword = () => {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={800}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

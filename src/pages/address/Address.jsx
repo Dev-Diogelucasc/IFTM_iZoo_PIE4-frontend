@@ -27,7 +27,7 @@ const Address = () => {
   const navigate = useNavigate();
 
   const notify = () => toast("Endereço excluido com sucesso!");
-  const notifyQrCode = () => toast("Qr Code gerado com sucesso!");
+  const notifyQrCode = () => toast("QR Code gerado com sucesso!");
 
   // Função de Get da api
   const loadAddress = async () => {

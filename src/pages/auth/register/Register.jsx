@@ -40,8 +40,8 @@ const Register = () => {
         // Enviar os estados ja preeenchidos, para login.
         state: {
           loginField: registerData.login,
-          password: registerData.senha
-        }
+          password: registerData.senha,
+        },
       });
     } catch (error) {
       console.log("Erro detalhado no registro:", error.response?.data || error);

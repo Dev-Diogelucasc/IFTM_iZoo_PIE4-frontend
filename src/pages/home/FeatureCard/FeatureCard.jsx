@@ -1,4 +1,3 @@
-
 // Modal dos Componentes da Page Main
 const FeatureCard = ({
   icon,
