@@ -32,25 +32,25 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
 | Categoria                           | Tecnologia / Biblioteca                                                                                                                             | Descrição                                          |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| 💻 **Biblioteca principal**         | [React](https://react.dev/)                                                                                                                         | Biblioteca para construção da interface do usuário |
-| ⚡ **Ambiente de build**            | [Vite](https://vitejs.dev/)                                                                                                                         | Ferramenta de build rápida e moderna               |
-| 🧭 **Roteamento**                   | [React Router DOM](https://reactrouter.com/)                                                                                                        | Gerencia rotas e navegação entre páginas           |
-| 🎨 **Estilização**                  | [Tailwind CSS](https://tailwindcss.com/)                                                                                                            | Framework CSS utilitário para design responsivo    |
-| 🧱 **Ícones**                       | [React Icons](https://react-icons.github.io/react-icons/)                                                                                           | Coleção de ícones de várias bibliotecas            |
-| 📡 **Requisições HTTP**             | [Axios](https://axios-http.com/)                                                                                                                    | Cliente HTTP para consumo de APIs                  |
-| 🧭 **Mapas Interativos**            | [Leaflet](https://leafletjs.com/) e [React Leaflet](https://react-leaflet.js.org/)                                                                  | Exibição de mapas e localização                    |
-| 🔍 **Leitura de Códigos de Barras** | [React Barcode Scanner](https://www.npmjs.com/package/@thewirv/react-barcode-scanner)                                                               | Leitor de códigos de barras via câmera             |
-| 🔲 **QR Code**                      | [React QR Code](https://www.npmjs.com/package/react-qr-code)                                                                                        | Geração de QR Codes dinâmicos                      |
-| 🔔 **Notificações**                 | [React Toastify](https://fkhadra.github.io/react-toastify/introduction)                                                                             | Exibição de alertas e mensagens de feedback        |
-| 🌐 **CORS**                         | [CORS](https://www.npmjs.com/package/cors)                                                                                                          | Middleware para controle de acessos via API        |
-| 🧹 **Lint e Qualidade de Código**   | [ESLint](https://eslint.org/), [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)                                 | Garantem boas práticas e padronização do código    |
-| 💡 **Types e Tipagens**             | `@types/react`, `@types/react-dom`                                                                                                                  | Tipagens auxiliares para desenvolvimento           |
-| 🧩 **Dev Tools**                    | [Vite Plugin React](https://www.npmjs.com/package/@vitejs/plugin-react), [React Refresh](https://www.npmjs.com/package/eslint-plugin-react-refresh) | Suporte ao hot reload e otimização do build        |
+| **Biblioteca principal**         | [React](https://react.dev/)                                                                                                                         | Biblioteca para construção da interface do usuário |
+| **Ambiente de build**            | [Vite](https://vitejs.dev/)                                                                                                                         | Ferramenta de build rápida e moderna               |
+| **Roteamento**                   | [React Router DOM](https://reactrouter.com/)                                                                                                        | Gerencia rotas e navegação entre páginas           |
+| **Estilização**                  | [Tailwind CSS](https://tailwindcss.com/)                                                                                                            | Framework CSS utilitário para design responsivo    |
+| **Ícones**                       | [React Icons](https://react-icons.github.io/react-icons/)                                                                                           | Coleção de ícones de várias bibliotecas            |
+| **Requisições HTTP**             | [Axios](https://axios-http.com/)                                                                                                                    | Cliente HTTP para consumo de APIs                  |
+| **Mapas Interativos**            | [Leaflet](https://leafletjs.com/) e [React Leaflet](https://react-leaflet.js.org/)                                                                  | Exibição de mapas e localização                    |
+| **Leitura de Códigos de Barras** | [React Barcode Scanner](https://www.npmjs.com/package/@thewirv/react-barcode-scanner)                                                               | Leitor de códigos de barras via câmera             |
+| **QR Code**                      | [React QR Code](https://www.npmjs.com/package/react-qr-code)                                                                                        | Geração de QR Codes dinâmicos                      |
+| **Notificações**                 | [React Toastify](https://fkhadra.github.io/react-toastify/introduction)                                                                             | Exibição de alertas e mensagens de feedback        |
+| **CORS**                         | [CORS](https://www.npmjs.com/package/cors)                                                                                                          | Middleware para controle de acessos via API        |
+| **Lint e Qualidade de Código**   | [ESLint](https://eslint.org/), [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)                                 | Garantem boas práticas e padronização do código    |
+| **Types e Tipagens**             | `@types/react`, `@types/react-dom`                                                                                                                  | Tipagens auxiliares para desenvolvimento           |
+| **Dev Tools**                    | [Vite Plugin React](https://www.npmjs.com/package/@vitejs/plugin-react), [React Refresh](https://www.npmjs.com/package/eslint-plugin-react-refresh) | Suporte ao hot reload e otimização do build        |
 
 ## 🧠 Principais Recursos Técnicos
 
 - Sistema de leitura de **código de barras** para registro de inspeções
-- Geração de **QR Codes dinâmicos** com informações detalhadas.
+- Geração de **QR Codes dinâmicos**.
 - Visualização geográfica através de **mapas interativos (Leaflet)**.
 - Feedbacks instantâneos com **notificações (React Toastify)**.
 - Interface **totalmente responsiva** desenvolvida com Tailwind CSS.
@@ -151,19 +151,19 @@ Antes de começar, verifique se você possui as seguintes ferramentas instaladas
 
 ### 🔹 Passos para execução local
 
-1️⃣ **Clonar o repositório**
+1️ **Clonar o repositório**
 
 ```bash
 git clone https://github.com/Dev-Diogelucasc/IFTM_iZoo_PIE4-frontend.git
 ```
 
-2️⃣ **Acessar o diretório do projeto**
+2️ **Acessar o diretório do projeto**
 
 ```bash
 cd IFTM_iZoo_PIE4-frontend
 ```
 
-3️⃣ **Instalar as dependências**
+3️ **Instalar as dependências**
 
 ```bash
 npm install
@@ -171,7 +171,7 @@ npm install
 yarn install
 ```
 
-4️⃣ **Iniciar o servidor de desenvolvimento**
+4️ **Iniciar o servidor de desenvolvimento**
 
 ```bash
 npm run dev
@@ -179,7 +179,7 @@ npm run dev
 yarn dev
 ```
 
-## 🧠 O servidor será iniciado e o projeto estará disponível em:
+## O servidor será iniciado e o projeto estará disponível em:
 
 ```bash
 http://localhost:5173
