@@ -151,19 +151,19 @@ Antes de começar, verifique se você possui as seguintes ferramentas instaladas
 
 ### 🔹 Passos para execução local
 
-1️ **Clonar o repositório**
+1️⃣ **Clonar o repositório**
 
 ```bash
 git clone https://github.com/Dev-Diogelucasc/IFTM_iZoo_PIE4-frontend.git
 ```
 
-2️ **Acessar o diretório do projeto**
+2️⃣ **Acessar o diretório do projeto**
 
 ```bash
 cd IFTM_iZoo_PIE4-frontend
 ```
 
-3️ **Instalar as dependências**
+3️⃣ **Instalar as dependências**
 
 ```bash
 npm install
@@ -171,7 +171,7 @@ npm install
 yarn install
 ```
 
-4️ **Iniciar o servidor de desenvolvimento**
+4️⃣ **Iniciar o servidor de desenvolvimento**
 
 ```bash
 npm run dev
