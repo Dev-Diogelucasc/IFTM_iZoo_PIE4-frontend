@@ -49,7 +49,7 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
 ## 🧠 Principais Recursos Técnicos
 
-- Sistema de leitura de **código de barras** para registro de inspeções
+- Sistema de leitura através do **QR Code** para registro de inspeções
 - Geração de **QR Codes dinâmicos**.
 - Visualização geográfica através de **mapas interativos (Leaflet)**.
 - Feedbacks instantâneos com **notificações (React Toastify)**.
