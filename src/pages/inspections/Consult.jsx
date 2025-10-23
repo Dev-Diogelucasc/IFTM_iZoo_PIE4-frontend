@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import SideBar from "../../components/sideBar/SideBar";
+import { BiEdit } from "react-icons/bi";
 import { CiSearch } from "react-icons/ci";
-import { getAllInspecoes, getEnderecoById, getUser } from "../../services/api";
+import {
+  getAllInspecoes,
+  getEnderecoById,
+  getUser,
+  fetchInspections,
+} from "../../services/api";
 
 const Consult = () => {
   const [inspecoes, setInspecoes] = useState([]);
@@ -11,6 +17,7 @@ const Consult = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTipo, setFilterTipo] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
+  const [opneUpdateInspection, setOpenUpdateInspection] = useState(false);
 
   // Buscar todas as inspeções ao carregar a página
   useEffect(() => {
@@ -147,6 +154,22 @@ const Consult = () => {
     return colors[status] || "text-gray-600 bg-gray-50 border-gray-200";
   };
 
+  const updateInspection = async () => {
+    setLoading(true);
+    try {
+      await fetchInspections(inspecoes.id);
+      getAllInspecoes();
+    } catch (error) {
+      console.log("Erro detalhado no registro:", error.response?.data || error);
+      setError(
+        error.response?.data?.error ||
+          "Erro ao atualizar. Verifique os dados e tente novamente."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex overflow-x-hidden">
       <SideBar />
@@ -255,6 +278,7 @@ const Consult = () => {
                       <th className="px-4 py-3 text-left">Criado por</th>
                       <th className="px-4 py-3 text-left">Gravidade</th>
                       <th className="px-4 py-3 text-left">Status</th>
+                      <th className="px-4 py-3 text-left">Ações</th>
                     </tr>
                   </thead>
 
@@ -309,6 +333,15 @@ const Consult = () => {
                                 inspecao.status?.slice(1)}
                             </span>
                           </td>
+                          <td >
+                            <BiEdit
+                              className="cursor-pointer"
+                              onClick={() => {
+                                setOpenUpdateInspection(true)
+                                updateInspection(inspecao.id)
+                              }}
+                            />
+                          </td>
                         </tr>
                       ))
                     )}
@@ -318,6 +351,9 @@ const Consult = () => {
             )}
           </div>
         </div>
+        {opneUpdateInspection && (
+          <></>
+        )}
       </main>
     </div>
   );

@@ -165,7 +165,7 @@ export const getAllInspecoes = async () => {
 };
 
 // Função para atualizar inspeção
-export const updateInspection = async (inspetionId) => {
+export const fetchInspections = async (inspetionId) => {
   try {
     const response = await api.patch(`/inspecao/${inspetionId}`);
     return response.data;
