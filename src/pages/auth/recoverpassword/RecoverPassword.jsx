@@ -43,20 +43,20 @@ const RecoverPassword = () => {
     }
   };
 
-  // const handleResend = async () => {
-  //   setError("");
-  //   setMessage("");
-  //   setLoading(true);
-  //   try {
-  //     await requestPassword({ email });
-  //     setMessage("Token reenviado. Verifique seu e-mail.");
-  //   } catch (err) {
-  //     console.error("Erro ao reenviar token:", err);
-  //     setError("Falha ao reenviar token.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleResend = async () => {
+    setError("");
+    setMessage("");
+    setLoading(true);
+    try {
+      await requestPassword({ email });
+      setMessage("Token reenviado. Verifique seu e-mail.");
+    } catch (err) {
+      console.error("Erro ao reenviar token:", err);
+      setError("Falha ao reenviar token.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
@@ -133,7 +133,7 @@ const RecoverPassword = () => {
             </div>
 
             <div className="flex justify-between mt-2">
-              {/* <button
+              <button
                 type="button"
                 onClick={() => {
                   handleResend()
@@ -143,7 +143,7 @@ const RecoverPassword = () => {
                 className="text-sm text-stone-600 hover:underline"
               >
                 Reenviar código
-              </button> */}
+              </button>
               <Link
                 to="/login"
                 className="text-sm text-green-600 hover:underline"

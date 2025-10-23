@@ -164,6 +164,16 @@ export const getAllInspecoes = async () => {
   }
 };
 
+// Função para atualizar inspeção
+export const updateInspection = async (inspetionId) => {
+  try {
+    const response = await api.patch(`/inspecao/${inspetionId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao atualizar inspeção", error);
+  }
+};
+
 // Função para buscar endereço por ID
 export const getEnderecoById = async (enderecoId) => {
   try {
