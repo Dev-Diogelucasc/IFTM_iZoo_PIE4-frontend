@@ -367,7 +367,7 @@ const Consult = () => {
                           </td>
                           <td>
                             <select
-                              className="w-full md:w-auto px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700 font-light"
+                              className="w-auto px-1 py-1 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700 font-light"
                               value={inspecao.status}
                               onChange={(e) =>
                                 updateInspection(inspecao.id, e.target.value)
