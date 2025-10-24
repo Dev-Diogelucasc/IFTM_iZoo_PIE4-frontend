@@ -44,7 +44,7 @@ const SideBar = () => {
               </NavLink>
               <NavLink to="/inspecoes/endereco" className={navLinkClass}>
                 <BsQrCodeScan size={20} />
-                <span className="ml-3">Consultar endereço</span>
+                <span className="ml-3">Consultar Endereço</span>
               </NavLink>
               <NavLink to="/inspecoes/consultar" className={navLinkClass}>
                 <BsSearch size={20} />
@@ -83,7 +83,7 @@ const SideBar = () => {
               </NavLink>
               <NavLink to="/inspecoes/endereco" className={navLinkClass}>
                 <BsQrCodeScan size={20} />
-                <span className="ml-3">Consultar endereço</span>
+                <span className="ml-3">Consultar Endereço</span>
               </NavLink>
               <NavLink to="/inspecoes/consultar" className={navLinkClass}>
                 <BsSearch size={20} />
@@ -106,7 +106,7 @@ const SideBar = () => {
             <nav className="mt-4 flex flex-col">
               <NavLink to="/inspecoes/endereco" className={navLinkClass}>
                 <BsQrCodeScan size={20} />
-                <span className="ml-3">Consultar endereço</span>
+                <span className="ml-3">Consultar Endereço</span>
               </NavLink>
               <NavLink to="/mapeamento" className={navLinkClass}>
                 <BsGeoAlt size={20} />
@@ -174,7 +174,7 @@ const SideBar = () => {
                   </NavLink>
                   <NavLink to="/inspecoes/endereco" className={navLinkClass}>
                     <BsQrCodeScan size={20} />
-                    <span className="ml-3">Consultar endereço</span>
+                    <span className="ml-3">Consultar Endereço</span>
                   </NavLink>
                   <NavLink
                     to="/inspecoes/consultar"
@@ -252,7 +252,7 @@ const SideBar = () => {
                   </NavLink>
                   <NavLink to="/inspecoes/endereco" className={navLinkClass}>
                     <BsQrCodeScan size={20} />
-                    <span className="ml-3">Consultar endereço</span>
+                    <span className="ml-3">Consultar Endereço</span>
                   </NavLink>
                   <NavLink
                     to="/inspecoes/consultar"
@@ -298,7 +298,7 @@ const SideBar = () => {
                 <nav className="mt-4 flex flex-col">
                   <NavLink to="/inspecoes/endereco" className={navLinkClass}>
                     <BsQrCodeScan size={20} />
-                    <span className="ml-3">Consultar endereço</span>
+                    <span className="ml-3">Consultar Endereço</span>
                   </NavLink>
                   <NavLink
                     to="/mapeamento"

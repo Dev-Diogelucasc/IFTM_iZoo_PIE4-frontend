@@ -8,6 +8,8 @@ import {
   getUser,
   fetchInspections,
 } from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Consult = () => {
   const [inspecoes, setInspecoes] = useState([]);
@@ -17,7 +19,9 @@ const Consult = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTipo, setFilterTipo] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
-  const [opneUpdateInspection, setOpenUpdateInspection] = useState(false);
+
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Buscar todas as inspeções ao carregar a página
   useEffect(() => {
@@ -154,13 +158,24 @@ const Consult = () => {
     return colors[status] || "text-gray-600 bg-gray-50 border-gray-200";
   };
 
-  const updateInspection = async () => {
+  const updateInspection = async (inspectionId, newStatus) => {
     setLoading(true);
     try {
-      await fetchInspections(inspecoes.id);
-      getAllInspecoes();
+      const response = await fetchInspections(inspectionId, {
+        status: newStatus,
+      });
+      console.log("Resposta do backend:", response);
+      setInspecoes((prev) =>
+        prev.map((i) =>
+          i.id === inspectionId ? { ...i, status: newStatus } : i
+        )
+      );
+      setFilteredInspecoes((prev) =>
+        prev.map((i) =>
+          i.id === inspectionId ? { ...i, status: newStatus } : i
+        )
+      );
     } catch (error) {
-      console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(
         error.response?.data?.error ||
           "Erro ao atualizar. Verifique os dados e tente novamente."
@@ -169,6 +184,23 @@ const Consult = () => {
       setLoading(false);
     }
   };
+
+  if (user?.cargo === "USER") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Acesso negado</h2>
+        <p className="text-gray-700">
+          Você não tem permissão para acessar esta página.
+        </p>
+        <button
+          className="mt-6 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
+          onClick={() => navigate("/")}
+        >
+          Voltar para o início
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex overflow-x-hidden">
@@ -278,7 +310,7 @@ const Consult = () => {
                       <th className="px-4 py-3 text-left">Criado por</th>
                       <th className="px-4 py-3 text-left">Gravidade</th>
                       <th className="px-4 py-3 text-left">Status</th>
-                      <th className="px-4 py-3 text-left">Ações</th>
+                      <th className="px-4 py-3 text-left">Alterar Status</th>
                     </tr>
                   </thead>
 
@@ -333,14 +365,20 @@ const Consult = () => {
                                 inspecao.status?.slice(1)}
                             </span>
                           </td>
-                          <td >
-                            <BiEdit
-                              className="cursor-pointer"
-                              onClick={() => {
-                                setOpenUpdateInspection(true)
-                                updateInspection(inspecao.id)
-                              }}
-                            />
+                          <td>
+                            <select
+                              className="w-full md:w-auto px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700 font-light"
+                              value={inspecao.status}
+                              onChange={(e) =>
+                                updateInspection(inspecao.id, e.target.value)
+                              }
+                            >
+                              <option value="">Alterar Status</option>
+                              <option value="pendente">Pendente</option>
+                              <option value="em andamento">Em Andamento</option>
+                              <option value="concluído">Concluído</option>
+                              <option value="cancelado">Cancelado</option>
+                            </select>
                           </td>
                         </tr>
                       ))
@@ -351,9 +389,6 @@ const Consult = () => {
             )}
           </div>
         </div>
-        {opneUpdateInspection && (
-          <></>
-        )}
       </main>
     </div>
   );
