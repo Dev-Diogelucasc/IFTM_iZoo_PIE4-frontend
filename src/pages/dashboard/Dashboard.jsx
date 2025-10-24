@@ -44,7 +44,7 @@ const Dashboard = () => {
       <main className="flex-1 flex flex-col">
         {/* Header */}
         <div className=" md:px-8 py-4">
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900">
+          <h1 className="font-medium text-lg text-gray-900">
             Dashboard
           </h1>
           <p className="text-sm text-gray-500">

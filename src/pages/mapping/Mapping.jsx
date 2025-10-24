@@ -197,7 +197,7 @@ const Mapping = () => {
       <main className="flex-1 flex flex-col mr-8 sm:mr-0">
         {/* Header */}
         <div className=" md:px-8 py-2">
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900">
+          <h1 className="font-medium text-lg text-gray-900">
             Mapeamento de Ocorrências
           </h1>
           <p className="text-sm text-gray-500">
