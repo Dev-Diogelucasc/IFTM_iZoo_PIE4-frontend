@@ -54,12 +54,21 @@ const Reports = () => {
               </label>
               <select className="w-full px-2 py-2 border border-gray-200 rounded-lg bg-white text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700">
                 <option value="">Relatorio Geral</option>
+                <option value="">Por Tipo de Ocorrência</option>
+                <option value="">Por Local</option>
+                <option value="">Por Gravidade</option>
+                <option value="">Por Período</option>
               </select>
             </div>
             <div className="flex-1">
               <label className="block font-medium mb-1">Período</label>
               <select className="w-full px-2 py-2 border border-gray-200 rounded-lg bg-white text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700">
-                <option value="">Ultimos 30 dias</option>
+                <option value="">Últimos 7 dias</option>
+                <option value="">Últimos 15 dias</option>
+                <option value="">Últimos 30 dias</option>
+                <option value="">Últimos 3 meses</option>
+                <option value="">Últimos 6 meses</option>
+                <option value="">Último ano</option>
               </select>
             </div>
           </div>
