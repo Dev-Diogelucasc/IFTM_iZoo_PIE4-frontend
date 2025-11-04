@@ -413,7 +413,7 @@ const Reports = () => {
     <div className="flex min-h-screen overflow-hidden">
       <SideBar />
       <main className="flex-1 mt-3 sm:m-5 overflow-auto">
-        <div className="bg-[#F8F8F8] rounded-xl shadow p-8 mb-8 mr-10 sm:mr-0 border border-gray-200">
+        <div className="bg-[#F8F8F8] rounded-xl shadow p-5 mb-8 mr-10 sm:mr-0 border border-gray-200">
           <h2 className="text-2xl font-bold mb-2">Gerar Relatório</h2>
           <p className="mb-6 text-gray-600">
             Selecione os parâmetros para gerar seu relatório
@@ -487,7 +487,7 @@ const Reports = () => {
 
           {relatorioData && (
             <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-3">
+              <h3 className=" font-semibold mb-3">
                 Resultado do Relatório
               </h3>
               <p className="text-gray-600 mb-4">
@@ -497,7 +497,7 @@ const Reports = () => {
 
               <div className="flex gap-4">
                 <button
-                  className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                  className="flex items-center cursor-pointer gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
                   onClick={handleExportarPDF}
                 >
                   <GoDownload />
@@ -505,7 +505,7 @@ const Reports = () => {
                 </button>
 
                 <button
-                  className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                  className="flex items-center cursor-pointer gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
                   onClick={handleExportarExcel}
                 >
                   <TbChartInfographic />
@@ -514,7 +514,7 @@ const Reports = () => {
               </div>
 
               {/* Tabela de preview dos dados */}
-              <div className="mt-6 overflow-auto rounded border border-stone-200 w-full h-85 font-light shadow">
+              <div className="mt-4 overflow-auto rounded border border-stone-200 w-full h-90 font-light shadow">
                 <table className="w-full">
                   <thead>
                     <tr className="bg-white border-b border-stone-200">
@@ -523,7 +523,7 @@ const Reports = () => {
                         Object.keys(relatorioData[0]).map((key) => (
                           <th
                             key={key}
-                            className="px-4 py-3 text-left capitalize"
+                            className="px-12 py-2 text-left capitalize"
                           >
                             {key === "id"
                               ? "ID"
@@ -551,7 +551,7 @@ const Reports = () => {
                       relatorioData.slice(0, 10).map((row, index) => (
                         <tr key={index} className="border-b border-stone-200">
                           {Object.entries(row).map(([key, value], i) => (
-                            <td key={i} className="px-4 py-4">
+                            <td key={i} className="px-2  py-2">
                               {key === "gravidade" ? (
                                 <span
                                   className={`px-3 py-1 rounded-full border text-sm font-medium ${getGravidadeColor(
