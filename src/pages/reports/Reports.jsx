@@ -15,6 +15,7 @@ import {
   getInspecoesDeletadas,
   getEnderecoById,
   getUser,
+  getAllInspecoes,
 } from "../../services/api";
 
 const Reports = () => {
@@ -25,6 +26,8 @@ const Reports = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [relatorioData, setRelatorioData] = useState(null);
+  const [dataInicial, setDataInicial] = useState("");
+  const [dataFinal, setDataFinal] = useState("");
 
   // Função para formatar data no padrão AAAA/MM/DD - HH:MM:SS
   const formatDateTime = (dateString) => {
@@ -128,6 +131,18 @@ const Reports = () => {
       return;
     }
 
+    // Validar datas se for filtro por período
+    if (tipoRelatorio === "periodo") {
+      if (!dataInicial || !dataFinal) {
+        setError("Por favor, selecione a data inicial e final");
+        return;
+      }
+      if (new Date(dataInicial) > new Date(dataFinal)) {
+        setError("A data inicial não pode ser maior que a data final");
+        return;
+      }
+    }
+
     setLoading(true);
     setError("");
     setRelatorioData(null);
@@ -163,6 +178,22 @@ const Reports = () => {
         case "concluida":
           result = await getInspecoesPorStatus("concluído");
           break;
+        case "periodo": {
+          // Buscar todas as inspeções e filtrar por período
+          const todasInspecoes = await getAllInspecoes();
+          const dataInicialObj = new Date(dataInicial);
+          const dataFinalObj = new Date(dataFinal);
+          // Ajustar data final para incluir o dia completo
+          dataFinalObj.setHours(23, 59, 59, 999);
+
+          const inspecoesFiltradas = todasInspecoes.filter((inspecao) => {
+            const dataInspecao = new Date(inspecao.createdAt);
+            return dataInspecao >= dataInicialObj && dataInspecao <= dataFinalObj;
+          });
+
+          result = { success: true, data: inspecoesFiltradas };
+          break;
+        }
         default:
           setError("Tipo de relatório não reconhecido");
           return;
@@ -219,6 +250,7 @@ const Reports = () => {
         em_andamento: "Inspeções Em Andamento",
         concluida: "Inspeções Concluídas",
         deletadas: "Inspeções Deletadas",
+        periodo: `Inspeções de ${dataInicial.split("-").reverse().join("/")} até ${dataFinal.split("-").reverse().join("/")}`,
       };
 
       // Adicionar cabeçalho
@@ -407,9 +439,34 @@ const Reports = () => {
                 <option value="em_andamento">Status: Em andamento</option>
                 <option value="concluida">Status: Concluída</option>
                 <option value="deletadas">Inspeções deletadas</option>
+                <option value="periodo">Filtrar por período</option>
               </select>
             </div>
           </div>
+
+          {/* Campos de data que aparecem apenas quando "periodo" é selecionado */}
+          {tipoRelatorio === "periodo" && (
+            <div className="flex gap-4 mb-6 font-light">
+              <div className="flex-1">
+                <label className="block font-medium mb-1">Data Inicial</label>
+                <input
+                  type="date"
+                  className="w-full px-2 py-1 border border-gray-200 rounded-lg bg-white text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700"
+                  value={dataInicial}
+                  onChange={(e) => setDataInicial(e.target.value)}
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block font-medium mb-1">Data Final</label>
+                <input
+                  type="date"
+                  className="w-full px-2 py-1 border border-gray-200 rounded-lg bg-white text-base outline-none transition-colors duration-150 hover:border-green-700 focus:border-green-700"
+                  value={dataFinal}
+                  onChange={(e) => setDataFinal(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
 
           <button
             className="w-full flex bg-white items-center justify-center gap-2 border border-stone-300 py-1 rounded-lg hover:bg-green-600 hover:text-white transition cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
