@@ -188,7 +188,9 @@ const Reports = () => {
 
           const inspecoesFiltradas = todasInspecoes.filter((inspecao) => {
             const dataInspecao = new Date(inspecao.createdAt);
-            return dataInspecao >= dataInicialObj && dataInspecao <= dataFinalObj;
+            return (
+              dataInspecao >= dataInicialObj && dataInspecao <= dataFinalObj
+            );
           });
 
           result = { success: true, data: inspecoesFiltradas };
@@ -250,7 +252,10 @@ const Reports = () => {
         em_andamento: "Inspeções Em Andamento",
         concluida: "Inspeções Concluídas",
         deletadas: "Inspeções Deletadas",
-        periodo: `Inspeções de ${dataInicial.split("-").reverse().join("/")} até ${dataFinal.split("-").reverse().join("/")}`,
+        periodo: `Inspeções de ${dataInicial
+          .split("-")
+          .reverse()
+          .join("/")} até ${dataFinal.split("-").reverse().join("/")}`,
       };
 
       // Adicionar cabeçalho
@@ -258,7 +263,8 @@ const Reports = () => {
       doc.setTextColor(40);
       const pageWidth = doc.internal.pageSize.getWidth();
       doc.text(
-        "Izoo - Relatório de: "+tipoRelatorioTexto[tipoRelatorio] || "Relatório",
+        "Izoo - Relatório de: " + tipoRelatorioTexto[tipoRelatorio] ||
+          "Relatório",
         pageWidth / 2,
         15,
         { align: "center" }
