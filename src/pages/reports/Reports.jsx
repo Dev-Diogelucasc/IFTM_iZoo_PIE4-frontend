@@ -6,6 +6,8 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { GoDownload } from "react-icons/go";
 import { TbChartInfographic } from "react-icons/tb";
 import { AiOutlineSchedule } from "react-icons/ai";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 import {
   getInspecoesPorStatus,
   getMinhasInspecoes,
@@ -89,20 +91,110 @@ const Reports = () => {
     }
   };
 
-  // Função para exportar para PDF (simulação)
+  // Função para exportar para PDF
   const handleExportarPDF = () => {
     if (!relatorioData) {
       setError("Gere um relatório primeiro");
       return;
     }
 
-    // Aqui você pode implementar a lógica real de exportação para PDF
-    // Por exemplo, usando bibliotecas como jsPDF ou fazendo uma requisição ao backend
-    const link = document.createElement("a");
-    link.href = "#"; // Substituir por URL real ou blob do PDF
-    link.download = `relatorio_${tipoRelatorio}_${new Date().toISOString()}.pdf`;
-    setError("");
-    alert("Funcionalidade de exportação em desenvolvimento");
+    if (!Array.isArray(relatorioData) || relatorioData.length === 0) {
+      setError("Não há dados para exportar");
+      return;
+    }
+
+    try {
+      // Criar nova instância do jsPDF
+      const doc = new jsPDF({
+        orientation: "landscape",
+        unit: "mm",
+        format: "a4",
+      });
+
+      // Configurar título do documento
+      const tipoRelatorioTexto = {
+        minhas: "Minhas Inspeções",
+        gravissima: "Inspeções Gravíssimas",
+        grave: "Inspeções Graves",
+        moderada: "Inspeções Moderadas",
+        leve: "Inspeções Leves",
+        pendente: "Inspeções Pendentes",
+        em_andamento: "Inspeções Em Andamento",
+        concluida: "Inspeções Concluídas",
+        deletadas: "Inspeções Deletadas",
+      };
+
+      // Adicionar cabeçalho
+      doc.setFontSize(18);
+      doc.setTextColor(40);
+      const pageWidth = doc.internal.pageSize.getWidth();
+      doc.text(
+        tipoRelatorioTexto[tipoRelatorio] || "Relatório",
+        pageWidth / 2,
+        15,
+        { align: "center" }
+      );
+
+      // Adicionar data de geração
+      doc.setFontSize(10);
+      doc.setTextColor(100);
+      doc.text(
+        `Gerado em: ${new Date().toLocaleString("pt-BR")}`,
+        pageWidth / 2,
+        22,
+        { align: "center" }
+      );
+
+      // Preparar dados para a tabela
+      const headers = Object.keys(relatorioData[0]);
+      const rows = relatorioData.map((row) =>
+        headers.map((header) => {
+          const value = row[header];
+          if (value === null || value === undefined) {
+            return "";
+          }
+          if (typeof value === "object") {
+            return JSON.stringify(value);
+          }
+          return String(value);
+        })
+      );
+
+      // Importar e usar autoTable
+      autoTable(doc, {
+        head: [headers],
+        body: rows,
+        startY: 28,
+        styles: {
+          fontSize: 8,
+          cellPadding: 3,
+          overflow: "linebreak",
+          halign: "left",
+        },
+        headStyles: {
+          fillColor: [34, 197, 94],
+          textColor: [255, 255, 255],
+          fontStyle: "bold",
+          halign: "left",
+        },
+        alternateRowStyles: {
+          fillColor: [248, 248, 248],
+        },
+        tableLineColor: [214, 211, 209],
+        tableLineWidth: 0.1,
+        margin: { top: 28, left: 10, right: 10 },
+      });
+
+      // Salvar o PDF
+      const fileName = `relatorio_${tipoRelatorio}_${
+        new Date().toISOString().split("T")[0]
+      }.pdf`;
+      doc.save(fileName);
+      setError("");
+    } catch (err) {
+      console.error("Erro detalhado ao gerar PDF:", err);
+      setError(`Erro ao gerar PDF: ${err.message || "Tente novamente."}`);
+    }
   };
 
   // Função para exportar para Excel/CSV
