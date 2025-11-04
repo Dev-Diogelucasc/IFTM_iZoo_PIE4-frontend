@@ -41,13 +41,13 @@ const Reports = () => {
           result = await getMinhasInspecoes();
           break;
         case "gravissima":
-          result = await getInspecoesPorGravidade("GRAVISSIMA");
+          result = await getInspecoesPorGravidade("gravíssimo");
           break;
         case "grave":
           result = await getInspecoesPorGravidade("GRAVE");
           break;
         case "moderada":
-          result = await getInspecoesPorGravidade("MODERADA");
+          result = await getInspecoesPorGravidade("moderado");
           break;
         case "leve":
           result = await getInspecoesPorGravidade("LEVE");
@@ -59,10 +59,10 @@ const Reports = () => {
           result = await getInspecoesPorStatus("PENDENTE");
           break;
         case "em_andamento":
-          result = await getInspecoesPorStatus("EM_ANDAMENTO");
+          result = await getInspecoesPorStatus("em andamento");
           break;
         case "concluida":
-          result = await getInspecoesPorStatus("CONCLUIDA");
+          result = await getInspecoesPorStatus("concluído");
           break;
         default:
           setError("Tipo de relatório não reconhecido");
@@ -71,10 +71,19 @@ const Reports = () => {
 
       if (result.success) {
         setRelatorioData(result.data);
+        // Limpar erro se houver dados
+        if (
+          result.data &&
+          Array.isArray(result.data) &&
+          result.data.length > 0
+        ) {
+          setError("");
+        } else {
+          setError("Nenhum dado encontrado para este relatório");
+        }
       }
-    } catch (err) {
+    } catch {
       setError("Erro ao gerar relatório. Tente novamente.");
-      console.error("Erro ao gerar relatório:", err);
     } finally {
       setLoading(false);
     }
@@ -162,9 +171,9 @@ const Reports = () => {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen overflow-hidden">
       <SideBar />
-      <main className="flex-1 mt-3 sm:m-5">
+      <main className="flex-1 mt-3 sm:m-5 overflow-auto">
         <div className="bg-[#F8F8F8] rounded-xl shadow p-8 mb-8 mr-10 sm:mr-0 border border-gray-200">
           <h2 className="text-2xl font-bold mb-2">Gerar Relatório</h2>
           <p className="mb-6 text-gray-600">
@@ -189,7 +198,7 @@ const Reports = () => {
               >
                 <option value="">Selecione um tipo</option>
                 <option value="minhas">Minhas inspeções</option>
-                <option value="gravíssimo">Inspeção gravíssima</option>
+                <option value="gravissima">Inspeção gravíssima</option>
                 <option value="grave">Inspeção grave</option>
                 <option value="moderada">Inspeção moderada</option>
                 <option value="leve">Inspeção leve</option>
