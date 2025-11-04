@@ -13,6 +13,8 @@ import {
   getMinhasInspecoes,
   getInspecoesPorGravidade,
   getInspecoesDeletadas,
+  getEnderecoById,
+  getUser,
 } from "../../services/api";
 
 const Reports = () => {
@@ -23,6 +25,101 @@ const Reports = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [relatorioData, setRelatorioData] = useState(null);
+
+  // Função para formatar data no padrão AAAA/MM/DD - HH:MM:SS
+  const formatDateTime = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${year}/${month}/${day} - ${hours}:${minutes}:${seconds}`;
+  };
+
+  // Função para obter cor da gravidade
+  const getGravidadeColor = (gravidade) => {
+    const colors = {
+      leve: "text-green-600 bg-green-50 border-green-200",
+      moderado: "text-yellow-600 bg-yellow-50 border-yellow-200",
+      grave: "text-orange-600 bg-orange-50 border-orange-200",
+      gravíssimo: "text-red-600 bg-red-50 border-red-200",
+    };
+    return colors[gravidade] || "text-gray-600 bg-gray-50 border-gray-200";
+  };
+
+  // Função para obter cor do status
+  const getStatusColor = (status) => {
+    const colors = {
+      pendente: "text-yellow-700 bg-yellow-50 border-yellow-200",
+      "em andamento": "text-blue-600 bg-blue-50 border-blue-200",
+      concluído: "text-green-600 bg-green-50 border-green-200",
+      cancelado: "text-red-600 bg-red-50 border-red-200",
+    };
+    return colors[status] || "text-gray-600 bg-gray-50 border-gray-200";
+  };
+
+  // Função para processar e enriquecer os dados das inspeções
+  const processarDadosInspecoes = async (inspecoes) => {
+    try {
+      // Buscar todos os usuários
+      const usuariosData = await getUser();
+      const usuariosMap = {};
+      usuariosData.data.forEach((usuario) => {
+        usuariosMap[usuario.id] = usuario.login;
+      });
+
+      // Processar cada inspeção
+      const inspecoesProcessadas = await Promise.all(
+        inspecoes.map(async (inspecao) => {
+          try {
+            // Buscar endereço completo
+            let enderecoTexto = "Endereço não disponível";
+            if (inspecao.enderecoId) {
+              const endereco = await getEnderecoById(inspecao.enderecoId);
+              if (endereco) {
+                enderecoTexto = `${endereco.rua}, ${endereco.numero} - ${endereco.bairro}`;
+              }
+            }
+
+            // Buscar nome do criador
+            const criadoPorNome =
+              usuariosMap[inspecao.criadoPor] || "Usuário não encontrado";
+
+            return {
+              id: inspecao.id || inspecao._id,
+              tipo: inspecao.tipo,
+              endereco: enderecoTexto,
+              gravidade: inspecao.gravidade,
+              status: inspecao.status,
+              criadoPor: criadoPorNome,
+              createdAt: formatDateTime(inspecao.createdAt),
+              updatedAt: formatDateTime(inspecao.updatedAt),
+            };
+          } catch (err) {
+            console.error("Erro ao processar inspeção:", err);
+            return {
+              id: inspecao.id || inspecao._id,
+              tipo: inspecao.tipo,
+              endereco: "Erro ao carregar",
+              gravidade: inspecao.gravidade,
+              status: inspecao.status,
+              criadoPor: "Erro ao carregar",
+              createdAt: formatDateTime(inspecao.createdAt),
+              updatedAt: formatDateTime(inspecao.updatedAt),
+            };
+          }
+        })
+      );
+
+      return inspecoesProcessadas;
+    } catch (err) {
+      console.error("Erro ao processar dados:", err);
+      throw err;
+    }
+  };
 
   // Função para gerar relatório baseado no tipo selecionado
   const handleGerarRelatorio = async () => {
@@ -72,19 +169,19 @@ const Reports = () => {
       }
 
       if (result.success) {
-        setRelatorioData(result.data);
+        // Processar os dados para deixar mais bonitos
+        const dadosProcessados = await processarDadosInspecoes(result.data);
+        setRelatorioData(dadosProcessados);
+
         // Limpar erro se houver dados
-        if (
-          result.data &&
-          Array.isArray(result.data) &&
-          result.data.length > 0
-        ) {
+        if (dadosProcessados && dadosProcessados.length > 0) {
           setError("");
         } else {
           setError("Nenhum dado encontrado para este relatório");
         }
       }
-    } catch {
+    } catch (err) {
+      console.error("Erro ao gerar relatório:", err);
       setError("Erro ao gerar relatório. Tente novamente.");
     } finally {
       setLoading(false);
@@ -129,7 +226,7 @@ const Reports = () => {
       doc.setTextColor(40);
       const pageWidth = doc.internal.pageSize.getWidth();
       doc.text(
-        tipoRelatorioTexto[tipoRelatorio] || "Relatório",
+        "Izoo - Relatório de: "+tipoRelatorioTexto[tipoRelatorio] || "Relatório",
         pageWidth / 2,
         15,
         { align: "center" }
@@ -145,11 +242,23 @@ const Reports = () => {
         { align: "center" }
       );
 
-      // Preparar dados para a tabela
-      const headers = Object.keys(relatorioData[0]);
+      // Preparar dados para a tabela com cabeçalhos mais bonitos
+      const headers = Object.keys(relatorioData[0]).map((key) => {
+        const headerMap = {
+          id: "ID",
+          tipo: "Tipo",
+          endereco: "Endereço",
+          gravidade: "Gravidade",
+          status: "Status",
+          criadoPor: "Criado Por",
+          createdAt: "Criado Em",
+          updatedAt: "Atualizado Em",
+        };
+        return headerMap[key] || key;
+      });
+
       const rows = relatorioData.map((row) =>
-        headers.map((header) => {
-          const value = row[header];
+        Object.values(row).map((value) => {
           if (value === null || value === undefined) {
             return "";
           }
@@ -349,8 +458,27 @@ const Reports = () => {
                       {Array.isArray(relatorioData) &&
                         relatorioData.length > 0 &&
                         Object.keys(relatorioData[0]).map((key) => (
-                          <th key={key} className="px-4 py-3 text-left">
-                            {key}
+                          <th
+                            key={key}
+                            className="px-4 py-3 text-left capitalize"
+                          >
+                            {key === "id"
+                              ? "ID"
+                              : key === "tipo"
+                              ? "Tipo"
+                              : key === "endereco"
+                              ? "Endereço"
+                              : key === "gravidade"
+                              ? "Gravidade"
+                              : key === "status"
+                              ? "Status"
+                              : key === "criadoPor"
+                              ? "Criado Por"
+                              : key === "createdAt"
+                              ? "Criado Em"
+                              : key === "updatedAt"
+                              ? "Atualizado Em"
+                              : key}
                           </th>
                         ))}
                     </tr>
@@ -359,11 +487,29 @@ const Reports = () => {
                     {Array.isArray(relatorioData) &&
                       relatorioData.slice(0, 10).map((row, index) => (
                         <tr key={index} className="border-b border-stone-200">
-                          {Object.values(row).map((value, i) => (
+                          {Object.entries(row).map(([key, value], i) => (
                             <td key={i} className="px-4 py-4">
-                              {typeof value === "object"
-                                ? JSON.stringify(value)
-                                : String(value)}
+                              {key === "gravidade" ? (
+                                <span
+                                  className={`px-3 py-1 rounded-full border text-sm font-medium ${getGravidadeColor(
+                                    value
+                                  )}`}
+                                >
+                                  {value}
+                                </span>
+                              ) : key === "status" ? (
+                                <span
+                                  className={`px-3 py-1 rounded-full border text-sm font-medium ${getStatusColor(
+                                    value
+                                  )}`}
+                                >
+                                  {value}
+                                </span>
+                              ) : typeof value === "object" ? (
+                                JSON.stringify(value)
+                              ) : (
+                                String(value)
+                              )}
                             </td>
                           ))}
                         </tr>
