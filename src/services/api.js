@@ -262,4 +262,107 @@ export const resetPassword = async (data) => {
   }
 };
 
+// ==================== RELATÓRIOS ====================
+
+// Buscar inspeções por tipo
+export const getInspecoesPorTipo = async (tipo) => {
+  try {
+    const response = await api.get(`/inspecao/tipo/${tipo}`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar inspeções por tipo:", error);
+    throw error;
+  }
+};
+
+// Buscar inspeções por status
+export const getInspecoesPorStatus = async (status) => {
+  try {
+    const response = await api.get(`/inspecao/status/${status}`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar inspeções por status:", error);
+    throw error;
+  }
+};
+
+// Buscar minhas inspeções
+export const getMinhasInspecoes = async () => {
+  try {
+    const response = await api.get("/inspecao/minhas");
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar minhas inspeções:", error);
+    throw error;
+  }
+};
+
+// Buscar inspeções por gravidade
+export const getInspecoesPorGravidade = async (gravidade) => {
+  try {
+    const response = await api.get(`/inspecao/gravidade/${gravidade}`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar inspeções por gravidade:", error);
+    throw error;
+  }
+};
+
+// Buscar inspeções por filtro (endereço ID e status)
+export const getInspecoesPorFiltro = async (params) => {
+  try {
+    const response = await api.get("/inspecao/filtro", { params });
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar inspeções por filtro:", error);
+    throw error;
+  }
+};
+
+// Buscar inspeções por endereço ID
+export const getInspecoesPorEndereco = async (enderecoId) => {
+  try {
+    const response = await api.get(`/inspecao/endereco/${enderecoId}`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar inspeções por endereço:", error);
+    throw error;
+  }
+};
+
+// Listar inspeções deletadas
+export const getInspecoesDeletadas = async () => {
+  try {
+    const response = await api.get("/inspecao/deletadas");
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar inspeções deletadas:", error);
+    throw error;
+  }
+};
+
+// Buscar inspeções por criador
+export const getInspecoesPorCriador = async (criadoPor) => {
+  try {
+    const response = await api.get(`/inspecao/criador/${criadoPor}`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar inspeções por criador:", error);
+    throw error;
+  }
+};
+
+// Buscar inspeções por criador e status
+export const getInspecoesPorCriadorEStatus = async (criadoPor, status) => {
+  try {
+    const response = await api.get(
+      `/inspecao/criador/${criadoPor}/status/${status}`
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Erro ao buscar inspeções por criador e status:", error);
+    throw error;
+  }
+};
+
 export default api;
