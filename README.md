@@ -13,7 +13,7 @@
 
 --- -->
 
-## 📖 Sobre o Projeto
+## Sobre o Projeto
 
 **iZoo** é a interface web do projeto **PIE4 - Instituto Federal do Triângulo Mineiro (IFTM)**, desenvolvida para facilitar a interação com o sistema **iZoo**, uma plataforma voltada à **gestão, exibição e controle de informações sobre zoonoses**.
 
@@ -26,7 +26,7 @@ Além disso, qualquer cidadão pode acessar o **mapeamento das inspeções** em 
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
@@ -49,7 +49,7 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 | **Types e Tipagens**             | `@types/react`, `@types/react-dom`                                                                                                                  | Tipagens auxiliares para desenvolvimento           |
 | **Dev Tools**                    | [Vite Plugin React](https://www.npmjs.com/package/@vitejs/plugin-react), [React Refresh](https://www.npmjs.com/package/eslint-plugin-react-refresh) | Suporte ao hot reload e otimização do build        |
 
-## 🧠 Principais Recursos Técnicos
+## Principais Recursos Técnicos
 
 - Sistema de leitura através do **QR Code** para registro de inspeções
 - Geração de **QR Codes dinâmicos**.
