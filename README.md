@@ -13,7 +13,7 @@
 
 --- -->
 
-## 📖 Sobre o Projeto
+## Sobre o Projeto
 
 **iZoo** é a interface web do projeto **PIE4 - Instituto Federal do Triângulo Mineiro (IFTM)**, desenvolvida para facilitar a interação com o sistema **iZoo**, uma plataforma voltada à **gestão, exibição e controle de informações sobre zoonoses**.
 
@@ -26,7 +26,7 @@ Além disso, qualquer cidadão pode acessar o **mapeamento das inspeções** em 
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 
@@ -43,13 +43,13 @@ Este projeto foi construído com as seguintes ferramentas e bibliotecas:
 | **QR Code**                      | [React QR Code](https://www.npmjs.com/package/react-qr-code)                                                                                        | Geração de QR Codes dinâmicos                      |
 | **Notificações**                 | [React Toastify](https://fkhadra.github.io/react-toastify/introduction)                                                                             | Exibição de alertas e mensagens de feedback        |
 | **PDF**                 | [jsPDF](https://www.npmjs.com/package/jspdf)                                                                             | Gerar documentos PDF diretamente no navegador (browser)       |
-| **Formatação de PDF**                 | [jsPDF-autotable](https://www.npmjs.com/package/jspdf-autotable)                                                                             | criação e formatação de tabelas dentro dos documentos PDF que estão sendo gerados.       |
+| **Formatação de PDF**                 | [jsPDF-autotable](https://www.npmjs.com/package/jspdf-autotable)                                                                             | Criação e formatação de tabelas dentro dos documentos PDF.       |
 | **CORS**                         | [CORS](https://www.npmjs.com/package/cors)                                                                                                          | Middleware para controle de acessos via API        |
 | **Lint e Qualidade de Código**   | [ESLint](https://eslint.org/), [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)                                 | Garantem boas práticas e padronização do código    |
 | **Types e Tipagens**             | `@types/react`, `@types/react-dom`                                                                                                                  | Tipagens auxiliares para desenvolvimento           |
 | **Dev Tools**                    | [Vite Plugin React](https://www.npmjs.com/package/@vitejs/plugin-react), [React Refresh](https://www.npmjs.com/package/eslint-plugin-react-refresh) | Suporte ao hot reload e otimização do build        |
 
-## 🧠 Principais Recursos Técnicos
+## Principais Recursos Técnicos
 
 - Sistema de leitura através do **QR Code** para registro de inspeções
 - Geração de **QR Codes dinâmicos**.
