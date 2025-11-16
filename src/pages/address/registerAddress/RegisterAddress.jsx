@@ -104,8 +104,8 @@ const RegisterAddress = ({ onClose, loadAddress }) => {
       cep: cep,
       cidade: city,
       estado: estado,
-      latitude: latitude,
-      longitude: longitude,
+      latitude: latitude !== null,
+      longitude: longitude !== null
     };
 
     try {
@@ -119,7 +119,7 @@ const RegisterAddress = ({ onClose, loadAddress }) => {
       console.log("Erro detalhado no registro:", error.response?.data || error);
       setError(
         error.response?.data?.error ||
-          "Erro ao registrar. Verifique os dados e tente novamente."
+          "Erro ao registrar, registro somente por dipositivos móveis."
       );
     } finally {
       setLoading(false);
