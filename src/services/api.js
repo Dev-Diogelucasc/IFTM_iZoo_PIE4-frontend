@@ -120,15 +120,15 @@ export const updateUser = async (id, data) => {
   }
 };
 
-// Função para Deletar Usuário
-export const deleteUser = async (id) => {
-  try {
-    const response = await api.delete(`/usuario/${id}`);
-    return { success: true, data: response.data };
-  } catch (error) {
-    console.error("Erro ao deletar o usuário", error);
-    throw error;
-  }
+  // Função para Deletar Usuário
+  export const deleteUser = async (id) => {
+    try {
+      const response = await api.delete(`/usuario/${id}`);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("Erro ao deletar o usuário", error);
+      throw error;
+    }
 };
 
 // Função para buscar endereço por ID para inspeção
