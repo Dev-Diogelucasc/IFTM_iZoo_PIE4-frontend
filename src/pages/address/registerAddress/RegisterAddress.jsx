@@ -104,8 +104,8 @@ const RegisterAddress = ({ onClose, loadAddress }) => {
       cep: cep,
       cidade: city,
       estado: estado,
-      latitude: latitude !== null,
-      longitude: longitude !== null
+      latitude: latitude,
+      longitude: longitude
     };
 
     try {
