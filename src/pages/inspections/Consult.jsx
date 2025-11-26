@@ -8,8 +8,6 @@ import {
   getUser,
   fetchInspections,
 } from "../../services/api";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
 
 const Consult = () => {
   const [inspecoes, setInspecoes] = useState([]);
@@ -20,8 +18,6 @@ const Consult = () => {
   const [filterTipo, setFilterTipo] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
 
-  const navigate = useNavigate();
-  const { user } = useAuth();
 
   // Buscar todas as inspeções ao carregar a página
   useEffect(() => {
