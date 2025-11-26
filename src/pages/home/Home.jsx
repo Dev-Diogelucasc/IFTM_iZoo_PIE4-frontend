@@ -189,6 +189,15 @@ const Home = () => {
                 onButtonClick={() => navigate("/mapeamento")}
               />
             </div>
+            <div className="transition-transform transform hover:scale-100 hover:-translate-y-1">
+              <FeatureCard
+                icon={<BsSearch size={28} className="text-green-700" />}
+                title="Consultar Inspeções"
+                description="Busque e visualize histórico completo de inspeções realizadas"
+                buttonLabel="Acessar"
+                onButtonClick={() => navigate("/inspecoes/consultar")}
+              />
+            </div>
           </div>
         </div>
       )}

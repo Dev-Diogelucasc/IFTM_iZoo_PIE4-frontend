@@ -108,6 +108,14 @@ const SideBar = () => {
                 <BsQrCodeScan size={20} />
                 <span className="ml-3">Consultar Endereço</span>
               </NavLink>
+              <NavLink
+                    to="/inspecoes/consultar"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsSearch size={20} />
+                    <span className="ml-3">Consultar Inspeções</span>
+                  </NavLink>
               <NavLink to="/mapeamento" className={navLinkClass}>
                 <BsGeoAlt size={20} />
                 <span className="ml-3">Mapeamento</span>
@@ -299,6 +307,14 @@ const SideBar = () => {
                   <NavLink to="/inspecoes/endereco" className={navLinkClass}>
                     <BsQrCodeScan size={20} />
                     <span className="ml-3">Consultar Endereço</span>
+                  </NavLink>
+                  <NavLink
+                    to="/inspecoes/consultar"
+                    className={navLinkClass}
+                    onClick={() => setOpen(false)}
+                  >
+                    <BsSearch size={20} />
+                    <span className="ml-3">Consultar Inspeções</span>
                   </NavLink>
                   <NavLink
                     to="/mapeamento"
